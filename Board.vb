@@ -945,6 +945,7 @@ Friend Class frmBoard
         Me.Controls.Add(Me._piece_2)
         Me.Cursor = System.Windows.Forms.Cursors.Default
         Me.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Location = New System.Drawing.Point(20, 20)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "frmBoard"
@@ -1336,8 +1337,8 @@ Friend Class frmBoard
     End Sub
 
     Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
-        'HelpAbout
-        MsgBox("Not implemented") 'My.Forms.frmAbout.Show()
+        Dim AppPath As String = System.AppDomain.CurrentDomain.BaseDirectory
+        System.Diagnostics.Process.Start(AppPath + "BGHelp.htm")
     End Sub
 
     Private Function TwipsToPixelsX(twips As Integer) As Integer

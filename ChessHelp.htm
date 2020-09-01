@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Chess help</title>
+</head>
+<body>
+    <h1>Basic play</h1>
+
+    <p>From the <b>File</b> menu, select <b>new</b>. You are red (=white);. </p>
+
+    <p>Pieces are moved in accordance with standard chess rules. (It won't correct illegal moves)</p>
+
+    <p>To move, drag a piece onto its destination square. To castle, right-click on a rook.</p>
+
+    <p>If a piece is taken, it sits on the bar and must be brought back into play before other pieces can be moved.</p>
+
+    <p>A pawn reaching the 8th rank is automatically promoted to a queen.</p>
+
+    <h2>Computer opponent</h2>
+    <p>
+        The computer opponent uses a basic method of scoring each possible move and then evaluating the resulting board situation weighting various criteria by a number of factor.
+        These factors relate to strategy elements or qualities that more or less equate to temperaments. E.g. the tendency to want to threaten pieces is called 'aggression'.
+        I haven't done much yet in terms of optimising these. I don't do any thinking ahead (i.e. if I do this he'll probably do that) (0 ply)
+    </p>
+
+    <ul>
+        <li>
+            Threatening  1 'aggressiveness - increase our threatening
+        </li>
+        <li>
+            AvoidingThreat  1 'wimpishness - reduce their threatening
+        </li>
+        <li>Supporting  1 'supporting our own pieces - increase our support</li>
+        <li>
+            Undermine  1 'reduce their support
+        </li>
+        <li>
+            Control  4 'aim to control more of the board
+        </li>
+        <li>
+            Frustrate  1 'aim to reduce their mobility and control
+        </li>
+        <li>
+            Keep  2 'aim to keep as many pieces as possible
+        </li>
+        <li>
+            Erode  1 'aim to reduce their pieces
+        </li>
+        <li>
+            Consolidate  5 'aim to avoid leaving piece unsupported
+        </li>
+        <li>
+            Isolate  1 'aim to isolate their pieces leaving them unsupported
+        </li>
+    </ul>
+
+    <p>
+        In order to allow the computer to 'fine tune' its play to suite playing against you, there is a capacity to weight various characteristics, and prefer to use more successful strategies
+        in response to success. The results of this can be seen in the Tools Settings screen.
+    </p>
+
+    <h2>Commands</h2>
+
+    <h3>File menu</h3>
+    <h4>New</h4>
+    <p>Start a new game</p>
+    <h4>Open</h4>
+    <h4>Exit</h4>
+    <p>Close the program.</p>
+
+    <h3>Edit menu</h3>
+    <h4>Undo</h4>
+    <p>Undo as many moves as you like.</p>
+
+    <h3>Tools</h3>
+    <h4>Move</h4>
+    <p>Let the computer make the next move</p>
+    <h4>Top Human</h4>
+    <p>toggle between blue (black) being a human or computer</p>
+    <h4>Bottom Human</h4>
+    <p>toggle between red (white) being a human or computer</p>
+
+    <h3>Help</h3>
+    <h4>Manual</h4>
+    <p>Display user manual.</p>
+
+    <h2>Other</h2>
+    <p>This is currently in VB.NET (VS2019) and tested on Windows 10.</p>
+    <h3>Past</h3>
+    <p>
+        This project started in 2000 I had a separate project that created a DLL for the basic chess piece functionality.
+        There were a bunch of chess piece classes deriving from a generic piece class.
+        This was in order to develop my skills in .Net, object oriented programming and a bit of chess practice.
+        My son was playing a bit of chess and I thought it would be fun to think about an automated opponent.
+    </p>
+    <h3>Future</h3>
+    <p>
+        It doesn't play very smartly at the moment. I'll probbly start by optimising weightings,
+        implementing learning as per BGC. Implement > 0 ply.
+        I'm interested in Reinforcement learning (Strategy) and learning more about deep Learning (Neural networks)
+    </p>
+
+</body>
+</html>
