@@ -3,14 +3,8 @@ Option Explicit On
 <System.Runtime.InteropServices.ProgId("King_NET.King")> Public Class King
     Inherits ChessPiece
     'King class allows for multiple instances of Chess King
-    Const DIRUP As Short = 1
-    Const DIRDOWN As Short = -1
-    Const XMOVE As Short = 0
-	Const YMOVE As Short = 1
-	Const SCOREMOVE As Short = 2
-    Const SUPPVALUE As Byte = 2
 
-    Public Overrides Function checkMoves() As Byte
+    Public Overrides Function CheckMoves() As Byte
         'Add each legal move to the NextMove array of legal moves, 
         'Therefore CheckMoves must be called each time before moving using the nextmove array in a computer move
         'Each move has a score:
@@ -24,12 +18,12 @@ Option Explicit On
 
         posCount = 0
         If OnBoard Then
-            posX = MyBase.xPos
-            posY = MyBase.yPos + 1 'up
+            posX = MyBase.XPos
+            posY = MyBase.YPos + 1 'up
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result <> Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                     MyBase.SetMoveY(posCount, posY)
                     If result = -Direction Then 'opponent
@@ -39,12 +33,12 @@ Option Explicit On
                     End If
                 End If
             End If
-            posX = MyBase.xPos + 1 'right
-            posY = MyBase.yPos + 1 'up
+            posX = MyBase.XPos + 1 'right
+            posY = MyBase.YPos + 1 'up
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result <> Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                     MyBase.SetMoveY(posCount, posY)
                     If result = -Direction Then 'opponent
@@ -54,12 +48,12 @@ Option Explicit On
                     End If
                 End If
             End If
-            posX = MyBase.xPos + 1 'right
-            posY = MyBase.yPos
+            posX = MyBase.XPos + 1 'right
+            posY = MyBase.YPos
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result <> Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                     MyBase.SetMoveY(posCount, posY)
                     If result = -Direction Then 'opponent
@@ -69,12 +63,12 @@ Option Explicit On
                     End If
                 End If
             End If
-            posX = MyBase.xPos + 1 'right
-            posY = MyBase.yPos - 1 'down
+            posX = MyBase.XPos + 1 'right
+            posY = MyBase.YPos - 1 'down
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result <> Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                     MyBase.SetMoveY(posCount, posY)
                     If result = -Direction Then 'opponent
@@ -84,12 +78,12 @@ Option Explicit On
                     End If
                 End If
             End If
-            posX = MyBase.xPos
-            posY = MyBase.yPos - 1 'down
+            posX = MyBase.XPos
+            posY = MyBase.YPos - 1 'down
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result <> Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                     MyBase.SetMoveY(posCount, posY)
                     If result = -Direction Then 'opponent
@@ -99,12 +93,12 @@ Option Explicit On
                     End If
                 End If
             End If
-            posX = MyBase.xPos - 1 'left
-            posY = MyBase.yPos - 1 'down
+            posX = MyBase.XPos - 1 'left
+            posY = MyBase.YPos - 1 'down
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result <> Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                     MyBase.SetMoveY(posCount, posY)
                     If result = -Direction Then 'opponent
@@ -114,12 +108,12 @@ Option Explicit On
                     End If
                 End If
             End If
-            posX = MyBase.xPos - 1 'left
-            posY = MyBase.yPos
+            posX = MyBase.XPos - 1 'left
+            posY = MyBase.YPos
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result <> Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                     MyBase.SetMoveY(posCount, posY)
                     If result = -Direction Then 'opponent
@@ -129,12 +123,12 @@ Option Explicit On
                     End If
                 End If
             End If
-            posX = MyBase.xPos - 1 'left
-            posY = MyBase.yPos + 1 'up
+            posX = MyBase.XPos - 1 'left
+            posY = MyBase.YPos + 1 'up
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result <> Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                     MyBase.SetMoveY(posCount, posY)
                     If result = -Direction Then 'opponent
@@ -146,10 +140,10 @@ Option Explicit On
             End If
         End If
         MyBase.MaxMove = posCount
-        checkMoves = posCount
+        CheckMoves = posCount
     End Function
 
-    Public Overrides Function checkSupport() As Byte
+    Public Overrides Function CheckSupport() As Byte
         'Add each support provided to the mSupport array (analogous to mSupport array)
         Dim posX As Short
         Dim posY As Short
@@ -159,88 +153,88 @@ Option Explicit On
 
         posCount = 0 'for each Support possibility: index into mSupport Array
         If OnBoard Then
-            posX = MyBase.xPos
-            posY = MyBase.yPos + 1 'up
+            posX = MyBase.XPos
+            posY = MyBase.YPos + 1 'up
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
-                If result = Direction Then 'own side piece is there; add to mSupport array
-                    posCount = posCount + 1
+                result = IsLegal(posX, posY, Direction)
+                If result = Direction Then 'own side Piece is there; add to mSupport array
+                    posCount += 1
                     MyBase.SetSuppX(posCount, posX)
                     MyBase.SetSuppY(posCount, posY)
                 End If
             End If
-            posX = MyBase.xPos + 1 'right
-            posY = MyBase.yPos + 1 'up
+            posX = MyBase.XPos + 1 'right
+            posY = MyBase.YPos + 1 'up
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result = Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetSuppX(posCount, posX)
                     MyBase.SetSuppY(posCount, posY)
                 End If
             End If
-            posX = MyBase.xPos + 1 'right
-            posY = MyBase.yPos
+            posX = MyBase.XPos + 1 'right
+            posY = MyBase.YPos
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result = Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetSuppX(posCount, posX)
                     MyBase.SetSuppY(posCount, posY)
                 End If
             End If
-            posX = MyBase.xPos + 1 'right
-            posY = MyBase.yPos - 1 'down
+            posX = MyBase.XPos + 1 'right
+            posY = MyBase.YPos - 1 'down
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result = Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetSuppX(posCount, posX)
                     MyBase.SetSuppY(posCount, posY)
                 End If
             End If
-            posX = MyBase.xPos
-            posY = MyBase.yPos - 1 'down
+            posX = MyBase.XPos
+            posY = MyBase.YPos - 1 'down
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result = Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetSuppX(posCount, posX)
                     MyBase.SetSuppY(posCount, posY)
                 End If
             End If
-            posX = MyBase.xPos - 1 'left
-            posY = MyBase.yPos - 1 'down
+            posX = MyBase.XPos - 1 'left
+            posY = MyBase.YPos - 1 'down
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result = Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetSuppX(posCount, posX)
                     MyBase.SetSuppY(posCount, posY)
                 End If
             End If
-            posX = MyBase.xPos - 1 'left
-            posY = MyBase.yPos
+            posX = MyBase.XPos - 1 'left
+            posY = MyBase.YPos
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result = Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetSuppX(posCount, posX)
                     MyBase.SetSuppY(posCount, posY)
                 End If
             End If
-            posX = MyBase.xPos - 1 'left
-            posY = MyBase.yPos + 1 'up
+            posX = MyBase.XPos - 1 'left
+            posY = MyBase.YPos + 1 'up
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result = Direction Then
-                    posCount = posCount + 1
+                    posCount += 1
                     MyBase.SetSuppX(posCount, posX)
                     MyBase.SetSuppY(posCount, posY)
                 End If
             End If
         End If
-        checkSupport = posCount
+        CheckSupport = posCount
     End Function
 
     Public Sub New()

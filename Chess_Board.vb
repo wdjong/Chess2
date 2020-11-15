@@ -2,7 +2,7 @@ Option Strict Off
 Option Explicit On
 <System.Runtime.InteropServices.ProgId("Board_NET.Board")> Public Class Board
     'A board is an 8 x 8 array number 1-8 x is across and y is number 1 at bottom to 8 on top
-    'Its defined in Chess_Module1.vb as a 3 dimensional array as each location store an id (of the piece) and a direction (of the piece)
+    'Its defined in Chess_Module1.vb as a 3 dimensional array as each location store an id (of the Piece) and a direction (of the Piece)
     'There are 2 boards for backing up the current setup before trying a move.
     Const PIECEID As Short = 0
     Const PIECETEAM As Short = 1
@@ -46,23 +46,23 @@ Option Explicit On
     End Sub
 
     Public Function GetGBoardID(ByRef x As Byte, ByRef y As Byte) As Integer
-        'Get the id of the piece at this position
-        GetGBoardID = gBoard(x, y, PIECEID) 'id of piece
+        'Get the id of the Piece at this position
+        GetGBoardID = gBoard(x, y, PIECEID) 'id of Piece
     End Function
 
     Public Function SetGBoardID(ByRef x As Byte, ByRef y As Byte, ByRef i As Byte) As Boolean
-        'Set the id of the piece at this position
-        gBoard(x, y, PIECEID) = i 'id of piece
+        'Set the id of the Piece at this position
+        gBoard(x, y, PIECEID) = i 'id of Piece
         SetGBoardID = True
     End Function
 
     Public Function GetGBoardDir(ByRef x As Byte, ByRef y As Byte) As Integer
-        'Get the team identification of the piece at this position
-        GetGBoardDir = gBoard(x, y, PIECETEAM) 'direction of piece
+        'Get the team identification of the Piece at this position
+        GetGBoardDir = gBoard(x, y, PIECETEAM) 'direction of Piece
     End Function
 
     Public Function SetGBoardDir(ByRef x As Byte, ByRef y As Byte, ByRef d As Short) As Boolean
-        'Set the team of the piece at this position
+        'Set the team of the Piece at this position
         gBoard(x, y, PIECETEAM) = d 'direction
         SetGBoardDir = True
     End Function

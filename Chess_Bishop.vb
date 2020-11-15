@@ -2,14 +2,8 @@ Option Strict Off
 Option Explicit On
 <System.Runtime.InteropServices.ProgId("Bishop_NET.Bishop")> Public Class Bishop
     Inherits ChessPiece
-    Const DIRUP As Short = 1
-    Const DIRDOWN As Short = -1
-    Const XMOVE As Short = 0
-	Const YMOVE As Short = 1
-    Const SCOREMOVE As Short = 2
-    Const SUPPVALUE As Byte = 2
 
-    Public Overrides Function checkMoves() As Byte
+    Public Overrides Function CheckMoves() As Byte
         'Add each legal move to the NextMove array of legal moves, 
         'Therefore CheckMoves must be called each time before moving using the nextmove array in a computer move
         'Each move has a score:
@@ -24,26 +18,26 @@ Option Explicit On
         posCount = 0 'first pos is 1
         If OnBoard Then
             blocked = False
-            posX = MyBase.xPos
-            posY = MyBase.yPos
+            posX = MyBase.XPos
+            posY = MyBase.YPos
             Do While Not blocked 'check each possibility in this direction
-                posX = posX + 1 'right
-                posY = posY + 1 'up
+                posX += 1 'right
+                posY += 1 'up
                 If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                    result = isLegal(posX, posY, Direction) '0=empty, direction=same side, -direction=opponent
+                    result = IsLegal(posX, posY, Direction) '0=empty, direction=same side, -direction=opponent
                     If result = 0 Then 'the destination is empty
-                        posCount = posCount + 1
+                        posCount += 1
                         MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                         MyBase.SetMoveY(posCount, posY)
                         MyBase.SetScore(posCount, 1) '1 for move to blank
                     Else 'the destination is occupied
                         If result = -Direction Then 'can take
-                            posCount = posCount + 1
+                            posCount += 1
                             MyBase.SetMoveX(posCount, posX)
                             MyBase.SetMoveY(posCount, posY)
                             MyBase.SetScore(posCount, 2) '2 for taking
                         Else 'in terms of support the following is possible but we're not using it
-                            'if 1 <= x <= 8 and 1 <= y <= 8, the bishop is currently supporting another piece
+                            'if 1 <= x <= 8 and 1 <= y <= 8, the bishop is currently supporting another Piece
                         End If
                         blocked = True 'but it's the end of line
                     End If
@@ -52,21 +46,21 @@ Option Explicit On
                 End If
             Loop
             blocked = False
-            posX = MyBase.xPos
-            posY = MyBase.yPos
+            posX = MyBase.XPos
+            posY = MyBase.YPos
             Do While Not blocked
-                posX = posX + 1 'right
-                posY = posY - 1 'down
+                posX += 1 'right
+                posY -= 1 'down
                 If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                    result = isLegal(posX, posY, Direction)
+                    result = IsLegal(posX, posY, Direction)
                     If result = 0 Then
-                        posCount = posCount + 1
+                        posCount += 1
                         MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                         MyBase.SetMoveY(posCount, posY)
                         MyBase.SetScore(posCount, 1) '1 for move to blank
                     Else
                         If result = -Direction Then 'can take
-                            posCount = posCount + 1
+                            posCount += 1
                             MyBase.SetMoveX(posCount, posX)
                             MyBase.SetMoveY(posCount, posY)
                             MyBase.SetScore(posCount, 2) '2 for taking
@@ -78,21 +72,21 @@ Option Explicit On
                 End If
             Loop
             blocked = False
-            posX = MyBase.xPos
-            posY = MyBase.yPos
+            posX = MyBase.XPos
+            posY = MyBase.YPos
             Do While Not blocked 'find all possible moves in this direction
-                posX = posX - 1 'left
-                posY = posY - 1 'down
+                posX -= 1 'left
+                posY -= 1 'down
                 If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                    result = isLegal(posX, posY, Direction) '0=empty, direction (own player or offboard), -direction (opponent)
+                    result = IsLegal(posX, posY, Direction) '0=empty, direction (own player or offboard), -direction (opponent)
                     If result = 0 Then 'empty
-                        posCount = posCount + 1
+                        posCount += 1
                         MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                         MyBase.SetMoveY(posCount, posY)
                         MyBase.SetScore(posCount, 1) '1 for move to blank
                     Else
                         If result = -Direction Then 'opponent: can take
-                            posCount = posCount + 1
+                            posCount += 1
                             MyBase.SetMoveX(posCount, posX)
                             MyBase.SetMoveY(posCount, posY)
                             MyBase.SetScore(posCount, 2) '2 for taking
@@ -104,21 +98,21 @@ Option Explicit On
                 End If
             Loop
             blocked = False
-            posX = MyBase.xPos
-            posY = MyBase.yPos
+            posX = MyBase.XPos
+            posY = MyBase.YPos
             Do While Not blocked
-                posX = posX - 1 'left
-                posY = posY + 1 'up
+                posX -= 1 'left
+                posY += 1 'up
                 If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                    result = isLegal(posX, posY, Direction)
+                    result = IsLegal(posX, posY, Direction)
                     If result = 0 Then
-                        posCount = posCount + 1
+                        posCount += 1
                         MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
                         MyBase.SetMoveY(posCount, posY)
                         MyBase.SetScore(posCount, 1) '1 for move to blank
                     Else
                         If result = -Direction Then 'can take
-                            posCount = posCount + 1
+                            posCount += 1
                             MyBase.SetMoveX(posCount, posX)
                             MyBase.SetMoveY(posCount, posY)
                             MyBase.SetScore(posCount, 2) '2 for taking
@@ -131,32 +125,30 @@ Option Explicit On
             Loop
         End If
         MyBase.MaxMove = posCount
-        checkMoves = posCount
+        CheckMoves = posCount
     End Function
 
-    Public Overrides Function checkSupport() As Byte
+    Public Overrides Function CheckSupport() As Byte
         'Add each support provided to the mSupport array (analogous to nextmove array)
         Dim posX As Short 'current x co-ordinate to look at
         Dim posY As Short 'current y co-ordinate to look at
         Dim posCount As Byte 'each possible support: there are four max
         Dim blocked As Boolean 'examine each position till you can't go any further...
-        Dim result As Short 'either 0 for nothing there, direction the same means it's your own piece (i.e. supporting)
+        Dim result As Short 'either 0 for nothing there, direction the same means it's your own Piece (i.e. supporting)
 
-        result = 0 'initialise
         posCount = 0 'first possibility is 1 in the array i.e. 1..4
-        If OnBoard Then 'only has things it can support if this piece is on the board
+        If OnBoard Then 'only has things it can support if this Piece is on the board
             blocked = False
-            posX = MyBase.xPos
-            posY = MyBase.yPos
-            result = 0 'initialise for each direction of exploration
+            posX = MyBase.XPos
+            posY = MyBase.YPos
             Do While Not blocked
-                posX = posX + 1 'right
-                posY = posY + 1 'up
+                posX += 1 'right
+                posY += 1 'up
                 If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                    result = isLegal(posX, posY, Direction) ' 0=empty, direction same=supported, direction opposit can take
+                    result = IsLegal(posX, posY, Direction) ' 0=empty, direction same=supported, direction opposite can take
                     If result <> 0 Then 'the destination is occupied
-                        If result = Direction Then 'one of our own side found: therefore this piece supports it
-                            posCount = posCount + 1
+                        If result = Direction Then 'one of our own side found: therefore this Piece supports it
+                            posCount += 1
                             MyBase.SetSuppX(posCount, posX)
                             MyBase.SetSuppY(posCount, posY)
                         End If
@@ -167,17 +159,17 @@ Option Explicit On
                 End If
             Loop
             blocked = False
-            posX = MyBase.xPos
-            posY = MyBase.yPos
+            posX = MyBase.XPos
+            posY = MyBase.YPos
             result = 0
             Do While Not blocked
-                posX = posX + 1 'right
-                posY = posY - 1 'down
+                posX += 1 'right
+                posY -= 1 'down
                 If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                    If Not blocked Then result = isLegal(posX, posY, Direction)
+                    If Not blocked Then result = IsLegal(posX, posY, Direction)
                     If result <> 0 Then 'the destination is occupied
                         If result = Direction Then 'one of our own side found
-                            posCount = posCount + 1
+                            posCount += 1
                             MyBase.SetSuppX(posCount, posX)
                             MyBase.SetSuppY(posCount, posY)
                         End If
@@ -188,17 +180,17 @@ Option Explicit On
                 End If
             Loop
             blocked = False
-            posX = MyBase.xPos
-            posY = MyBase.yPos
+            posX = MyBase.XPos
+            posY = MyBase.YPos
             result = 0
             Do While Not blocked
                 If posX < 1 Then blocked = True
                 If posY < 1 Then blocked = True
                 If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                    If Not blocked Then result = isLegal(posX, posY, Direction)
+                    If Not blocked Then result = IsLegal(posX, posY, Direction)
                     If result <> 0 Then 'the destination is occupied
                         If result = Direction Then 'one of our own side found
-                            posCount = posCount + 1
+                            posCount += 1
                             MyBase.SetSuppX(posCount, posX)
                             MyBase.SetSuppY(posCount, posY)
                         End If
@@ -209,17 +201,17 @@ Option Explicit On
                 End If
             Loop
             blocked = False
-            posX = MyBase.xPos
-            posY = MyBase.yPos
+            posX = MyBase.XPos
+            posY = MyBase.YPos
             result = 0
             Do While Not blocked
-                posX = posX - 1 'left
-                posY = posY + 1 'up
+                posX -= 1 'left
+                posY += 1 'up
                 If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                    If Not blocked Then result = isLegal(posX, posY, Direction)
+                    If Not blocked Then result = IsLegal(posX, posY, Direction)
                     If result <> 0 Then 'the destination is occupied
                         If result = Direction Then 'one of our own side found
-                            posCount = posCount + 1
+                            posCount += 1
                             MyBase.SetSuppX(posCount, posX)
                             MyBase.SetSuppY(posCount, posY)
                         End If
@@ -231,7 +223,7 @@ Option Explicit On
             Loop
         End If
         MyBase.MaxMove = posCount
-        checkSupport = posCount
+        CheckSupport = posCount
     End Function
 
     Public Sub New()

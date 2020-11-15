@@ -1,31 +1,19 @@
 Public Class Game
-    Const mMAXMOVES As Short = 200
-    Private mMoves(mMAXMOVES) As Move 'x= moves, y1=pieceid, y2=xorig y3=yorig y4=xdest y5=ydest y6=piece2id, y7 piece2xorig y8=piece2yorig y9=piece2xdest y10=piece2ydest
+    Const MAXMOVE As Integer = 200
+    Private ReadOnly mMoves(MAXMOVE) As Move 'x= moves, y1=Pieceid, y2=xorig y3=yorig y4=xdest y5=ydest y6=Piece2id, y7 Piece2xorig y8=Piece2yorig y9=Piece2xdest y10=Piece2ydest
     Private mCount As Short
     Private mPlaying As Boolean 'keep track of whether we're playing or not at the moment
-    Private mShareThoughts As Boolean = False
-
-    Public ReadOnly Property count() As Integer
+    Public ReadOnly Property Count() As Integer
         'returns how many moves have been made
         Get
-            count = mCount
+            Count = mCount
         End Get
     End Property
 
-    Public Property ShareThoughts() As Boolean
-        'whether we want to output thinking
-        Get
-            ShareThoughts = mShareThoughts
-        End Get
-        Set(ByVal value As Boolean)
-            mShareThoughts = value
-        End Set
-    End Property
-
-    Public ReadOnly Property moves(ByVal i As Integer) As Move
+    Public ReadOnly Property Moves(ByVal i As Integer) As Move
         'return a specific move
         Get
-            moves = mMoves(i)
+            Moves = mMoves(i)
         End Get
     End Property
 
@@ -39,45 +27,53 @@ Public Class Game
         End Set
     End Property
 
-    Public Sub add(ByVal aMove As Move)
+    Public Sub Add(ByVal aMove As Move)
         'Create a new move object and add a reference to it to the list
-        Dim newMove As New Move
-
-        newMove.p1id = aMove.p1id
-        newMove.p1XOrig = aMove.p1XOrig
-        newMove.p1YOrig = aMove.p1YOrig
-        newMove.p1XDest = aMove.p1XDest
-        newMove.p1YDest = aMove.p1YDest
-        newMove.p2id = aMove.p2id
-        newMove.p2XOrig = aMove.p2XOrig
-        newMove.p2YOrig = aMove.p2YOrig
-        newMove.p2XDest = aMove.p2XDest
-        newMove.p2YDest = aMove.p2YDest
-        newMove.MCode = aMove.MCode
+        Dim newMove As New Move With {
+            .P1id = aMove.P1id,
+            .P1XOrig = aMove.P1XOrig,
+            .P1YOrig = aMove.P1YOrig,
+            .P1XDest = aMove.P1XDest,
+            .P1YDest = aMove.P1YDest,
+            .P2id = aMove.P2id,
+            .P2XOrig = aMove.P2XOrig,
+            .P2YOrig = aMove.P2YOrig,
+            .P2XDest = aMove.P2XDest,
+            .P2YDest = aMove.P2YDest,
+            .MCode = aMove.MCode
+        }
+        If mCount > MAXMOVE - 1 Then
+            Cout("Stalemate: Draw")
+            aGame.Playing = False
+        End If
         mMoves(mCount) = newMove 'first move is 0
-        mCount = mCount + 1 'mCount is 1
+        mCount += 1 'mCount is 1
     End Sub
 
-    Public Sub remove()
+    Public Sub Remove()
         'Destroy the last move
         Dim aMove As Move
 
-        mCount = mCount - 1
+        mCount -= 1
         aMove = mMoves(mCount)
-        aMove = Nothing
     End Sub
 
-    Public Function last() As Move
+    Public Function Last() As Move
         'return the last move
         Try
-            last = mMoves(mCount - 1)
+            Last = mMoves(mCount - 1)
         Catch ex As Exception
             MsgBox("Can't undo")
-            last = Nothing
+            Last = Nothing
         End Try
     End Function
 
     Public Sub New()
         mCount = 0
+    End Sub
+
+    Friend Sub Clear()
+        mCount = 0
+        Array.Clear(mMoves, 0, mMoves.Length)
     End Sub
 End Class

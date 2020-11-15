@@ -2,22 +2,22 @@ Option Strict Off
 Option Explicit On
 
 Public Class ChessPiece
-    Private mstrAlgNot As String 'Algebraic Notation of piece
-    Private mlngDebugID As Integer 'ID of piece should match array index of piece objects and controls on the form
+    Private mstrAlgNot As String 'Algebraic Notation of Piece
+    Private mlngDebugID As Integer 'ID of Piece should match array index of Piece objects and controls on the form
     Private mintDirection As Short '1 is up -1 is down
     Private mbytMaxMove As Byte 'Number of valid moves 1 to n
     Private mbytObjIndex As Byte 'object index to be stored on board
-    Private mbooOnBoard As Boolean 'If the piece is currently in play
-    Private mbytValue As Byte 'value of piece
+    Private mbooOnBoard As Boolean 'If the Piece is currently in play
+    Private ReadOnly mbytValue As Byte 'value of Piece
     Private mbytXPos As Byte 'Current file 1 to 8 left to right convert to letters in algebraic notation section
     Private mbytYPos As Byte 'Current rank 1 to 8 bottom to top
     Private mSupported As Byte 'How many supporters
     Private mThreatened As Byte 'How many attackers
-    Private mWatch As Boolean 'If true display the scores relating to this piece
+    Private mWatch As Boolean 'If true display the scores relating to this Piece
     Const DIRUP As Short = 1
     Const DIRDOWN As Short = -1
-    Private NextMove(28, 3) As Byte 'array of moves 1st dim: movenum, 2nd dim 0=x, 1=y, 2=score
-    Private mSupport(8, 3) As Byte 'array of support 1st dim  movenum, 2nd dim 0=x, 1=y, 3=value
+    Private ReadOnly NextMove(28, 3) As Byte 'array of moves 1st dim: movenum, 2nd dim 0=x, 1=y, 2=score
+    Private ReadOnly mSupport(8, 3) As Byte 'array of support 1st dim  movenum, 2nd dim 0=x, 1=y, 3=value
     Const XMOVE As Short = 0
     Const YMOVE As Short = 1
     Const SCOREMOVE As Short = 2
@@ -45,7 +45,7 @@ Public Class ChessPiece
     End Property
 
     Public Overridable Property Direction() As Short
-        'The direction of the piece = the colour or which side it's on
+        'The direction of the Piece = the colour or which side it's on
         Get
             Direction = mintDirection
         End Get
@@ -65,7 +65,7 @@ Public Class ChessPiece
     End Property
 
     Public Overridable Property Supported() As Byte
-        'Set in vb.score to record the count of supporting pieces...
+        'Set in vb.score to record the count of supporting Pieces...
         Get
             Supported = mSupported
         End Get
@@ -75,7 +75,7 @@ Public Class ChessPiece
     End Property
 
     Public Overridable Property Threatened() As Byte
-        'Set in vb.score to record the count of attacking pieces...
+        'Set in vb.score to record the count of attacking Pieces...
         Get
             Threatened = mThreatened
         End Get
@@ -85,7 +85,7 @@ Public Class ChessPiece
     End Property
 
     Public Overridable Property ObjIndex() As Byte
-        'the this value is stored in the board object to allow us to reference a piece on the board
+        'the this value is stored in the board object to allow us to reference a Piece on the board
         Get
             ObjIndex = mbytObjIndex
         End Get
@@ -95,7 +95,7 @@ Public Class ChessPiece
     End Property
 
     Public Overridable Property OnBoard() As Boolean
-        'Tells us if this piece is on the board
+        'Tells us if this Piece is on the board
         Get
             OnBoard = mbooOnBoard
         End Get
@@ -105,14 +105,14 @@ Public Class ChessPiece
     End Property
 
     Public Overridable ReadOnly Property Value() As Byte
-        'Returns the value of this piece
+        'Returns the value of this Piece
         Get
             Value = mbytValue
         End Get
     End Property
 
     Public Overridable Property Watch() As Boolean
-        'whether we want to output thinking re this piece
+        'whether we want to output thinking re this Piece
         Get
             Watch = mWatch
         End Get
@@ -121,20 +121,20 @@ Public Class ChessPiece
         End Set
     End Property
 
-    Public Overridable Property xPos() As Byte
-        'returns the x value of this piece
+    Public Overridable Property XPos() As Byte
+        'returns the x value of this Piece
         Get
-            xPos = mbytXPos
+            XPos = mbytXPos
         End Get
         Set(ByVal Value As Byte)
             mbytXPos = Value
         End Set
     End Property
 
-    Public Overridable Property yPos() As Byte
-        'returns the y value of this piece
+    Public Overridable Property YPos() As Byte
+        'returns the y value of this Piece
         Get
-            yPos = mbytYPos
+            YPos = mbytYPos
         End Get
         Set(ByVal Value As Byte)
             mbytYPos = Value
@@ -166,7 +166,7 @@ Public Class ChessPiece
     End Sub
 
     Overridable Function GetSuppX(ByRef n As Byte) As Byte
-        'Called from scoring routine in order ultimately to determine the value of the piece supported
+        'Called from scoring routine in order ultimately to determine the value of the Piece supported
         GetSuppX = mSupport(n, XMOVE)
     End Function
 
@@ -175,7 +175,7 @@ Public Class ChessPiece
     End Sub
 
     Overridable Function GetSuppY(ByRef n As Byte) As Byte
-        'Called from scoring routine in order ultimately to determine the value of the piece supported
+        'Called from scoring routine in order ultimately to determine the value of the Piece supported
         GetSuppY = mSupport(n, YMOVE)
     End Function
 
@@ -185,16 +185,17 @@ Public Class ChessPiece
 
     Public Overridable Function Move(ByRef moveNum As Byte) As Boolean
         'with reference to a moveNum in the NextMove array (having run checkmoves)
-        'carry out a move by updating the source and destination position on the board and the piece co-ords
+        'carry out a move by updating the source and destination position on the board and the Piece co-ords
         On Error GoTo errMove
         Move = False 'assume error
         If moveNum > mbytMaxMove Then
             MsgBox("Piece.Move: " & moveNum & " is greater than " & mbytMaxMove)
         End If
-        SetGBoard(mbytXPos, mbytYPos, 0, 0) 'remove piece from old location
+        SetGBoard(mbytXPos, mbytYPos, 0, 0) 'remove Piece from old location
         mbooOnBoard = True
-        mbytXPos = NextMove(moveNum, XMOVE) 'update piece x location
-        mbytYPos = NextMove(moveNum, YMOVE) 'update piece y location
+        mbytXPos = NextMove(moveNum, XMOVE) 'update Piece x location
+        mbytYPos = NextMove(moveNum, YMOVE) 'update Piece y location
+        Thoughts += "Move: " & Chr(63 + NextMove(moveNum, XMOVE)) & NextMove(moveNum, YMOVE) & vbNewLine
         SetGBoard(mbytXPos, mbytYPos, mbytObjIndex, mintDirection) 'place on new location
         Move = True 'success
         'printBoard
@@ -207,13 +208,13 @@ errMove:
 
     Public Overridable Function Move(ByRef X As Byte, ByRef Y As Byte) As Boolean
         'by specifying destination co-ordinates (e.g. a human move)
-        'carry out the move by updating the board position values and the piece co-ords
+        'carry out the move by updating the board position values and the Piece co-ords
         Move = False 'assume error
         Try
             SetGBoard(mbytXPos, mbytYPos, 0, 0) 'clear source
             mbooOnBoard = True
-            mbytXPos = X 'set new piece xpos
-            mbytYPos = Y 'set new piece ypos
+            mbytXPos = X 'set new Piece xpos
+            mbytYPos = Y 'set new Piece ypos
             SetGBoard(mbytXPos, mbytYPos, mbytObjIndex, mintDirection) 'set destination
             Move = True 'success
         Catch ex As Exception
@@ -223,7 +224,7 @@ errMove:
 
     Public Overridable Sub Remove()
         On Error GoTo errRemove
-        SetGBoard(mbytXPos, mbytYPos, 0, 0) 'remove piece from old location
+        SetGBoard(mbytXPos, mbytYPos, 0, 0) 'remove Piece from old location
         mbooOnBoard = False
         mbytXPos = 0
         mbytYPos = 0
@@ -235,7 +236,7 @@ errRemove:
         Resume exitRemove
     End Sub
 
-    Public Overridable Function checkMoves() As Byte
+    Public Overridable Function CheckMoves() As Byte
         'Add each legal move to the NextMove array of legal moves, 
         'Therefore CheckMoves must be called each time before moving using the nextmove array in a computer move
         'Each move has a score:
@@ -250,17 +251,17 @@ errRemove:
         If OnBoard Then
             posX = mbytXPos
             posY = mbytYPos + Direction 'forward
-            result = isLegal(posX, posY, Direction) 'returns the same direction if you can't go there
+            result = IsLegal(posX, posY, Direction) 'returns the same direction if you can't go there
             If result = 0 Then 'can move up 1 (must be unoccupied for a pawn to move forward)
-                posCount = posCount + 1 'a legal move found
+                posCount += 1 'a legal move found
                 NextMove(posCount, XMOVE) = posX 'remember the co-ordinates
                 NextMove(posCount, YMOVE) = posY
                 NextMove(posCount, SCOREMOVE) = 1 'give it a modest positive score
                 If (mbytYPos = 2 And Direction = DIRUP) Or (mbytYPos = 7 And DIRDOWN) Then 'on 2nd rank
                     posY = mbytYPos + 2 * Direction 'up can move two forward initially
-                    result = isLegal(posX, posY, Direction)
+                    result = IsLegal(posX, posY, Direction)
                     If result = 0 Then 'can move up 2
-                        posCount = posCount + 1
+                        posCount += 1
                         NextMove(posCount, XMOVE) = posX
                         NextMove(posCount, YMOVE) = posY
                         NextMove(posCount, SCOREMOVE) = 1
@@ -269,10 +270,10 @@ errRemove:
             End If
         End If
         mbytMaxMove = posCount
-        checkMoves = posCount
+        CheckMoves = posCount
     End Function
 
-    Public Overridable Function checkSupport() As Byte
+    Public Overridable Function CheckSupport() As Byte
         'Add each support provided to the mSupport array (analogous to nextmove array)
         Dim posX As Short 'the destination
         Dim posY As Short 'the destination co-ord
@@ -281,20 +282,20 @@ errRemove:
 
         posCount = 0
         If OnBoard Then
-            'check for taking pieces
+            'check for taking Pieces
             posX = mbytXPos
             posY = mbytYPos + Direction 'forward
             If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
-                result = isLegal(posX, posY, Direction)
+                result = IsLegal(posX, posY, Direction)
                 If result = Direction Then 'there's someone on our side to support
-                    posCount = posCount + 1
+                    posCount += 1
                     mSupport(posCount, XMOVE) = posX
                     mSupport(posCount, YMOVE) = posY
                     mSupport(posCount, SCOREMOVE) = 2
                 End If
             End If
         End If
-        checkSupport = posCount
+        CheckSupport = posCount
     End Function
 
     Public Sub New(ByVal aAlgNot As String, ByVal abytValue As Byte)

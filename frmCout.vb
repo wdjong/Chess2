@@ -42,47 +42,47 @@ Friend Class frmCout
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCout))
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.txtDebug = New System.Windows.Forms.TextBox()
-        Me.SuspendLayout()
-        '
-        'txtDebug
-        '
-        Me.txtDebug.AcceptsReturn = True
-        Me.txtDebug.BackColor = System.Drawing.SystemColors.Window
-        Me.txtDebug.Cursor = System.Windows.Forms.Cursors.IBeam
-        Me.txtDebug.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.txtDebug.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDebug.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.txtDebug.Location = New System.Drawing.Point(0, 0)
-        Me.txtDebug.MaxLength = 0
-        Me.txtDebug.Multiline = True
-        Me.txtDebug.Name = "txtDebug"
-        Me.txtDebug.ReadOnly = True
-        Me.txtDebug.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.txtDebug.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtDebug.Size = New System.Drawing.Size(312, 213)
-        Me.txtDebug.TabIndex = 0
-        Me.txtDebug.WordWrap = False
-        '
-        'frmCout
-        '
-        Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
-        Me.BackColor = System.Drawing.SystemColors.Control
-        Me.ClientSize = New System.Drawing.Size(312, 213)
-        Me.Controls.Add(Me.txtDebug)
-        Me.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Location = New System.Drawing.Point(4, 23)
-        Me.Name = "frmCout"
-        Me.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Text = "Console"
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+		Me.SuspendLayout()
+		'
+		'txtDebug
+		'
+		Me.txtDebug.AcceptsReturn = True
+		Me.txtDebug.BackColor = System.Drawing.SystemColors.Window
+		Me.txtDebug.Cursor = System.Windows.Forms.Cursors.IBeam
+		Me.txtDebug.Dock = System.Windows.Forms.DockStyle.Fill
+		Me.txtDebug.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.txtDebug.ForeColor = System.Drawing.SystemColors.WindowText
+		Me.txtDebug.Location = New System.Drawing.Point(0, 0)
+		Me.txtDebug.MaxLength = 0
+		Me.txtDebug.Multiline = True
+		Me.txtDebug.Name = "txtDebug"
+		Me.txtDebug.ReadOnly = True
+		Me.txtDebug.RightToLeft = System.Windows.Forms.RightToLeft.No
+		Me.txtDebug.ScrollBars = System.Windows.Forms.ScrollBars.Both
+		Me.txtDebug.Size = New System.Drawing.Size(312, 213)
+		Me.txtDebug.TabIndex = 0
+		Me.txtDebug.WordWrap = False
+		'
+		'frmCout
+		'
+		Me.AutoScaleBaseSize = New System.Drawing.Size(8, 19)
+		Me.BackColor = System.Drawing.SystemColors.Control
+		Me.ClientSize = New System.Drawing.Size(312, 213)
+		Me.Controls.Add(Me.txtDebug)
+		Me.Cursor = System.Windows.Forms.Cursors.Default
+		Me.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+		Me.Location = New System.Drawing.Point(4, 23)
+		Me.Name = "frmCout"
+		Me.RightToLeft = System.Windows.Forms.RightToLeft.No
+		Me.Text = "Console"
+		Me.ResumeLayout(False)
+		Me.PerformLayout()
 
-    End Sub
+	End Sub
 #End Region
 #Region "Upgrade Support "
-    Private Shared m_vb6FormDefInstance As frmCout
+	Private Shared m_vb6FormDefInstance As frmCout
 	Private Shared m_InitializingDefInstance As Boolean
 	Public Shared Property DefInstance() As frmCout
 		Get
@@ -97,6 +97,7 @@ Friend Class frmCout
 			m_vb6FormDefInstance = Value
 		End Set
 	End Property
-#End Region 
+
+#End Region
 
 End Class

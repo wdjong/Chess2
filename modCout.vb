@@ -3,8 +3,8 @@ Option Explicit On
 Module modCout
 	
 	Sub Cout(ByRef s As String)
-		'Display output on screen
-		Const MAXTEXTBOX As Short = 2048
+        'Display output on screen
+        Const MAXTEXTBOX As Short = 8192
         Dim CForm As frmCout
 		
 		On Error GoTo errCout
