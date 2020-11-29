@@ -65,6 +65,186 @@ Namespace My
                 Me("ShareThoughts") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property CheckIncentive() As Double
+            Get
+                Return CType(Me("CheckIncentive"),Double)
+            End Get
+            Set
+                Me("CheckIncentive") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
+        Public Property TakeIncentive() As Double
+            Get
+                Return CType(Me("TakeIncentive"),Double)
+            End Get
+            Set
+                Me("TakeIncentive") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("10")>  _
+        Public Property PromoteIncentive() As Double
+            Get
+                Return CType(Me("PromoteIncentive"),Double)
+            End Get
+            Set
+                Me("PromoteIncentive") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("10")>  _
+        Public Property DeterRepetition() As Double
+            Get
+                Return CType(Me("DeterRepetition"),Double)
+            End Get
+            Set
+                Me("DeterRepetition") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
+        Public Property CaptureMove() As Double
+            Get
+                Return CType(Me("CaptureMove"),Double)
+            End Get
+            Set
+                Me("CaptureMove") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property Threatening() As Double
+            Get
+                Return CType(Me("Threatening"),Double)
+            End Get
+            Set
+                Me("Threatening") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
+        Public Property AvoidingThreat() As Double
+            Get
+                Return CType(Me("AvoidingThreat"),Double)
+            End Get
+            Set
+                Me("AvoidingThreat") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property Supporting() As Double
+            Get
+                Return CType(Me("Supporting"),Double)
+            End Get
+            Set
+                Me("Supporting") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property Undermine() As Double
+            Get
+                Return CType(Me("Undermine"),Double)
+            End Get
+            Set
+                Me("Undermine") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property Control() As Double
+            Get
+                Return CType(Me("Control"),Double)
+            End Get
+            Set
+                Me("Control") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property Frustrate() As Double
+            Get
+                Return CType(Me("Frustrate"),Double)
+            End Get
+            Set
+                Me("Frustrate") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property Keep() As Double
+            Get
+                Return CType(Me("Keep"),Double)
+            End Get
+            Set
+                Me("Keep") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property Erode() As Double
+            Get
+                Return CType(Me("Erode"),Double)
+            End Get
+            Set
+                Me("Erode") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("8")>  _
+        Public Property Consolidate() As Double
+            Get
+                Return CType(Me("Consolidate"),Double)
+            End Get
+            Set
+                Me("Consolidate") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property Isolate() As Double
+            Get
+                Return CType(Me("Isolate"),Double)
+            End Get
+            Set
+                Me("Isolate") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

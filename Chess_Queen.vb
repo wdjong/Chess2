@@ -22,21 +22,8 @@ Option Explicit On
             posY = MyBase.YPos
             Do While Not blocked
                 posY += 1 'up
-                result = IsLegal(posX, posY, Direction)
-                If result = 0 Then
-                    posCount += 1
-                    MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                    MyBase.SetMoveY(posCount, posY)
-                    MyBase.SetScore(posCount, 1) 'give it a modest positive score
-                Else
-                    If result = -Direction Then 'can take
-                        posCount += 1
-                        MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                        MyBase.SetMoveY(posCount, posY)
-                        MyBase.SetScore(posCount, 2) 'give it a modest positive score
-                    End If
-                    blocked = True
-                End If
+                result = IsLegal(posX, posY, Direction) 'result 0 = empty, Same direction off board or own player, opposite direction opponent
+                blocked = RecordResult(result, posCount, posX, posY)
             Loop
             blocked = False
             posX = MyBase.XPos
@@ -45,20 +32,7 @@ Option Explicit On
                 posX += 1 'right
                 posY += 1 'up
                 result = IsLegal(posX, posY, Direction)
-                If result = 0 Then
-                    posCount += 1
-                    MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                    MyBase.SetMoveY(posCount, posY)
-                    MyBase.SetScore(posCount, 1) 'give it a modest positive score
-                Else
-                    If result = -Direction Then 'can take
-                        posCount += 1
-                        MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                        MyBase.SetMoveY(posCount, posY)
-                        MyBase.SetScore(posCount, 2) 'give it a modest positive score
-                    End If
-                    blocked = True
-                End If
+                blocked = RecordResult(result, posCount, posX, posY)
             Loop
             blocked = False
             posX = MyBase.XPos
@@ -66,20 +40,7 @@ Option Explicit On
             Do While Not blocked
                 posX += 1 'right
                 result = IsLegal(posX, posY, Direction)
-                If result = 0 Then
-                    posCount += 1
-                    MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                    MyBase.SetMoveY(posCount, posY)
-                    MyBase.SetScore(posCount, 1) 'give it a modest positive score
-                Else
-                    If result = -Direction Then 'can take
-                        posCount += 1
-                        MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                        MyBase.SetMoveY(posCount, posY)
-                        MyBase.SetScore(posCount, 2) 'give it a modest positive score
-                    End If
-                    blocked = True
-                End If
+                blocked = RecordResult(result, posCount, posX, posY)
             Loop
             blocked = False
             posX = MyBase.XPos
@@ -88,20 +49,7 @@ Option Explicit On
                 posX += 1 'right
                 posX -= 1 'down
                 result = IsLegal(posX, posY, Direction)
-                If result = 0 Then
-                    posCount += 1
-                    MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                    MyBase.SetMoveY(posCount, posY)
-                    MyBase.SetScore(posCount, 1) 'give it a modest positive score
-                Else
-                    If result = -Direction Then 'can take
-                        posCount += 1
-                        MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                        MyBase.SetMoveY(posCount, posY)
-                        MyBase.SetScore(posCount, 2) 'give it a modest positive score
-                    End If
-                    blocked = True
-                End If
+                blocked = RecordResult(result, posCount, posX, posY)
             Loop
             blocked = False
             posX = MyBase.XPos
@@ -109,20 +57,7 @@ Option Explicit On
             Do While Not blocked
                 posX -= 1 'down
                 result = IsLegal(posX, posY, Direction)
-                If result = 0 Then
-                    posCount += 1
-                    MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                    MyBase.SetMoveY(posCount, posY)
-                    MyBase.SetScore(posCount, 1) 'give it a modest positive score
-                Else
-                    If result = -Direction Then 'can take
-                        posCount += 1
-                        MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                        MyBase.SetMoveY(posCount, posY)
-                        MyBase.SetScore(posCount, 2) 'give it a modest positive score
-                    End If
-                    blocked = True
-                End If
+                blocked = RecordResult(result, posCount, posX, posY)
             Loop
             blocked = False
             posX = MyBase.XPos
@@ -131,20 +66,7 @@ Option Explicit On
                 posX -= 1 'left
                 posX -= 1 'up
                 result = IsLegal(posX, posY, Direction)
-                If result = 0 Then
-                    posCount += 1
-                    MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                    MyBase.SetMoveY(posCount, posY)
-                    MyBase.SetScore(posCount, 1) 'give it a modest positive score
-                Else
-                    If result = -Direction Then 'can take
-                        posCount += 1
-                        MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                        MyBase.SetMoveY(posCount, posY)
-                        MyBase.SetScore(posCount, 2) 'give it a modest positive score
-                    End If
-                    blocked = True
-                End If
+                blocked = RecordResult(result, posCount, posX, posY)
             Loop
             blocked = False
             posX = MyBase.XPos
@@ -152,20 +74,7 @@ Option Explicit On
             Do While Not blocked
                 posX -= 1 'left
                 result = IsLegal(posX, posY, Direction)
-                If result = 0 Then
-                    posCount += 1
-                    MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                    MyBase.SetMoveY(posCount, posY)
-                    MyBase.SetScore(posCount, 1) 'give it a modest positive score
-                Else
-                    If result = -Direction Then 'can take
-                        posCount += 1
-                        MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                        MyBase.SetMoveY(posCount, posY)
-                        MyBase.SetScore(posCount, 2) 'give it a modest positive score
-                    End If
-                    blocked = True
-                End If
+                blocked = RecordResult(result, posCount, posX, posY)
             Loop
             blocked = False
             posX = MyBase.XPos
@@ -174,24 +83,32 @@ Option Explicit On
                 posX -= 1 'left
                 posY += 1 'up
                 result = IsLegal(posX, posY, Direction)
-                If result = 0 Then
-                    posCount += 1
-                    MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                    MyBase.SetMoveY(posCount, posY)
-                    MyBase.SetScore(posCount, 1) 'give it a modest positive score
-                Else
-                    If result = -Direction Then 'can take
-                        posCount += 1
-                        MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
-                        MyBase.SetMoveY(posCount, posY)
-                        MyBase.SetScore(posCount, 2) 'give it a modest positive score
-                    End If
-                    blocked = True
-                End If
+                blocked = RecordResult(result, posCount, posX, posY)
             Loop
         End If
         MyBase.MaxMove = posCount
         CheckMoves = posCount
+    End Function
+
+    Private Function RecordResult(result As Short, posCount As Byte, posX As Short, posY As Short) As Boolean
+        RecordResult = False 'not blocked
+        If result = 0 Then
+            posCount += 1
+            If posCount >= MyBase.MAXPOSCOUNT Then
+                Stop
+            End If
+            MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
+            MyBase.SetMoveY(posCount, posY)
+            MyBase.SetScore(posCount, 1) 'give it a modest positive score
+        Else
+            If result = -Direction Then 'can take
+                posCount += 1
+                MyBase.SetMoveX(posCount, posX) 'remember the co-ordinates
+                MyBase.SetMoveY(posCount, posY)
+                MyBase.SetScore(posCount, 2) 'give it a modest positive score
+            End If
+            RecordResult = True 'blocked
+        End If
     End Function
 
     Public Overrides Function CheckSupport() As Byte

@@ -16,7 +16,8 @@ Public Class ChessPiece
     Private mWatch As Boolean 'If true display the scores relating to this Piece
     Const DIRUP As Short = 1
     Const DIRDOWN As Short = -1
-    Private ReadOnly NextMove(28, 3) As Byte 'array of moves 1st dim: movenum, 2nd dim 0=x, 1=y, 2=score
+    Friend ReadOnly MAXPOSCOUNT As Byte = 28
+    Private ReadOnly NextMove(MAXPOSCOUNT, 3) As Byte 'array of moves 1st dim: movenum, 2nd dim 0=x, 1=y, 2=score
     Private ReadOnly mSupport(8, 3) As Byte 'array of support 1st dim  movenum, 2nd dim 0=x, 1=y, 3=value
     Const XMOVE As Short = 0
     Const YMOVE As Short = 1
@@ -50,7 +51,7 @@ Public Class ChessPiece
             Direction = mintDirection
         End Get
         Set(ByVal Value As Short)
-            mintDirection = Value '1 is up/red/black -1 is down/blue/white
+            mintDirection = Value '1 is going up/red/white -1 is down/blue/black
         End Set
     End Property
 
@@ -248,28 +249,36 @@ errRemove:
         Dim result As Short
 
         posCount = 0
-        If OnBoard Then
-            posX = mbytXPos
-            posY = mbytYPos + Direction 'forward
-            result = IsLegal(posX, posY, Direction) 'returns the same direction if you can't go there
-            If result = 0 Then 'can move up 1 (must be unoccupied for a pawn to move forward)
-                posCount += 1 'a legal move found
-                NextMove(posCount, XMOVE) = posX 'remember the co-ordinates
-                NextMove(posCount, YMOVE) = posY
-                NextMove(posCount, SCOREMOVE) = 1 'give it a modest positive score
-                If (mbytYPos = 2 And Direction = DIRUP) Or (mbytYPos = 7 And DIRDOWN) Then 'on 2nd rank
-                    posY = mbytYPos + 2 * Direction 'up can move two forward initially
-                    result = IsLegal(posX, posY, Direction)
-                    If result = 0 Then 'can move up 2
-                        posCount += 1
-                        NextMove(posCount, XMOVE) = posX
-                        NextMove(posCount, YMOVE) = posY
-                        NextMove(posCount, SCOREMOVE) = 1
+        Try
+            If OnBoard Then
+                posX = mbytXPos
+                posY = mbytYPos + Direction 'forward
+                result = IsLegal(posX, posY, Direction) 'returns the same direction if you can't go there
+                If result = 0 Then 'can move up 1 (must be unoccupied for a pawn to move forward)
+                    posCount += 1 'a legal move found
+                    If posCount >= 28 Then
+                        Stop
+                    End If
+                    NextMove(posCount, XMOVE) = posX 'remember the co-ordinates
+                    NextMove(posCount, YMOVE) = posY
+                    NextMove(posCount, SCOREMOVE) = 1 'give it a modest positive score
+                    If (mbytYPos = 2 And Direction = DIRUP) Or (mbytYPos = 7 And DIRDOWN) Then 'on 2nd rank
+                        posY = mbytYPos + 2 * Direction 'up can move two forward initially
+                        result = IsLegal(posX, posY, Direction)
+                        If result = 0 Then 'can move up 2
+                            posCount += 1
+                            NextMove(posCount, XMOVE) = posX
+                            NextMove(posCount, YMOVE) = posY
+                            NextMove(posCount, SCOREMOVE) = 1
+                        End If
                     End If
                 End If
             End If
-        End If
-        mbytMaxMove = posCount
+            mbytMaxMove = posCount
+        Catch ex As Exception
+            Stop
+            MsgBox("CheckMoves: " & ex.Message)
+        End Try
         CheckMoves = posCount
     End Function
 

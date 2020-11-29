@@ -43,11 +43,14 @@ Public Class Game
             .MCode = aMove.MCode
         }
         If mCount > MAXMOVE - 1 Then
-            Cout("Stalemate: Draw")
+            Cout("Stalemate: Draw (> max move)")
+            'MessageBox.Show(aWhite.GetRawScore())
+            'SaveResult(aWhite.GetRawScore() + 20)
             aGame.Playing = False
+        Else
+            mMoves(mCount) = newMove 'first move is 0
+            mCount += 1 'mCount is 1
         End If
-        mMoves(mCount) = newMove 'first move is 0
-        mCount += 1 'mCount is 1
     End Sub
 
     Public Sub Remove()

@@ -13,6 +13,8 @@ Public Class DlgOptions
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
+        My.Settings.ShareThoughts = cbShareThoughts.Checked
+        My.Settings.Save()
         Me.Close()
     End Sub
 
@@ -21,7 +23,4 @@ Public Class DlgOptions
         Me.Close()
     End Sub
 
-    Private Sub CBShareThoughts_CheckedChanged(sender As Object, e As EventArgs) Handles cbShareThoughts.CheckedChanged
-        My.Settings.ShareThoughts = cbShareThoughts.Checked
-    End Sub
 End Class

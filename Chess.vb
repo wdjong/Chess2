@@ -1,5 +1,6 @@
 Option Strict Off
 Option Explicit On
+Imports System.IO
 'Walter de Jong
 '8/10/2007
 'To do
@@ -47,12 +48,14 @@ Module modChess
     Public aChessPiece(MAXPIECE) As ChessPiece 'NB array index must match control index on the form for the corresponding Piece
     Public PieceArray(MAXPIECE) As System.Windows.Forms.PictureBox
     Public aGame As New Game
+    Public aWhite As New Player(1)
     Public Turn As Short 'Who's turn is it? Black/Blue = -1 Top going down or White/Red = 1 Bottom going up
     Public Const TOPGOINGDOWN As Short = -1 'Direction/ Turn constant
     Public Const BOTTOMGOINGUP As Short = 1
     Public PlayerisHuman(2) As Boolean 'bit ugly but make player 0 top and player 2 bottom
     Const captureMove As Byte = 2 ' e.g. aChessPiece(aPiece).getscore(aMove) = captureMove
     Public Thoughts As String
+    Public Property displayMoves As Boolean = True
 
     Sub DebugBoardPrint()
         'Output positions to debug window
@@ -91,19 +94,21 @@ Module modChess
             aMove.P2XOrig = aMove.P1XDest
             aMove.P2YOrig = aMove.P1YDest
         End If
-        If Take(aMove.P1XDest, aMove.P1YDest) Then Beep() 'update the board and taken Piece if necessary
+        Take(aMove.P1XDest, aMove.P1YDest) 'update the board and taken Piece if necessary
         aChessPiece(aMove.P1id).Move(aMove.P1XDest, aMove.P1YDest) 'update the moving Piece's location (and the board)
         If Ispromoting(aMove.P1id, aMove.P1YDest) Then 'it realises it's reached the 8th rank
             Queening(aMove.P1id) 'change into a queen
             aMove.MCode = "q" 'in case we need to undo
         End If
         aGame.Add(aMove) 'add the move to the array
-        My.Forms.FrmBoard.ShowPiece(aMove.P1id) 'ensure the Piece is visible and in the right location on the board
-        My.Forms.FrmBoard.StatusStrip1.Items("statFrom").Text = "From: " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XOrig) & aMove.P1YOrig
-        My.Forms.FrmBoard.StatusStrip1.Items("statTo").Text = "To: " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XDest) & aMove.P1YDest
-        DoHistory(aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XDest) & aMove.P1YDest, aChessPiece(aMove.P1id).Direction)
-        If IsInCheck(-Turn) Then 'warn the opponent that they're in check 'just if human I guess
-            'MsgBox("Check")
+        If displayMoves = True Then
+            My.Forms.FrmBoard.ShowPiece(aMove.P1id) 'ensure the Piece is visible and in the right location on the board
+            My.Forms.FrmBoard.StatusStrip1.Items("statFrom").Text = "From: " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XOrig) & aMove.P1YOrig
+            My.Forms.FrmBoard.StatusStrip1.Items("statTo").Text = "To: " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XDest) & aMove.P1YDest
+            DoHistory(aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XDest) & aMove.P1YDest, aChessPiece(aMove.P1id).Direction)
+            If IsInCheck(-Turn) Then 'warn the opponent that they're in check 'just if human I guess
+                MsgBox("Check")
+            End If
         End If
     End Sub
 
@@ -136,12 +141,17 @@ Module modChess
         'Calculates the openness which (apart from pawns) equates to controlled squares
         Dim maxLegal As Short
 
-        maxLegal = aPiece.CheckMoves 'get number of legal moves
-        If aPiece.Direction = currentPlayersDirection Then
-            ourOpenness += maxLegal  'this is also roughly the same as contolled spaces
-        Else
-            theirOpenness += maxLegal
-        End If
+        Try
+            maxLegal = aPiece.CheckMoves 'get number of legal moves
+            If aPiece.Direction = currentPlayersDirection Then
+                ourOpenness += maxLegal  'this is also roughly the same as contolled spaces
+            Else
+                theirOpenness += maxLegal
+            End If
+        Catch ex As Exception
+            Stop
+            MsgBox("CheckOpenness: " & ex.Message)
+        End Try
     End Sub
 
     Sub CheckSupport(ByRef aPiece As ChessPiece, ByVal currentPlayersDirection As Short, ByRef ourSuppCount As Integer, ByRef theirSuppCount As Integer)
@@ -161,21 +171,25 @@ Module modChess
         '        End If
         '    End If
         'End If
-        maxSupport = aPiece.CheckSupport 'get an array of supporting moves
-        For aMove = 1 To maxSupport 'each supporting possibility
-            aDestX = aPiece.GetSuppX(aMove) 'determine the co-ordinates of the supported Piece
-            aDestY = aPiece.GetSuppY(aMove)
-            aSupportedID = aBoard.GetGBoardID(aDestX, aDestY) 'get the id of the supported Piece
-            aValue = aChessPiece(aSupportedID).Value * takePieceValPwr 'get value of supported Piece
-            aChessPiece(aSupportedID).Supported = aChessPiece(aSupportedID).Supported + 1 'used in checkUnsupported
-            If aChessPiece(aSupportedID).Threatened = 0 Then aValue = 0
-            If aChessPiece(aSupportedID).AlgNot = "K" Then aValue = 0 'no point supporting the king
-            If aPiece.Direction = currentPlayersDirection Then 'it's our Piece
-                ourSuppCount += aValue * takePieceValPwr 'Find the total level of support for other Pieces
-            Else 'it's their (the opponent's) Piece
-                theirSuppCount += aValue * takePieceValPwr 'beTakenCount = beTakenCount + aValue * AvoidingThreat 'add the value of the Piece it can take to the opponents take count
-            End If
-        Next aMove
+        Try
+            maxSupport = aPiece.CheckSupport 'get an array of supporting moves
+            For aMove = 1 To maxSupport 'each supporting possibility
+                aDestX = aPiece.GetSuppX(aMove) 'determine the co-ordinates of the supported Piece
+                aDestY = aPiece.GetSuppY(aMove)
+                aSupportedID = aBoard.GetGBoardID(aDestX, aDestY) 'get the id of the supported Piece
+                aValue = aChessPiece(aSupportedID).Value * takePieceValPwr 'get value of supported Piece
+                aChessPiece(aSupportedID).Supported = aChessPiece(aSupportedID).Supported + 1 'used in checkUnsupported
+                If aChessPiece(aSupportedID).Threatened = 0 Then aValue = 0
+                If aChessPiece(aSupportedID).AlgNot = "K" Then aValue = 0 'no point supporting the king
+                If aPiece.Direction = currentPlayersDirection Then 'it's our Piece
+                    ourSuppCount += aValue * takePieceValPwr 'Find the total level of support for other Pieces
+                Else 'it's their (the opponent's) Piece
+                    theirSuppCount += aValue * takePieceValPwr 'beTakenCount = beTakenCount + aValue * AvoidingThreat 'add the value of the Piece it can take to the opponents take count
+                End If
+            Next aMove
+        Catch ex As Exception
+            MsgBox("CheckSupport: " & ex.Message)
+        End Try
     End Sub
 
     Sub CheckThreats(ByRef aPiece As ChessPiece, ByVal currentPlayersDirection As Short, ByRef takeCount As Integer, ByRef betakenCount As Integer)
@@ -219,35 +233,40 @@ Module modChess
         End Try
     End Sub
 
-    Sub CheckUnsuported(ByVal currentPlayersDirection As Short, ByRef ourUnSuppValue As Integer, ByRef theirUnSuppValue As Integer)
+    Sub CheckUnsupported(ByVal currentPlayersDirection As Short, ByRef ourUnSuppValue As Integer, ByRef theirUnSuppValue As Integer)
         '----------- works out the total value & level of unsupported Pieces
         'probably should use threatened unsupported Pieces
         'The loop relating to support needs to have completed for all Pieces
         Const takePieceValPwr As Byte = 1.5 'this adds the capture Piece value to this power
         Dim aPiece As Byte
 
-        For aPiece = 1 To MAXPIECE
-            'If My.Settings.ShareThoughts Then
-            '    If aChessPiece(aPiece).Watch Then
-            '        Cout(vbNewLine & "CheckUnsupported c:" & ourUnSuppValue & " h:" & theirUnSuppValue & vbNewLine)
-            '    End If
-            'End If
-            If aChessPiece(aPiece).OnBoard Then
-                If aChessPiece(aPiece).Direction = currentPlayersDirection Then 'just look at our Pieces
-                    If aChessPiece(aPiece).Supported = 0 Then 'ignore kings as they don't need supporting
-                        If aChessPiece(aPiece).AlgNot <> "K" Then
-                            ourUnSuppValue += aChessPiece(aPiece).Value * takePieceValPwr
+        Try
+            For aPiece = 1 To MAXPIECE
+                'If My.Settings.ShareThoughts Then
+                '    If aChessPiece(aPiece).Watch Then
+                '        Cout(vbNewLine & "CheckUnsupported c:" & ourUnSuppValue & " h:" & theirUnSuppValue & vbNewLine)
+                '    End If
+                'End If
+                If aChessPiece(aPiece).OnBoard Then
+                    If aChessPiece(aPiece).Direction = currentPlayersDirection Then 'just look at our Pieces
+                        If aChessPiece(aPiece).Supported = 0 Then 'ignore kings as they don't need supporting
+                            If aChessPiece(aPiece).AlgNot <> "K" Then
+                                ourUnSuppValue += aChessPiece(aPiece).Value * takePieceValPwr
+                            End If
                         End If
-                    End If
-                Else 'thier Pieces
-                    If aChessPiece(aPiece).AlgNot <> "K" Then 'ignore kings as they don't need supporting
-                        If aChessPiece(aPiece).Supported = 0 Then
-                            theirUnSuppValue += aChessPiece(aPiece).Value * takePieceValPwr
+                    Else 'thier Pieces
+                        If aChessPiece(aPiece).AlgNot <> "K" Then 'ignore kings as they don't need supporting
+                            If aChessPiece(aPiece).Supported = 0 Then
+                                theirUnSuppValue += aChessPiece(aPiece).Value * takePieceValPwr
+                            End If
                         End If
                     End If
                 End If
-            End If
-        Next
+            Next
+        Catch ex As Exception
+            MsgBox("CheckUnsupported: " & ex.Message)
+        End Try
+
     End Sub
 
     Sub CheckTotalValue(ByRef aPiece As ChessPiece, ByVal currentPlayersDirection As Short, ByRef ourPieceTtlValue As Integer, ByRef theirPieceTtlValue As Integer)
@@ -279,6 +298,8 @@ Module modChess
         Const takeIncentive As Byte = 2 'this adds the capture Piece value to this power i.e. Value^2
         Const promoteIncentive As Byte = 10
         Const deterRepetition As Integer = 10
+        Const checkMateIncentive As Byte = 20
+
         Dim p As Byte 'each Piece
         Dim pf As Byte 'first Piece
         Dim pl As Byte 'last Piece
@@ -313,26 +334,27 @@ Module modChess
                         TakeNoShow(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m)) 'perform capture
                         aChessPiece(p).Move(m)
                         s = Score(Turn) 'Derive a score based on the resulting board arrangement
-                        If IsInCheck(-Turn) Then s += checkIncentive 'Add some incentive to check opponent
+                        If IsInCheck(-Turn) Then s += CheckIncentive 'Add some incentive to check opponent
+                        If IsCheckMate(-Turn) Then s += CheckMateIncentive 'Add some incentive to check opponent
                         inCheck = IsInCheck(Turn) 'Ensure you move out of check
                         aBoard.RestoreBoard()
                         PiecesFromBoard() 'recreate Piece positions from board
                         result = aChessPiece(p).CheckMoves 'ensure this Piece has current moves again
                         If aChessPiece(p).GetScore(m) = captureMove Then 'Add some incentive to take the opponent
-                            s += aChessPiece(aBoard.GetGBoardID(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m))).Value ^ takeIncentive 'get the value of the opponents Piece
+                            s += aChessPiece(aBoard.GetGBoardID(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m))).Value ^ TakeIncentive 'get the value of the opponents Piece
                             If My.Settings.ShareThoughts And aChessPiece(p).Watch Then
-                                Thoughts += "Capture move: " & aChessPiece(aBoard.GetGBoardID(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m))).Value ^ takeIncentive & vbNewLine
+                                Thoughts += "Capture move: " & aChessPiece(aBoard.GetGBoardID(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m))).Value ^ TakeIncentive & vbNewLine
                             End If
                         End If
                         If Ispromoting(p, aChessPiece(p).GetMoveY(m)) Then
-                            s += promoteIncentive 'Add some incentive to queen
+                            s += PromoteIncentive 'Add some incentive to queen
                             If My.Settings.ShareThoughts And aChessPiece(p).Watch Then
                                 Thoughts += "Promote incentive added: " & vbNewLine
                             End If
                         End If
                         repetitions = CountRepetition(p, m)
-                        s -= deterRepetition * repetitions
-                        If s > sl And Not inCheck Then
+                        s -= DeterRepetition * repetitions
+                        If s > sl And Not inCheck And repetitions < 3 Then
                             sl = s 'Keep track of the best score
                             pBest = p 'the best Piece
                             mBest = m 'the best move
@@ -347,16 +369,91 @@ Module modChess
                 End If
             End If
         Next p
+        ''Basic Move weightings are used in conjunction with Board/Position strength assessments.
+        'Const checkIncentive As Byte = 1
+        'Const takeIncentive As Byte = 2 'this adds the capture Piece value to this power i.e. Value^2
+        'Const promoteIncentive As Byte = 10
+        'Const deterRepetition As Integer = 10
+        'Dim p As Byte 'each Piece
+        'Dim pf As Byte 'first Piece
+        'Dim pl As Byte 'last Piece
+        'Dim ml As Byte 'number of valid moves
+        'Dim m As Byte '1 to number of moves
+        'Dim s As Long 'score for each move
+        'Dim sl As Long 'maximum score
+        'Dim result As Byte
+        'Dim inCheck As Boolean
+        'Dim repetitions As Integer
+
+        'sl = Integer.MinValue ' -10000 'best score so far
+        'pBest = 0 'best Piece index
+        'mBest = 0 'best move index
+        'If Turn = TOPGOINGDOWN Then
+        '    pf = 17
+        '    pl = MAXPIECE
+        'Else 'BOTTOMGOINGUP
+        '    pf = 1
+        '    pl = 16
+        'End If
+        'For p = pf To pl 'For each Piece in team
+        '    If My.Settings.ShareThoughts And aChessPiece(p).Watch Then
+        '        Thoughts = ""
+        '    End If
+        '    If aChessPiece(p).OnBoard Then 'when a Piece is taken OnBoard is set to false
+        '        ml = aChessPiece(p).CheckMoves 'count legal moves a Piece can make and add them to an array of moves in the Piece object
+        '        If ml > 0 Then
+        '            For m = 1 To ml 'For each possible move 'The list of legal moves are stored in the Piece
+        '                aBoard.CopyBoard() 'each board object can remember a copy of itself
+        '                'Try Piece p's mth move; which may be capturing something
+        '                TakeNoShow(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m)) 'perform capture
+        '                aChessPiece(p).Move(m)
+        '                s = Score(Turn) 'Derive a score based on the resulting board arrangement
+        '                If IsInCheck(-Turn) Then s += checkIncentive 'Add some incentive to check opponent
+        '                inCheck = IsInCheck(Turn) 'Ensure you move out of check
+        '                aBoard.RestoreBoard()
+        '                PiecesFromBoard() 'recreate Piece positions from board
+        '                result = aChessPiece(p).CheckMoves 'ensure this Piece has current moves again
+        '                If aChessPiece(p).GetScore(m) = captureMove Then 'Add some incentive to take the opponent
+        '                    s += aChessPiece(aBoard.GetGBoardID(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m))).Value ^ takeIncentive 'get the value of the opponents Piece
+        '                    If My.Settings.ShareThoughts And aChessPiece(p).Watch Then
+        '                        Thoughts += "Capture move: " & aChessPiece(aBoard.GetGBoardID(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m))).Value ^ takeIncentive & vbNewLine
+        '                    End If
+        '                End If
+        '                If Ispromoting(p, aChessPiece(p).GetMoveY(m)) Then
+        '                    s += promoteIncentive 'Add some incentive to queen
+        '                    If My.Settings.ShareThoughts And aChessPiece(p).Watch Then
+        '                        Thoughts += "Promote incentive added: " & vbNewLine
+        '                    End If
+        '                End If
+        '                repetitions = CountRepetition(p, m)
+        '                s -= deterRepetition * repetitions
+        '                If s > sl And Not inCheck And repetitions < 3 Then
+        '                    sl = s 'Keep track of the best score
+        '                    pBest = p 'the best Piece
+        '                    mBest = m 'the best move
+        '                    If My.Settings.ShareThoughts Then
+        '                        Cout(vbNewLine & "Piece: " & aChessPiece(p).AlgNot & Chr(64 + aChessPiece(p).GetMoveX(m)) & "" & aChessPiece(p).GetMoveY(m) & " Score: " & s & "--> ")
+        '                        If aChessPiece(p).Watch Then
+        '                            Cout(Thoughts)
+        '                        End If
+        '                    End If
+        '                End If
+        '            Next m
+        '        End If
+        '    End If
+        'Next p
     End Sub
-    Private Function CountRepetition(p As Byte, m As Byte) As Integer
+
+    Function CountRepetition(p As Byte, m As Byte) As Integer
         CountRepetition = 0
 
         If aGame.Count > 0 Then
             For i As Integer = 0 To aGame.Count - 1
                 If aGame.Moves(i).P1XOrig = aChessPiece(p).XPos _
             And aGame.Moves(i).P1YOrig = aChessPiece(p).YPos _
-            And aGame.Moves(i).P1XOrig = aChessPiece(p).GetMoveX(m) _
-            And aGame.Moves(i).P1YDest = aChessPiece(p).GetMoveY(m) Then
+            And aGame.Moves(i).P1XDest = aChessPiece(p).GetMoveX(m) _
+            And aGame.Moves(i).P1YDest = aChessPiece(p).GetMoveY(m) _
+            And aGame.Moves(i).P1id = p Then
                     CountRepetition += 1
                 End If
             Next
@@ -365,8 +462,7 @@ Module modChess
 
     Function IsInCheck(ByVal aDir As Short) As Boolean
         'aDir is the colour of the king that could be in check
-        'Checkmoves for each opposition Piece and see if it's threatening the King
-        'Called form Board.vb.cmdMove_click
+        'Check if any moves for opposition Pieces are threatening the King
         Dim p As Byte 'each Piece
         Dim pf As Byte 'first Piece
         Dim pl As Byte 'last Piece
@@ -406,6 +502,20 @@ Module modChess
         Catch ex As Exception
             MsgBox("isInCheck: " & ex.Message)
         End Try
+    End Function
+
+    Function IsCheckMate(ByVal aDir As Short) As Boolean
+        Dim ml As Byte 'number of valid moves
+        Dim p As Byte
+
+        IsCheckMate = False
+        If IsInCheck(aDir) Then
+            If aDir = BOTTOMGOINGUP Then p = 5 Else p = 29
+            ml = aChessPiece(p).CheckMoves 'find how many moves the opponent's Piece can make
+            If ml = 0 Then
+                IsCheckMate = True
+            End If
+        End If
     End Function
 
     Function IsLegal1(ByVal aMove As Move) As Boolean
@@ -482,16 +592,16 @@ Module modChess
         End If
     End Sub
 
-    Function Score(ByVal d As Short) As Long
+    Private Function Score(ByVal d As Short) As Long
         'Check the relative strength of the two sides
         'given the direction d is the direction of the current player
         'Returns integer.minvalue if there would be no move
         'Because very large numbers can be generated use the following value with care... They are basically pairs of characteristics from our point of view and theirs.
         Const Threatening As Byte = 0 'aggressiveness - increase our threatening
-        Const AvoidingThreat As Byte = 2 'wimpishness - reduce their threatening
+        Const AvoidingThreat As Byte = 3 'wimpishness - reduce their threatening
         Const Supporting As Byte = 1 'supporting our own Pieces - increase our support
         Const Undermine As Byte = 1 'reduce their support
-        Const Control As Byte = 1 'aim to control more of the board
+        Const Control As Byte = 0 'aim to control more of the board
         Const Frustrate As Byte = 1 'aim to reduce their mobility and control
         Const Keep As Byte = 1 'aim to keep as many Pieces as possible
         Const Erode As Byte = 1 'aim to reduce their Pieces
@@ -519,7 +629,7 @@ Module modChess
                     CheckSupport(aChessPiece(aPiece), d, ourSuppCount, theirSuppCount) 'find out what's supported
                 End If
             Next aPiece
-            CheckUnsuported(d, ourUnSuppValue, theirUnSuppValue) 'uses .supported property set in checkSupport (therefore can't be in same loop)
+            CheckUnsupported(d, ourUnSuppValue, theirUnSuppValue) 'uses .supported property set in checkSupport (therefore can't be in same loop)
             If ourOpenness = 0 Then
                 Score = Long.MinValue
             Else
@@ -693,6 +803,14 @@ Module modChess
                     aChessPiece(p).Move(8, 8)
                     PieceArray(32) = FrmBoard.Piece_32
             End Select
+            'If displayMoves = True Then
+            '    My.Forms.FrmBoard.ShowPiece(p)
+            'End If
+        Next p
+    End Sub
+
+    Sub ShowPieces()
+        For p As Integer = 1 To 32
             My.Forms.FrmBoard.ShowPiece(p)
         Next p
     End Sub
@@ -706,10 +824,12 @@ Module modChess
         p = aBoard.GetGBoardID(X, Y)
         If p > 0 Then
             aChessPiece(p).Remove()
-            PieceArray(p).Visible = False 'make invisible
-            Beep()
+            If displayMoves = True Then
+                PieceArray(p).Visible = False 'make invisible
+                Beep()
+            End If
             Take = True 'affirm that take has occurred
-        End If
+            End If
 exitTake:
         Exit Function
 errTake:
@@ -749,4 +869,31 @@ errTake:
         End If
     End Sub
 
+    Sub SaveResult(Score As Double)
+        Dim strFile As String = "results.txt"
+        Dim resultLine As String = DateTime.Now
+        Dim fileExists As Boolean = File.Exists(strFile)
+
+        resultLine += ", " & aWhite.CheckIncentive
+        resultLine += ", " & aWhite.TakeIncentive 'this adds the capture Piece value to this power i.e. Value^2
+        resultLine += ", " & aWhite.PromoteIncentive
+        resultLine += ", " & aWhite.DeterRepetition
+        resultLine += ", " & aWhite.CaptureMove ' e.g. aChessPiece(aPiece).getscore(aMove) = captureMove
+        resultLine += ", " & aWhite.Threatening 'aggressiveness - increase our threatening
+        resultLine += ", " & aWhite.AvoidingThreat 'wimpishness - reduce their threatening
+        resultLine += ", " & aWhite.Supporting 'supporting our own Pieces - increase our support
+        resultLine += ", " & aWhite.Undermine
+        resultLine += ", " & aWhite.Control 'aim to control more of the board
+        resultLine += ", " & aWhite.Frustrate 'aim to reduce their mobility and control
+        resultLine += ", " & aWhite.Keep 'aim to keep as many Pieces as possible
+        resultLine += ", " & aWhite.Erode 'aim to reduce their Pieces
+        resultLine += ", " & aWhite.Consolidate 'aim to avoid leaving Piece unsupported
+        resultLine += ", " & aWhite.Isolate 'aim to isolate their Pieces leaving them unsupported
+        resultLine += ", " & aWhite.CheckMateIncentive 'Achieve for CheckMate
+        resultLine += ", " & Score
+
+        Using sw As New StreamWriter(File.Open(strFile, FileMode.OpenOrCreate))
+            sw.WriteLine(resultLine)
+        End Using
+    End Sub
 End Module

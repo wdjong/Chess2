@@ -93,6 +93,8 @@ Friend Class FrmBoard
     Friend WithEvents AboutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents MnuHelpInstructions As ToolStripMenuItem
     Friend WithEvents OptionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LearnToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents StatScore As ToolStripStatusLabel
     Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
@@ -115,6 +117,8 @@ Friend Class FrmBoard
         Me.MnuToolsMove = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuToolsTopHuman = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuToolsBottomHuman = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LearnToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuHelp = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuHelpInstructions = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -151,7 +155,7 @@ Friend Class FrmBoard
         Me.Piece_3 = New System.Windows.Forms.PictureBox()
         Me.Piece_7 = New System.Windows.Forms.PictureBox()
         Me.Piece_2 = New System.Windows.Forms.PictureBox()
-        Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StatScore = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.MnuStrip1.SuspendLayout()
@@ -195,13 +199,13 @@ Friend Class FrmBoard
         Me.ContextMenuStrip1.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(132, 36)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(107, 26)
         Me.ContextMenuStrip1.Tag = ""
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(131, 32)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(106, 22)
         Me.ToolStripMenuItem1.Text = "Castle"
         '
         'Timer1
@@ -212,10 +216,10 @@ Friend Class FrmBoard
         '
         Me.StatusStrip1.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(24, 24)
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StatFrom, Me.StatTo})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 298)
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.StatFrom, Me.StatTo, Me.StatScore})
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 308)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(318, 32)
+        Me.StatusStrip1.Size = New System.Drawing.Size(318, 22)
         Me.StatusStrip1.TabIndex = 36
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -223,24 +227,23 @@ Friend Class FrmBoard
         '
         Me.StatFrom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.StatFrom.Name = "StatFrom"
-        Me.StatFrom.Size = New System.Drawing.Size(54, 25)
+        Me.StatFrom.Size = New System.Drawing.Size(35, 17)
         Me.StatFrom.Text = "From"
         '
         'StatTo
         '
         Me.StatTo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
         Me.StatTo.Name = "StatTo"
-        Me.StatTo.Size = New System.Drawing.Size(30, 25)
+        Me.StatTo.Size = New System.Drawing.Size(19, 17)
         Me.StatTo.Text = "To"
         '
         'MnuStrip1
         '
-        Me.MnuStrip1.GripMargin = New System.Windows.Forms.Padding(2, 2, 0, 2)
         Me.MnuStrip1.ImageScalingSize = New System.Drawing.Size(24, 24)
         Me.MnuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuFile, Me.MnuEdit, Me.MnuTools, Me.MnuHelp})
         Me.MnuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MnuStrip1.Name = "MnuStrip1"
-        Me.MnuStrip1.Size = New System.Drawing.Size(318, 33)
+        Me.MnuStrip1.Size = New System.Drawing.Size(318, 24)
         Me.MnuStrip1.TabIndex = 37
         Me.MnuStrip1.Text = "MenuStrip1"
         '
@@ -248,82 +251,94 @@ Friend Class FrmBoard
         '
         Me.MnuFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuFileNew, Me.MnuFileExit})
         Me.MnuFile.Name = "MnuFile"
-        Me.MnuFile.Size = New System.Drawing.Size(54, 29)
+        Me.MnuFile.Size = New System.Drawing.Size(37, 20)
         Me.MnuFile.Text = "&File"
         '
         'MnuFileNew
         '
         Me.MnuFileNew.Name = "MnuFileNew"
-        Me.MnuFileNew.Size = New System.Drawing.Size(270, 34)
+        Me.MnuFileNew.Size = New System.Drawing.Size(98, 22)
         Me.MnuFileNew.Text = "&New"
         '
         'MnuFileExit
         '
         Me.MnuFileExit.Name = "MnuFileExit"
-        Me.MnuFileExit.Size = New System.Drawing.Size(270, 34)
+        Me.MnuFileExit.Size = New System.Drawing.Size(98, 22)
         Me.MnuFileExit.Text = "E&xit"
         '
         'MnuEdit
         '
         Me.MnuEdit.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuEditUndo})
         Me.MnuEdit.Name = "MnuEdit"
-        Me.MnuEdit.Size = New System.Drawing.Size(58, 29)
+        Me.MnuEdit.Size = New System.Drawing.Size(39, 20)
         Me.MnuEdit.Text = "&Edit"
         '
         'MnuEditUndo
         '
         Me.MnuEditUndo.Name = "MnuEditUndo"
-        Me.MnuEditUndo.Size = New System.Drawing.Size(270, 34)
+        Me.MnuEditUndo.Size = New System.Drawing.Size(103, 22)
         Me.MnuEditUndo.Text = "&Undo"
         '
         'MnuTools
         '
-        Me.MnuTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuToolsHistory, Me.MnuToolsMove, Me.MnuToolsTopHuman, Me.MnuToolsBottomHuman, Me.OptionsToolStripMenuItem})
+        Me.MnuTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuToolsHistory, Me.MnuToolsMove, Me.MnuToolsTopHuman, Me.MnuToolsBottomHuman, Me.OptionsToolStripMenuItem, Me.LearnToolStripMenuItem})
         Me.MnuTools.Name = "MnuTools"
-        Me.MnuTools.Size = New System.Drawing.Size(69, 29)
+        Me.MnuTools.Size = New System.Drawing.Size(46, 20)
         Me.MnuTools.Text = "&Tools"
         '
         'MnuToolsHistory
         '
         Me.MnuToolsHistory.Name = "MnuToolsHistory"
-        Me.MnuToolsHistory.Size = New System.Drawing.Size(270, 34)
+        Me.MnuToolsHistory.Size = New System.Drawing.Size(180, 22)
         Me.MnuToolsHistory.Text = "&History"
         '
         'MnuToolsMove
         '
         Me.MnuToolsMove.Name = "MnuToolsMove"
-        Me.MnuToolsMove.Size = New System.Drawing.Size(270, 34)
+        Me.MnuToolsMove.Size = New System.Drawing.Size(180, 22)
         Me.MnuToolsMove.Text = "&Move"
         '
         'MnuToolsTopHuman
         '
         Me.MnuToolsTopHuman.Name = "MnuToolsTopHuman"
-        Me.MnuToolsTopHuman.Size = New System.Drawing.Size(270, 34)
+        Me.MnuToolsTopHuman.Size = New System.Drawing.Size(180, 22)
         Me.MnuToolsTopHuman.Text = "&Top Human"
         '
         'MnuToolsBottomHuman
         '
         Me.MnuToolsBottomHuman.Name = "MnuToolsBottomHuman"
-        Me.MnuToolsBottomHuman.Size = New System.Drawing.Size(270, 34)
+        Me.MnuToolsBottomHuman.Size = New System.Drawing.Size(180, 22)
         Me.MnuToolsBottomHuman.Text = "&Bottom Human"
+        '
+        'OptionsToolStripMenuItem
+        '
+        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OptionsToolStripMenuItem.Text = "&Options"
+        '
+        'LearnToolStripMenuItem
+        '
+        Me.LearnToolStripMenuItem.Name = "LearnToolStripMenuItem"
+        Me.LearnToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LearnToolStripMenuItem.Text = "&Learn"
         '
         'MnuHelp
         '
         Me.MnuHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuHelpInstructions, Me.AboutToolStripMenuItem})
         Me.MnuHelp.Name = "MnuHelp"
-        Me.MnuHelp.Size = New System.Drawing.Size(65, 29)
+        Me.MnuHelp.Size = New System.Drawing.Size(44, 20)
         Me.MnuHelp.Text = "&Help"
         '
         'MnuHelpInstructions
         '
         Me.MnuHelpInstructions.Name = "MnuHelpInstructions"
-        Me.MnuHelpInstructions.Size = New System.Drawing.Size(270, 34)
+        Me.MnuHelpInstructions.Size = New System.Drawing.Size(136, 22)
         Me.MnuHelpInstructions.Text = "&Instructions"
         '
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
         Me.AboutToolStripMenuItem.Text = "&About"
         '
         'Dragger
@@ -333,7 +348,7 @@ Friend Class FrmBoard
         Me.Dragger.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Dragger.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Dragger.Image = Global.Chess2.My.Resources.Resources.pawn
-        Me.Dragger.Location = New System.Drawing.Point(229, 215)
+        Me.Dragger.Location = New System.Drawing.Point(143, 147)
         Me.Dragger.Name = "Dragger"
         Me.Dragger.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.Dragger.Size = New System.Drawing.Size(32, 31)
@@ -353,10 +368,10 @@ Friend Class FrmBoard
         Me.Piece_25.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_25.Image = Global.Chess2.My.Resources.Resources.rook1
         Me.Piece_25.InitialImage = CType(resources.GetObject("Piece_25.InitialImage"), System.Drawing.Image)
-        Me.Piece_25.Location = New System.Drawing.Point(51, 35)
+        Me.Piece_25.Location = New System.Drawing.Point(32, 24)
         Me.Piece_25.Name = "Piece_25"
         Me.Piece_25.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_25.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_25.Size = New System.Drawing.Size(32, 31)
         Me.Piece_25.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_25.TabIndex = 25
         Me.Piece_25.TabStop = False
@@ -372,10 +387,10 @@ Friend Class FrmBoard
         Me.Piece_32.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_32.Image = Global.Chess2.My.Resources.Resources.rook1
         Me.Piece_32.InitialImage = CType(resources.GetObject("Piece_32.InitialImage"), System.Drawing.Image)
-        Me.Piece_32.Location = New System.Drawing.Point(410, 35)
+        Me.Piece_32.Location = New System.Drawing.Point(256, 24)
         Me.Piece_32.Name = "Piece_32"
         Me.Piece_32.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_32.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_32.Size = New System.Drawing.Size(32, 31)
         Me.Piece_32.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_32.TabIndex = 32
         Me.Piece_32.TabStop = False
@@ -390,10 +405,10 @@ Friend Class FrmBoard
         Me.Piece_31.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_31.Image = Global.Chess2.My.Resources.Resources.knight1
         Me.Piece_31.InitialImage = CType(resources.GetObject("Piece_31.InitialImage"), System.Drawing.Image)
-        Me.Piece_31.Location = New System.Drawing.Point(358, 35)
+        Me.Piece_31.Location = New System.Drawing.Point(224, 24)
         Me.Piece_31.Name = "Piece_31"
         Me.Piece_31.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_31.Size = New System.Drawing.Size(52, 45)
+        Me.Piece_31.Size = New System.Drawing.Size(32, 31)
         Me.Piece_31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_31.TabIndex = 31
         Me.Piece_31.TabStop = False
@@ -408,10 +423,10 @@ Friend Class FrmBoard
         Me.Piece_30.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_30.Image = Global.Chess2.My.Resources.Resources.bishop1
         Me.Piece_30.InitialImage = CType(resources.GetObject("Piece_30.InitialImage"), System.Drawing.Image)
-        Me.Piece_30.Location = New System.Drawing.Point(307, 35)
+        Me.Piece_30.Location = New System.Drawing.Point(192, 24)
         Me.Piece_30.Name = "Piece_30"
         Me.Piece_30.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_30.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_30.Size = New System.Drawing.Size(32, 31)
         Me.Piece_30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_30.TabIndex = 30
         Me.Piece_30.TabStop = False
@@ -426,10 +441,10 @@ Friend Class FrmBoard
         Me.Piece_29.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_29.Image = Global.Chess2.My.Resources.Resources.king1
         Me.Piece_29.InitialImage = CType(resources.GetObject("Piece_29.InitialImage"), System.Drawing.Image)
-        Me.Piece_29.Location = New System.Drawing.Point(256, 35)
+        Me.Piece_29.Location = New System.Drawing.Point(160, 24)
         Me.Piece_29.Name = "Piece_29"
         Me.Piece_29.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_29.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_29.Size = New System.Drawing.Size(32, 31)
         Me.Piece_29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_29.TabIndex = 29
         Me.Piece_29.TabStop = False
@@ -444,10 +459,10 @@ Friend Class FrmBoard
         Me.Piece_28.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_28.Image = Global.Chess2.My.Resources.Resources.queen1
         Me.Piece_28.InitialImage = CType(resources.GetObject("Piece_28.InitialImage"), System.Drawing.Image)
-        Me.Piece_28.Location = New System.Drawing.Point(205, 35)
+        Me.Piece_28.Location = New System.Drawing.Point(128, 24)
         Me.Piece_28.Name = "Piece_28"
         Me.Piece_28.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_28.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_28.Size = New System.Drawing.Size(32, 31)
         Me.Piece_28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_28.TabIndex = 28
         Me.Piece_28.TabStop = False
@@ -462,10 +477,10 @@ Friend Class FrmBoard
         Me.Piece_27.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_27.Image = Global.Chess2.My.Resources.Resources.bishop1
         Me.Piece_27.InitialImage = CType(resources.GetObject("Piece_27.InitialImage"), System.Drawing.Image)
-        Me.Piece_27.Location = New System.Drawing.Point(154, 35)
+        Me.Piece_27.Location = New System.Drawing.Point(96, 24)
         Me.Piece_27.Name = "Piece_27"
         Me.Piece_27.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_27.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_27.Size = New System.Drawing.Size(32, 31)
         Me.Piece_27.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_27.TabIndex = 27
         Me.Piece_27.TabStop = False
@@ -480,10 +495,10 @@ Friend Class FrmBoard
         Me.Piece_26.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_26.Image = Global.Chess2.My.Resources.Resources.knight1
         Me.Piece_26.InitialImage = CType(resources.GetObject("Piece_26.InitialImage"), System.Drawing.Image)
-        Me.Piece_26.Location = New System.Drawing.Point(102, 35)
+        Me.Piece_26.Location = New System.Drawing.Point(64, 24)
         Me.Piece_26.Name = "Piece_26"
         Me.Piece_26.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_26.Size = New System.Drawing.Size(52, 45)
+        Me.Piece_26.Size = New System.Drawing.Size(32, 31)
         Me.Piece_26.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_26.TabIndex = 26
         Me.Piece_26.TabStop = False
@@ -498,10 +513,10 @@ Friend Class FrmBoard
         Me.Piece_24.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_24.Image = Global.Chess2.My.Resources.Resources.pawn1
         Me.Piece_24.InitialImage = CType(resources.GetObject("Piece_24.InitialImage"), System.Drawing.Image)
-        Me.Piece_24.Location = New System.Drawing.Point(410, 82)
+        Me.Piece_24.Location = New System.Drawing.Point(256, 56)
         Me.Piece_24.Name = "Piece_24"
         Me.Piece_24.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_24.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_24.Size = New System.Drawing.Size(32, 31)
         Me.Piece_24.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_24.TabIndex = 24
         Me.Piece_24.TabStop = False
@@ -517,10 +532,10 @@ Friend Class FrmBoard
         Me.Piece_23.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_23.Image = Global.Chess2.My.Resources.Resources.pawn1
         Me.Piece_23.InitialImage = CType(resources.GetObject("Piece_23.InitialImage"), System.Drawing.Image)
-        Me.Piece_23.Location = New System.Drawing.Point(358, 82)
+        Me.Piece_23.Location = New System.Drawing.Point(224, 56)
         Me.Piece_23.Name = "Piece_23"
         Me.Piece_23.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_23.Size = New System.Drawing.Size(52, 45)
+        Me.Piece_23.Size = New System.Drawing.Size(32, 31)
         Me.Piece_23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_23.TabIndex = 23
         Me.Piece_23.TabStop = False
@@ -536,10 +551,10 @@ Friend Class FrmBoard
         Me.Piece_22.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_22.Image = Global.Chess2.My.Resources.Resources.pawn1
         Me.Piece_22.InitialImage = CType(resources.GetObject("Piece_22.InitialImage"), System.Drawing.Image)
-        Me.Piece_22.Location = New System.Drawing.Point(307, 82)
+        Me.Piece_22.Location = New System.Drawing.Point(192, 56)
         Me.Piece_22.Name = "Piece_22"
         Me.Piece_22.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_22.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_22.Size = New System.Drawing.Size(32, 31)
         Me.Piece_22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_22.TabIndex = 22
         Me.Piece_22.TabStop = False
@@ -555,10 +570,10 @@ Friend Class FrmBoard
         Me.Piece_21.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_21.Image = Global.Chess2.My.Resources.Resources.pawn1
         Me.Piece_21.InitialImage = CType(resources.GetObject("Piece_21.InitialImage"), System.Drawing.Image)
-        Me.Piece_21.Location = New System.Drawing.Point(256, 82)
+        Me.Piece_21.Location = New System.Drawing.Point(160, 56)
         Me.Piece_21.Name = "Piece_21"
         Me.Piece_21.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_21.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_21.Size = New System.Drawing.Size(32, 31)
         Me.Piece_21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_21.TabIndex = 21
         Me.Piece_21.TabStop = False
@@ -574,10 +589,10 @@ Friend Class FrmBoard
         Me.Piece_20.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_20.Image = Global.Chess2.My.Resources.Resources.pawn1
         Me.Piece_20.InitialImage = CType(resources.GetObject("Piece_20.InitialImage"), System.Drawing.Image)
-        Me.Piece_20.Location = New System.Drawing.Point(205, 82)
+        Me.Piece_20.Location = New System.Drawing.Point(128, 56)
         Me.Piece_20.Name = "Piece_20"
         Me.Piece_20.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_20.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_20.Size = New System.Drawing.Size(32, 31)
         Me.Piece_20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_20.TabIndex = 20
         Me.Piece_20.TabStop = False
@@ -593,10 +608,10 @@ Friend Class FrmBoard
         Me.Piece_19.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_19.Image = Global.Chess2.My.Resources.Resources.pawn1
         Me.Piece_19.InitialImage = CType(resources.GetObject("Piece_19.InitialImage"), System.Drawing.Image)
-        Me.Piece_19.Location = New System.Drawing.Point(154, 82)
+        Me.Piece_19.Location = New System.Drawing.Point(96, 56)
         Me.Piece_19.Name = "Piece_19"
         Me.Piece_19.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_19.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_19.Size = New System.Drawing.Size(32, 31)
         Me.Piece_19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_19.TabIndex = 19
         Me.Piece_19.TabStop = False
@@ -612,10 +627,10 @@ Friend Class FrmBoard
         Me.Piece_18.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_18.Image = Global.Chess2.My.Resources.Resources.pawn1
         Me.Piece_18.InitialImage = CType(resources.GetObject("Piece_18.InitialImage"), System.Drawing.Image)
-        Me.Piece_18.Location = New System.Drawing.Point(102, 82)
+        Me.Piece_18.Location = New System.Drawing.Point(64, 56)
         Me.Piece_18.Name = "Piece_18"
         Me.Piece_18.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_18.Size = New System.Drawing.Size(52, 45)
+        Me.Piece_18.Size = New System.Drawing.Size(32, 31)
         Me.Piece_18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_18.TabIndex = 18
         Me.Piece_18.TabStop = False
@@ -631,10 +646,10 @@ Friend Class FrmBoard
         Me.Piece_17.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_17.Image = Global.Chess2.My.Resources.Resources.pawn1
         Me.Piece_17.InitialImage = CType(resources.GetObject("Piece_17.InitialImage"), System.Drawing.Image)
-        Me.Piece_17.Location = New System.Drawing.Point(51, 82)
+        Me.Piece_17.Location = New System.Drawing.Point(32, 56)
         Me.Piece_17.Name = "Piece_17"
         Me.Piece_17.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_17.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_17.Size = New System.Drawing.Size(32, 31)
         Me.Piece_17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_17.TabIndex = 17
         Me.Piece_17.TabStop = False
@@ -648,10 +663,10 @@ Friend Class FrmBoard
         Me.Piece_16.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_16.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_16.Image = Global.Chess2.My.Resources.Resources.pawn
-        Me.Piece_16.Location = New System.Drawing.Point(410, 327)
+        Me.Piece_16.Location = New System.Drawing.Point(256, 224)
         Me.Piece_16.Name = "Piece_16"
         Me.Piece_16.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_16.Size = New System.Drawing.Size(51, 46)
+        Me.Piece_16.Size = New System.Drawing.Size(32, 31)
         Me.Piece_16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_16.TabIndex = 16
         Me.Piece_16.TabStop = False
@@ -665,10 +680,10 @@ Friend Class FrmBoard
         Me.Piece_15.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_15.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_15.Image = Global.Chess2.My.Resources.Resources.pawn
-        Me.Piece_15.Location = New System.Drawing.Point(358, 327)
+        Me.Piece_15.Location = New System.Drawing.Point(224, 224)
         Me.Piece_15.Name = "Piece_15"
         Me.Piece_15.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_15.Size = New System.Drawing.Size(52, 46)
+        Me.Piece_15.Size = New System.Drawing.Size(32, 31)
         Me.Piece_15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_15.TabIndex = 15
         Me.Piece_15.TabStop = False
@@ -682,10 +697,10 @@ Friend Class FrmBoard
         Me.Piece_14.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_14.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_14.Image = Global.Chess2.My.Resources.Resources.pawn
-        Me.Piece_14.Location = New System.Drawing.Point(307, 327)
+        Me.Piece_14.Location = New System.Drawing.Point(192, 224)
         Me.Piece_14.Name = "Piece_14"
         Me.Piece_14.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_14.Size = New System.Drawing.Size(51, 46)
+        Me.Piece_14.Size = New System.Drawing.Size(32, 31)
         Me.Piece_14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_14.TabIndex = 14
         Me.Piece_14.TabStop = False
@@ -699,10 +714,10 @@ Friend Class FrmBoard
         Me.Piece_13.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_13.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_13.Image = Global.Chess2.My.Resources.Resources.pawn
-        Me.Piece_13.Location = New System.Drawing.Point(256, 327)
+        Me.Piece_13.Location = New System.Drawing.Point(160, 224)
         Me.Piece_13.Name = "Piece_13"
         Me.Piece_13.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_13.Size = New System.Drawing.Size(51, 46)
+        Me.Piece_13.Size = New System.Drawing.Size(32, 31)
         Me.Piece_13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_13.TabIndex = 13
         Me.Piece_13.TabStop = False
@@ -716,10 +731,10 @@ Friend Class FrmBoard
         Me.Piece_12.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_12.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_12.Image = Global.Chess2.My.Resources.Resources.pawn
-        Me.Piece_12.Location = New System.Drawing.Point(205, 326)
+        Me.Piece_12.Location = New System.Drawing.Point(128, 223)
         Me.Piece_12.Name = "Piece_12"
         Me.Piece_12.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_12.Size = New System.Drawing.Size(51, 47)
+        Me.Piece_12.Size = New System.Drawing.Size(32, 32)
         Me.Piece_12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_12.TabIndex = 12
         Me.Piece_12.TabStop = False
@@ -733,10 +748,10 @@ Friend Class FrmBoard
         Me.Piece_11.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_11.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_11.Image = Global.Chess2.My.Resources.Resources.pawn
-        Me.Piece_11.Location = New System.Drawing.Point(154, 327)
+        Me.Piece_11.Location = New System.Drawing.Point(96, 224)
         Me.Piece_11.Name = "Piece_11"
         Me.Piece_11.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_11.Size = New System.Drawing.Size(51, 46)
+        Me.Piece_11.Size = New System.Drawing.Size(32, 31)
         Me.Piece_11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_11.TabIndex = 11
         Me.Piece_11.TabStop = False
@@ -750,10 +765,10 @@ Friend Class FrmBoard
         Me.Piece_10.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_10.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_10.Image = Global.Chess2.My.Resources.Resources.pawn
-        Me.Piece_10.Location = New System.Drawing.Point(102, 327)
+        Me.Piece_10.Location = New System.Drawing.Point(64, 224)
         Me.Piece_10.Name = "Piece_10"
         Me.Piece_10.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_10.Size = New System.Drawing.Size(52, 46)
+        Me.Piece_10.Size = New System.Drawing.Size(32, 31)
         Me.Piece_10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_10.TabIndex = 10
         Me.Piece_10.TabStop = False
@@ -767,10 +782,10 @@ Friend Class FrmBoard
         Me.Piece_9.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_9.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_9.Image = Global.Chess2.My.Resources.Resources.pawn
-        Me.Piece_9.Location = New System.Drawing.Point(51, 327)
+        Me.Piece_9.Location = New System.Drawing.Point(32, 224)
         Me.Piece_9.Name = "Piece_9"
         Me.Piece_9.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_9.Size = New System.Drawing.Size(51, 46)
+        Me.Piece_9.Size = New System.Drawing.Size(32, 31)
         Me.Piece_9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_9.TabIndex = 9
         Me.Piece_9.TabStop = False
@@ -785,10 +800,10 @@ Friend Class FrmBoard
         Me.Piece_8.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_8.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_8.Image = Global.Chess2.My.Resources.Resources.rook
-        Me.Piece_8.Location = New System.Drawing.Point(410, 374)
+        Me.Piece_8.Location = New System.Drawing.Point(256, 256)
         Me.Piece_8.Name = "Piece_8"
         Me.Piece_8.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_8.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_8.Size = New System.Drawing.Size(32, 31)
         Me.Piece_8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_8.TabIndex = 8
         Me.Piece_8.TabStop = False
@@ -803,10 +818,10 @@ Friend Class FrmBoard
         Me.Piece_1.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_1.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_1.Image = Global.Chess2.My.Resources.Resources.rook
-        Me.Piece_1.Location = New System.Drawing.Point(51, 374)
+        Me.Piece_1.Location = New System.Drawing.Point(32, 256)
         Me.Piece_1.Name = "Piece_1"
         Me.Piece_1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_1.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_1.Size = New System.Drawing.Size(32, 31)
         Me.Piece_1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_1.TabIndex = 1
         Me.Piece_1.TabStop = False
@@ -820,10 +835,10 @@ Friend Class FrmBoard
         Me.Piece_5.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_5.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_5.Image = Global.Chess2.My.Resources.Resources.king
-        Me.Piece_5.Location = New System.Drawing.Point(256, 374)
+        Me.Piece_5.Location = New System.Drawing.Point(160, 256)
         Me.Piece_5.Name = "Piece_5"
         Me.Piece_5.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_5.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_5.Size = New System.Drawing.Size(32, 31)
         Me.Piece_5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_5.TabIndex = 5
         Me.Piece_5.TabStop = False
@@ -837,10 +852,10 @@ Friend Class FrmBoard
         Me.Piece_4.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_4.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_4.Image = Global.Chess2.My.Resources.Resources.queen
-        Me.Piece_4.Location = New System.Drawing.Point(205, 374)
+        Me.Piece_4.Location = New System.Drawing.Point(128, 256)
         Me.Piece_4.Name = "Piece_4"
         Me.Piece_4.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_4.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_4.Size = New System.Drawing.Size(32, 31)
         Me.Piece_4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_4.TabIndex = 4
         Me.Piece_4.TabStop = False
@@ -854,10 +869,10 @@ Friend Class FrmBoard
         Me.Piece_6.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_6.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_6.Image = Global.Chess2.My.Resources.Resources.bishop
-        Me.Piece_6.Location = New System.Drawing.Point(307, 374)
+        Me.Piece_6.Location = New System.Drawing.Point(192, 256)
         Me.Piece_6.Name = "Piece_6"
         Me.Piece_6.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_6.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_6.Size = New System.Drawing.Size(32, 31)
         Me.Piece_6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_6.TabIndex = 6
         Me.Piece_6.TabStop = False
@@ -871,10 +886,10 @@ Friend Class FrmBoard
         Me.Piece_3.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_3.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_3.Image = Global.Chess2.My.Resources.Resources.bishop
-        Me.Piece_3.Location = New System.Drawing.Point(154, 374)
+        Me.Piece_3.Location = New System.Drawing.Point(96, 256)
         Me.Piece_3.Name = "Piece_3"
         Me.Piece_3.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_3.Size = New System.Drawing.Size(51, 45)
+        Me.Piece_3.Size = New System.Drawing.Size(32, 31)
         Me.Piece_3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_3.TabIndex = 3
         Me.Piece_3.TabStop = False
@@ -888,10 +903,10 @@ Friend Class FrmBoard
         Me.Piece_7.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_7.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_7.Image = Global.Chess2.My.Resources.Resources.knight
-        Me.Piece_7.Location = New System.Drawing.Point(358, 374)
+        Me.Piece_7.Location = New System.Drawing.Point(224, 256)
         Me.Piece_7.Name = "Piece_7"
         Me.Piece_7.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_7.Size = New System.Drawing.Size(52, 45)
+        Me.Piece_7.Size = New System.Drawing.Size(32, 31)
         Me.Piece_7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_7.TabIndex = 7
         Me.Piece_7.TabStop = False
@@ -905,25 +920,25 @@ Friend Class FrmBoard
         Me.Piece_2.Font = New System.Drawing.Font("Arial", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Piece_2.ForeColor = System.Drawing.SystemColors.WindowText
         Me.Piece_2.Image = Global.Chess2.My.Resources.Resources.knight
-        Me.Piece_2.Location = New System.Drawing.Point(102, 374)
+        Me.Piece_2.Location = New System.Drawing.Point(64, 256)
         Me.Piece_2.Name = "Piece_2"
         Me.Piece_2.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.Piece_2.Size = New System.Drawing.Size(52, 45)
+        Me.Piece_2.Size = New System.Drawing.Size(32, 31)
         Me.Piece_2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.Piece_2.TabIndex = 2
         Me.Piece_2.TabStop = False
         Me.Piece_2.Tag = "2"
         Me.Piece_2.Visible = False
         '
-        'OptionsToolStripMenuItem
+        'StatScore
         '
-        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(270, 34)
-        Me.OptionsToolStripMenuItem.Text = "&Options"
+        Me.StatScore.Name = "StatScore"
+        Me.StatScore.Size = New System.Drawing.Size(36, 17)
+        Me.StatScore.Text = "Score"
         '
         'FrmBoard
         '
-        Me.AutoScaleBaseSize = New System.Drawing.Size(8, 19)
+        Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(318, 330)
         Me.Controls.Add(Me.StatusStrip1)
@@ -1034,34 +1049,320 @@ Friend Class FrmBoard
     Dim IsUDraggin As Boolean 'used to track dragging Pieces...
     Dim origX As Long 'the mouse point from which we dragged
     Dim origY As Long 'the mouse point from which we dragged
+    Private ReadOnly ttlAttributes As Integer = 16
 
-    Sub ComputerMove()
+    'Properties
+    Public ReadOnly Property XPos(ByVal xmouse As Single) As Byte
+        Get
+            XPos = Int(xmouse / PWIDTH)
+        End Get
+    End Property
+
+    Public ReadOnly Property YPos(ByVal ymouse As Single) As Byte
+        Get
+            YPos = MaxY + 1 - Int(ymouse / PHEIGHT)
+        End Get
+    End Property
+
+    'Form events
+    Private Sub FrmBoard_Load(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Load
+        aGame.Playing = True
+        SetupPlayer(aWhite)
+        PlayerisHuman(1 + TOPGOINGDOWN) = False 'i.e. index = (0) 'i.e. Black/Blue at top is a computer
+        PlayerisHuman(1 + BOTTOMGOINGUP) = True 'i.e. index = (2) 'i.e. White/Red at the bottom is a human (by default. See menu)
+        MnuToolsTopHuman.Checked = PlayerisHuman(1 + TOPGOINGDOWN)
+        MnuToolsBottomHuman.Checked = PlayerisHuman(1 + BOTTOMGOINGUP)
+        Turn = BOTTOMGOINGUP 'white/red goes first
+        StatusStrip1.Items("statFrom").Text = ""
+        StatusStrip1.Items("statTo").Text = ""
+        Cout("CLS")
+        aBoard = New Board
+        PHEIGHT = PWIDTH 'pixels
+        PIECEWIDTH = PWIDTH * 15 '32 * 15 = 480 'twips: both Piece and square
+        PIECEHEIGHT = PHEIGHT * 15 '
+        BOARDBOTTOM = (MaxY + 1) * PIECEHEIGHT
+        BBOTTOM = (MaxY + 1) * PHEIGHT
+        Me.Width = (MaxX + 2) * PWIDTH
+        Me.Height = (MaxY + 5) * PHEIGHT
+        SetupPieces()
+        ShowPieces()
+    End Sub
+
+    Private Sub FrmBoard_Closed(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Closed
+        End
+    End Sub
+
+    Private Sub FrmBoard_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles MyBase.Paint
+        DrawBoard(e.Graphics)
+    End Sub
+
+    Private Sub FrmBoard_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.ResizeEnd
+        Dim i As Byte
+
+        If Me.Width > Me.Height Then
+            PWIDTH = Me.Height / (MaxX + 2) '
+            PHEIGHT = Me.Height / (MaxY + 2) 'PWIDTH 'pixels
+        Else
+            PWIDTH = Me.Width / (MaxX + 2) '
+            PHEIGHT = Me.Width / (MaxY + 2) 'PWIDTH 'pixels
+        End If
+        PIECEWIDTH = PWIDTH * 15 '32 * 15 = 480 'twips: both Piece and square
+        PIECEHEIGHT = PHEIGHT * 15 '
+        BOARDBOTTOM = (MaxY + 1) * PIECEHEIGHT
+        BBOTTOM = (MaxY + 1) * PHEIGHT
+        Me.Invalidate()
+        For i = 1 To 32
+            ShowPiece(i)
+        Next
+    End Sub
+
+    Private Sub ImgMousedown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Piece_1.MouseDown, Piece_2.MouseDown, Piece_3.MouseDown, Piece_4.MouseDown, Piece_5.MouseDown, Piece_6.MouseDown, Piece_7.MouseDown, Piece_8.MouseDown, Piece_9.MouseDown, Piece_10.MouseDown, Piece_11.MouseDown, Piece_12.MouseDown, Piece_13.MouseDown, Piece_14.MouseDown, Piece_15.MouseDown, Piece_16.MouseDown, Piece_17.MouseDown, Piece_18.MouseDown, Piece_19.MouseDown, Piece_20.MouseDown, Piece_21.MouseDown, Piece_22.MouseDown, Piece_23.MouseDown, Piece_24.MouseDown, Piece_25.MouseDown, Piece_26.MouseDown, Piece_27.MouseDown, Piece_28.MouseDown, Piece_29.MouseDown, Piece_30.MouseDown, Piece_31.MouseDown, Piece_32.MouseDown
+        'The user commences dragging with the mousedown
+        If Not IsUDraggin Then
+            IsUDraggin = True
+            Dragger = sender
+            'Dragger.BackColor = System.Drawing.Color.Gray ' PieceArray(i).BackColor = System.Drawing.ColorTranslator.FromOle(QBColor(7))
+            Dragger.Visible = True
+            Dragger.BringToFront()
+            origX = e.X 'used for displaying dragged Piece with same offset
+            origY = e.Y 'e.x and e.y are the click position relative to the control
+        End If
+    End Sub
+
+    Private Sub ImgMouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Piece_1.MouseUp, Piece_2.MouseUp, Piece_3.MouseUp, Piece_4.MouseUp, Piece_5.MouseUp, Piece_6.MouseUp, Piece_7.MouseUp, Piece_8.MouseUp, Piece_9.MouseUp, Piece_10.MouseUp, Piece_11.MouseUp, Piece_12.MouseUp, Piece_13.MouseUp, Piece_14.MouseUp, Piece_15.MouseUp, Piece_16.MouseUp, Piece_17.MouseUp, Piece_18.MouseUp, Piece_19.MouseUp, Piece_20.MouseUp, Piece_21.MouseUp, Piece_22.MouseUp, Piece_23.MouseUp, Piece_24.MouseUp, Piece_25.MouseUp, Piece_26.MouseUp, Piece_27.MouseUp, Piece_28.MouseUp, Piece_29.MouseUp, Piece_30.MouseUp, Piece_31.MouseUp, Piece_32.MouseUp
+        'The user release the mouse button completing the dragging
+        'I think e.x and e.y are relative to the control so the absolute position on the form is
+        'sender.left + e.x and sender.top + e.y
+        If IsUDraggin Then
+            IsUDraggin = False
+            Dragger.Visible = False
+            HumanMove(sender, e.X, e.Y)
+        End If
+    End Sub
+
+    Private Sub RP1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Piece_1.MouseMove, Piece_2.MouseMove, Piece_3.MouseMove, Piece_4.MouseMove, Piece_5.MouseMove, Piece_6.MouseMove, Piece_7.MouseMove, Piece_8.MouseMove, Piece_9.MouseMove, Piece_10.MouseMove, Piece_11.MouseMove, Piece_12.MouseMove, Piece_13.MouseMove, Piece_14.MouseMove, Piece_15.MouseMove, Piece_16.MouseMove, Piece_17.MouseMove, Piece_18.MouseMove, Piece_19.MouseMove, Piece_20.MouseMove, Piece_21.MouseMove, Piece_22.MouseMove, Piece_23.MouseMove, Piece_24.MouseMove, Piece_25.MouseMove, Piece_26.MouseMove, Piece_27.MouseMove, Piece_28.MouseMove, Piece_29.MouseMove, Piece_30.MouseMove, Piece_31.MouseMove, Piece_32.MouseMove
+        'The user moves the mouse while dragging
+        If IsUDraggin Then
+            Dragger.Left = sender.left + e.X - origX 'baseX + e.X - origX
+            Dragger.Top = sender.top + e.Y - origY 'baseY + e.Y - origY
+        End If
+    End Sub
+
+    'Menus
+    Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
+        'Castle
+        Dim aMove As New Move 'create a new move object for storing the current move in 
+
+        aMove.Clear()
+        aMove.P1id = ContextMenuStrip1.SourceControl.Tag 'record the first Pieces move
+        aMove.P1YOrig = aChessPiece(aMove.P1id).YPos 'top or bottom?
+        aMove.P1XOrig = aChessPiece(aMove.P1id).XPos
+        If aChessPiece(aMove.P1id).AlgNot = "R" And (aMove.P1YOrig = 1 Or aMove.P1YOrig = MaxY) Then 'it's a rook in position
+            aMove.P2id = aBoard.GetGBoardID(5, aMove.P1YOrig) 'make sure king's there
+            If aMove.P2id > 0 Then 'there is something there
+                If aChessPiece(aMove.P2id).AlgNot = "K" Then 'it's a king!
+                    If aMove.P1XOrig = 1 Then 'queenside and in legal position
+                        If aBoard.GetGBoardID(2, aMove.P1YOrig) = 0 And aBoard.GetGBoardID(3, aMove.P1YOrig) = 0 And aBoard.GetGBoardID(4, aMove.P1YOrig) = 0 Then 'legal
+                            DoCastle(aMove)
+                            DoHistory("0-0-0", aChessPiece(aMove.P1id).Direction)
+                            StatusStrip1.Items("statFrom").Text = "0-0-0"
+                        End If 'no Pieces between
+                    ElseIf aMove.P1XOrig = MaxX Then 'kingside and in legal position
+                        If aBoard.GetGBoardID(7, aMove.P1YOrig) = 0 And aBoard.GetGBoardID(6, aMove.P1YOrig) = 0 Then 'legal
+                            DoCastle(aMove)
+                            DoHistory("0-0", aChessPiece(aMove.P1id).Direction)
+                            StatusStrip1.Items("statFrom").Text = "0-0"
+                        End If 'no Pieces between
+                    End If
+                End If 'it's a king
+            End If 'it's a rook
+        End If
+        ShowPiece(aMove.P1id) 'draw the Piece (if they moved the control but we didn't move the Piece position it will redraw in the original location
+        ShowPiece(aMove.P2id) 'draw the Piece (if they moved the control but we didn't move the Piece position it will redraw in the original location
+        Timer1.Enabled = True
+    End Sub
+
+    Private Sub NewToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuFileNew.Click
+        'File New
+        Dim Score
+
+        aGame.Clear()
+        aBoard.Clear() ' = New Board
+        SetupPieces()
+        StatusStrip1.Items("statFrom").Text = ""
+        StatusStrip1.Items("statTo").Text = ""
+        Cout("CLS")
+        aGame.Playing = True
+        Turn = BOTTOMGOINGUP 'white/red goes first
+        Score = ComputerMoves()
+        If aGame.Playing = False Then
+            'MessageBox.Show(score)
+            SaveResult(Score)
+        End If
+    End Sub
+
+    Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuFileExit.Click
+        'File Exit
+        End
+    End Sub
+
+    Private Sub UndoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuEditUndo.Click
+        'Edit Undo
+        Dim aMove As Move
+
+        Try
+            aMove = aGame.Last
+            If aMove.MCode = "q" Then
+                UnQueen(aMove.P1id)
+            End If
+            aChessPiece(aMove.P1id).Move(aMove.P1XOrig, aMove.P1YOrig)
+            ShowPiece(aMove.P1id)
+            DoHistory("undo-> " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XDest) & aMove.P1YDest, aChessPiece(aMove.P1id).Direction)
+            If aMove.P2id > 0 Then
+                aChessPiece(aMove.P2id).Move(aMove.P2XOrig, aMove.P2YOrig)
+                ShowPiece(aMove.P2id) 'make visible
+            End If
+            aGame.Remove() 'remove move from array
+            Turn = -Turn 'end of turn
+        Catch ex As Exception
+            'MsgBox("MenuUndo: can't undo")
+        End Try
+    End Sub
+
+    Private Sub HistoryToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuToolsHistory.Click
+        'Tools History
+        frmCout.DefInstance.Show()
+    End Sub
+
+    Private Sub MoveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuToolsMove.Click
+        'Tools Move
+        If aGame.Playing Then
+            ComputerMoves()  'do a computer generated move
+        Else
+            MsgBox("Choose the New command from the File menu to start a new game.")
+        End If
+    End Sub
+
+    Private Sub TopHumanToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuToolsTopHuman.Click
+        'Tools Top Human
+        PlayerisHuman(1 + TOPGOINGDOWN) = Not PlayerisHuman(1 + TOPGOINGDOWN)
+        MnuToolsTopHuman.Checked = PlayerisHuman(1 + TOPGOINGDOWN)
+        If aGame.Playing And Not PlayerisHuman(1 + Turn) Then
+            ComputerMoves()
+        End If
+    End Sub
+
+    Private Sub BottomHumanToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuToolsBottomHuman.Click
+        'Tools Bottom human
+        PlayerisHuman(1 + BOTTOMGOINGUP) = Not PlayerisHuman(1 + BOTTOMGOINGUP)
+        MnuToolsBottomHuman.Checked = PlayerisHuman(1 + BOTTOMGOINGUP)
+        If aGame.Playing And Not PlayerisHuman(1 + Turn) Then
+            ComputerMoves()
+        End If
+    End Sub
+
+    Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
+        dlgAboutBox1.ShowDialog()
+    End Sub
+
+    Private Sub MnuHelpInstructions_Click(sender As Object, e As EventArgs) Handles MnuHelpInstructions.Click
+        Try
+            Dim AppPath As String = System.AppDomain.CurrentDomain.BaseDirectory
+            System.Diagnostics.Process.Start(AppPath + "ChessHelp.htm")
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub OptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OptionsToolStripMenuItem.Click
+        DlgOptions.ShowDialog()
+    End Sub
+
+    Private Sub LearnToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LearnToolStripMenuItem.Click
+        'White learns to play better by adjusting attributes to optimise score
+        Dim x1 As Double 'Attribute n value
+        Dim y1 As Double 'Score with x1 value
+        Dim x2 As Double 'Attribute n new value
+        Dim y2 As Double 'Score with x2 value
+        Dim changeFactor As Double 'how much to change by
+
+        PlayerisHuman(2) = False 'White bottom direction 1
+        PlayerisHuman(0) = False 'Black top direction -1
+        displayMoves = False
+        y2 = ComputerMoves() 'This should play a whole game (and save results) to get the ball rolling by determining y1
+        For j As Integer = 1 To 20 'do the whole shebang j times
+            For attribute As Integer = 1 To ttlAttributes
+                For i As Integer = 1 To 1 'for each attribute optimise i times
+                    changeFactor = aWhite.GetGradient(attribute)
+                    x1 = aWhite.GetAttributeValue(attribute) 'what it was
+                    y1 = y2 'what it scored
+                    x2 = aWhite.ChangeAttribute(attribute, changeFactor) 'what it is
+                    aGame.Clear()
+                    aBoard.Clear() ' = New Board
+                    SetupPieces()
+                    StatusStrip1.Items("statFrom").Text = ""
+                    StatusStrip1.Items("statTo").Text = ""
+                    Cout("CLS")
+                    aGame.Playing = True
+                    y2 = ComputerMoves() 'This should play a whole game (and save results)
+                    StatusStrip1.Items("statScore").Text = y2
+                    changeFactor = GetNewChangeFactor(x1, y1, x2, y2)  ' Percentage difference divide the difference by an average of the creates a factor
+                    aWhite.SetChangeFactor(attribute, changeFactor)
+                    Debug.Print("a:" & attribute & " x1:" & x1 & " y1:" & y1 & " x2:" & x2 & " y2:" & y2 & " g:" & changeFactor)
+                    SaveResult(y2)
+                    ShowPieces()
+                Next i
+            Next attribute
+        Next j
+    End Sub
+
+    'Other routines
+    Friend Function ComputerMoves() As Double
+        While aGame.Playing And Not PlayerisHuman(1 + Turn) 'Do
+            ComputerMove()
+        End While
+        If IsCheckMate(Turn) Then
+            ShowPieces()
+            Application.DoEvents()
+            Stop
+            'MsgBox("Check mate. You win.")
+            If Turn = BOTTOMGOINGUP Then 'White check mate
+                Debug.Print("Checkmate. Blue win.")
+                ComputerMoves = aWhite.GetRawScore() - 20
+            Else
+                Debug.Print("Checkmate. Red win.")
+                ComputerMoves = aWhite.GetRawScore() + 20
+            End If
+        Else 'No legal move and no check mate e.g. when there is just a king and any move would put him in check
+            'MsgBox("Stalemate. We draw.")
+            'Debug.Print("Stalemate. Draw.")
+            ComputerMoves = aWhite.GetRawScore()
+            ShowPieces()
+            Application.DoEvents()
+            'Stop
+        End If
+    End Function
+
+    Private Function ComputerMove() As Double
         'Find the best move and do it.
         Dim pbest As Byte 'best Piece (1..32)  where 1 is White (Red) Rook at bottom left and and 32 is Black (Blue) Rook at top right
         Dim mbest As Byte 'best move
 
-        Do
+        ComputerMove = 0
+        If Turn = 1 Then
+            aWhite.GetBestMove(pbest, mbest)
+        Else
             GetBestMove(pbest, mbest)
-            Application.DoEvents()
-            If pbest < 1 Or pbest > 32 Then 'there is no legal move
-                If IsInCheck(Turn) Then
-                    MsgBox("Check mate. You win.")
-                Else 'No legal move and no check mate e.g. when there is just a king and any move would put him in check
-                    MsgBox("Stalemate. We draw.")
-                End If
-                aGame.Playing = False
-                Timer1.Enabled = False
-            Else 'carry out the best move
-                DoBestMove(pbest, mbest)
-                Turn = -Turn 'next turn
-            End If
-            'If Not PlayerisHuman(0) And Not PlayerisHuman(2) Then 'When both opponents are computer's, currently pausing after each move to check action. 0 = top, 2 = bottom when it's bottoms turn turn = 1 and when it's top's turn = -1
-            '    If MsgBox("pause", vbOKCancel) = vbCancel Then
-            '        aGame.Playing = False
-            '    End If
-            'End If
-        Loop While aGame.Playing And Not PlayerisHuman(1 + Turn) 'if then next turn is a computer loop
-    End Sub
+        End If
+        Application.DoEvents()
+        If pbest < 1 Or pbest > 32 Then 'there is no legal move
+            aGame.Playing = False
+            Timer1.Enabled = False
+        Else 'carry out the best move
+            DoBestMove(pbest, mbest)
+            Turn = -Turn 'next turn
+        End If
+    End Function
 
     Sub DrawBoard(ByVal formGraphics As System.Drawing.Graphics)
         'Draw an array of alternating colour squares: not the Pieces
@@ -1083,30 +1384,10 @@ Friend Class FrmBoard
         myBrush.Dispose()
     End Sub
 
-    Private Sub FrmBoard_Load(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Load
-        aGame.Playing = True
-        PlayerisHuman(1 + TOPGOINGDOWN) = False 'i.e. index = (0) 'i.e. Black/Blue at top is a computer
-        PlayerisHuman(1 + BOTTOMGOINGUP) = True 'i.e. index = (2) 'i.e. White/Red at the bottom is a human (by default. See menu)
-        MnuToolsTopHuman.Checked = PlayerisHuman(1 + TOPGOINGDOWN)
-        MnuToolsBottomHuman.Checked = PlayerisHuman(1 + BOTTOMGOINGUP)
-        Turn = BOTTOMGOINGUP 'white/red goes first
-        StatusStrip1.Items("statFrom").Text = ""
-        StatusStrip1.Items("statTo").Text = ""
-        Cout("CLS")
-        aBoard = New Board
-        PHEIGHT = PWIDTH 'pixels
-        PIECEWIDTH = PWIDTH * 15 '32 * 15 = 480 'twips: both Piece and square
-        PIECEHEIGHT = PHEIGHT * 15 '
-        BOARDBOTTOM = (MaxY + 1) * PIECEHEIGHT
-        BBOTTOM = (MaxY + 1) * PHEIGHT
-        Me.Width = (MaxX + 2) * PWIDTH
-        Me.Height = (MaxY + 5) * PHEIGHT
-        SetupPieces()
-    End Sub
-
-    Private Sub FrmBoard_Closed(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Closed
-        End
-    End Sub
+    Private Function GetNewChangeFactor(x1 As Object, y1 As Double, x2 As Object, y2 As Double) As Double
+        'e.g. y1 -23, y2 +23 = 46 / y
+        GetNewChangeFactor = (y2 - y1) / 100 'abs(y2 - y1) '((y2 + y1) / 2) 'Was gradient but numbers were too big (y2 - y1) / (x2 - x1)
+    End Function
 
     Private Sub HumanMove(ByRef Source As System.Windows.Forms.Control, ByRef X As Single, ByRef Y As Single)
         'What in VB6 was the source is now the sender; the control we're working with
@@ -1155,55 +1436,46 @@ Friend Class FrmBoard
         Timer1.Enabled = True
     End Sub
 
-    Private Sub ImgMousedown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Piece_1.MouseDown, Piece_2.MouseDown, Piece_3.MouseDown, Piece_4.MouseDown, Piece_5.MouseDown, Piece_6.MouseDown, Piece_7.MouseDown, Piece_8.MouseDown, Piece_9.MouseDown, Piece_10.MouseDown, Piece_11.MouseDown, Piece_12.MouseDown, Piece_13.MouseDown, Piece_14.MouseDown, Piece_15.MouseDown, Piece_16.MouseDown, Piece_17.MouseDown, Piece_18.MouseDown, Piece_19.MouseDown, Piece_20.MouseDown, Piece_21.MouseDown, Piece_22.MouseDown, Piece_23.MouseDown, Piece_24.MouseDown, Piece_25.MouseDown, Piece_26.MouseDown, Piece_27.MouseDown, Piece_28.MouseDown, Piece_29.MouseDown, Piece_30.MouseDown, Piece_31.MouseDown, Piece_32.MouseDown
-        'The user commences dragging with the mousedown
-        If Not IsUDraggin Then
-            IsUDraggin = True
-            Dragger = sender
-            'Dragger.BackColor = System.Drawing.Color.Gray ' PieceArray(i).BackColor = System.Drawing.ColorTranslator.FromOle(QBColor(7))
-            Dragger.Visible = True
-            Dragger.BringToFront()
-            origX = e.X 'used for displaying dragged Piece with same offset
-            origY = e.Y 'e.x and e.y are the click position relative to the control
-        End If
+    Private Sub SetupPlayer(aWhite As Player)
+        aWhite.CheckIncentive = My.Settings.CheckIncentive '1
+        aWhite.TakeIncentive = My.Settings.TakeIncentive '2 'this adds the capture Piece value to this power i.e. Value^2
+        aWhite.PromoteIncentive = My.Settings.PromoteIncentive '10
+        aWhite.DeterRepetition = My.Settings.DeterRepetition '10
+        aWhite.CaptureMove = My.Settings.CaptureMove '0 ' e.g. aChessPiece(aPiece).getscore(aMove) = captureMove
+        '-------
+        aWhite.Threatening = My.Settings.Threatening '0 'aggressiveness - increase our threatening
+        aWhite.AvoidingThreat = My.Settings.AvoidingThreat '2 'wimpishness - reduce their threatening
+        aWhite.Supporting = My.Settings.Supporting '1 'supporting our own Pieces - increase our support
+        aWhite.Undermine = My.Settings.Undermine '1
+        aWhite.Control = My.Settings.Control '1 'aim to control more of the board
+        aWhite.Frustrate = My.Settings.Frustrate '1 'aim to reduce their mobility and control
+        aWhite.Keep = My.Settings.Keep '1 'aim to keep as many Pieces as possible
+        aWhite.Erode = My.Settings.Erode '2 'aim to reduce their Pieces
+        aWhite.Consolidate = My.Settings.Consolidate '4 'aim to avoid leaving Piece unsupported
+        aWhite.Isolate = My.Settings.Isolate '0 'aim to isolate their Pieces leaving them unsupported
     End Sub
 
-    Private Sub ImgMouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Piece_1.MouseUp, Piece_2.MouseUp, Piece_3.MouseUp, Piece_4.MouseUp, Piece_5.MouseUp, Piece_6.MouseUp, Piece_7.MouseUp, Piece_8.MouseUp, Piece_9.MouseUp, Piece_10.MouseUp, Piece_11.MouseUp, Piece_12.MouseUp, Piece_13.MouseUp, Piece_14.MouseUp, Piece_15.MouseUp, Piece_16.MouseUp, Piece_17.MouseUp, Piece_18.MouseUp, Piece_19.MouseUp, Piece_20.MouseUp, Piece_21.MouseUp, Piece_22.MouseUp, Piece_23.MouseUp, Piece_24.MouseUp, Piece_25.MouseUp, Piece_26.MouseUp, Piece_27.MouseUp, Piece_28.MouseUp, Piece_29.MouseUp, Piece_30.MouseUp, Piece_31.MouseUp, Piece_32.MouseUp
-        'The user release the mouse button completing the dragging
-        'I think e.x and e.y are relative to the control so the absolute position on the form is
-        'sender.left + e.x and sender.top + e.y
-        If IsUDraggin Then
-            IsUDraggin = False
-            Dragger.Visible = False
-            HumanMove(sender, e.X, e.Y)
-        End If
+    Private Sub SavePlayer(aWhite As Player)
+        My.Settings.CheckIncentive = aWhite.CheckIncentive '1
+        My.Settings.TakeIncentive = aWhite.TakeIncentive ' =  '2 'this adds the capture Piece value to this power i.e. Value^2
+        My.Settings.PromoteIncentive = aWhite.PromoteIncentive '=  '10
+        My.Settings.DeterRepetition = aWhite.DeterRepetition '=  '10
+        My.Settings.CaptureMove = aWhite.CaptureMove '=  '0 ' e.g. aChessPiece(aPiece).getscore(aMove) = captureMove
+        '-------
+        My.Settings.Threatening = aWhite.Threatening '=  '0 'aggressiveness - increase our threatening
+        My.Settings.AvoidingThreat = aWhite.AvoidingThreat '=  '2 'wimpishness - reduce their threatening
+        My.Settings.Supporting = aWhite.Supporting '=  '1 'supporting our own Pieces - increase our support
+        My.Settings.Undermine = aWhite.Undermine '=  '1
+        My.Settings.Control = aWhite.Control '=  '1 'aim to control more of the board
+        My.Settings.Frustrate = aWhite.Frustrate '=  '1 'aim to reduce their mobility and control
+        My.Settings.Keep = aWhite.Keep '=  '1 'aim to keep as many Pieces as possible
+        My.Settings.Erode = aWhite.Erode '=  '2 'aim to reduce their Pieces
+        My.Settings.Consolidate = aWhite.Consolidate '=  '4 'aim to avoid leaving Piece unsupported
+        My.Settings.Isolate = aWhite.Isolate '=  '0 'aim to isolate their Pieces leaving them unsupported
+        My.Settings.Save()
     End Sub
 
-    Private Sub RP1_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Piece_1.MouseMove, Piece_2.MouseMove, Piece_3.MouseMove, Piece_4.MouseMove, Piece_5.MouseMove, Piece_6.MouseMove, Piece_7.MouseMove, Piece_8.MouseMove, Piece_9.MouseMove, Piece_10.MouseMove, Piece_11.MouseMove, Piece_12.MouseMove, Piece_13.MouseMove, Piece_14.MouseMove, Piece_15.MouseMove, Piece_16.MouseMove, Piece_17.MouseMove, Piece_18.MouseMove, Piece_19.MouseMove, Piece_20.MouseMove, Piece_21.MouseMove, Piece_22.MouseMove, Piece_23.MouseMove, Piece_24.MouseMove, Piece_25.MouseMove, Piece_26.MouseMove, Piece_27.MouseMove, Piece_28.MouseMove, Piece_29.MouseMove, Piece_30.MouseMove, Piece_31.MouseMove, Piece_32.MouseMove
-        'The user moves the mouse while dragging
-        If IsUDraggin Then
-            Dragger.Left = sender.left + e.X - origX 'baseX + e.X - origX
-            Dragger.Top = sender.top + e.Y - origY 'baseY + e.Y - origY
-        End If
-    End Sub
-
-    Public ReadOnly Property XPos(ByVal xmouse As Single) As Byte
-        Get
-            XPos = Int(xmouse / PWIDTH)
-        End Get
-    End Property
-
-    Public ReadOnly Property YPos(ByVal ymouse As Single) As Byte
-        Get
-            YPos = MaxY + 1 - Int(ymouse / PHEIGHT)
-        End Get
-    End Property
-
-    Private Sub FrmBoard_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles MyBase.Paint
-        DrawBoard(e.Graphics)
-    End Sub
-
-    Sub ShowPiece(ByRef i As Short) 'I is the Piece
+    Friend Sub ShowPiece(ByRef i As Short) 'I is the Piece
         'Move actual Piece (control) and display move in algebraic notation
         Dim Pieceexists As Boolean = True
 
@@ -1228,145 +1500,16 @@ Friend Class FrmBoard
         End If
     End Sub
 
-    Private Sub FrmBoard_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.ResizeEnd
-        Dim i As Byte
-
-        If Me.Width > Me.Height Then
-            PWIDTH = Me.Height / (MaxX + 2) '
-            PHEIGHT = Me.Height / (MaxY + 2) 'PWIDTH 'pixels
-        Else
-            PWIDTH = Me.Width / (MaxX + 2) '
-            PHEIGHT = Me.Width / (MaxY + 2) 'PWIDTH 'pixels
-        End If
-        PIECEWIDTH = PWIDTH * 15 '32 * 15 = 480 'twips: both Piece and square
-        PIECEHEIGHT = PHEIGHT * 15 '
-        BOARDBOTTOM = (MaxY + 1) * PIECEHEIGHT
-        BBOTTOM = (MaxY + 1) * PHEIGHT
-        Me.Invalidate()
-        For i = 1 To 32
-            ShowPiece(i)
-        Next
-    End Sub
-
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        'Try to use this to allow redrawing board after user completes dragging (see Human move)
+        'I tried this to allow redrawing board after human completes dragging (see Human move) ... don't know if it's used...
+        Dim Score
+
         Timer1.Enabled = False
-        If aGame.Playing And Not PlayerisHuman(1 + Turn) Then
-            ComputerMove()
+        Score = ComputerMoves()
+        If aGame.Playing = False Then
+            'MessageBox.Show(score)
+            SaveResult(Score)
         End If
-    End Sub
-
-    Private Sub ToolStripMenuItem1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ToolStripMenuItem1.Click
-        'Castle
-        Dim aMove As New Move 'create a new move object for storing the current move in 
-
-        aMove.Clear()
-        aMove.P1id = ContextMenuStrip1.SourceControl.Tag 'record the first Pieces move
-        aMove.P1YOrig = aChessPiece(aMove.P1id).YPos 'top or bottom?
-        aMove.P1XOrig = aChessPiece(aMove.P1id).XPos
-        If aChessPiece(aMove.P1id).AlgNot = "R" And (aMove.P1YOrig = 1 Or aMove.P1YOrig = MaxY) Then 'it's a rook in position
-            aMove.P2id = aBoard.GetGBoardID(5, aMove.P1YOrig) 'make sure king's there
-            If aMove.P2id > 0 Then 'there is something there
-                If aChessPiece(aMove.P2id).AlgNot = "K" Then 'it's a king!
-                    If aMove.P1XOrig = 1 Then 'queenside and in legal position
-                        If aBoard.GetGBoardID(2, aMove.P1YOrig) = 0 And aBoard.GetGBoardID(3, aMove.P1YOrig) = 0 And aBoard.GetGBoardID(4, aMove.P1YOrig) = 0 Then 'legal
-                            DoCastle(aMove)
-                            DoHistory("0-0-0", aChessPiece(aMove.P1id).Direction)
-                            StatusStrip1.Items("statFrom").Text = "0-0-0"
-                        End If 'no Pieces between
-                    ElseIf aMove.P1XOrig = MaxX Then 'kingside and in legal position
-                        If aBoard.GetGBoardID(7, aMove.P1YOrig) = 0 And aBoard.GetGBoardID(6, aMove.P1YOrig) = 0 Then 'legal
-                            DoCastle(aMove)
-                            DoHistory("0-0", aChessPiece(aMove.P1id).Direction)
-                            StatusStrip1.Items("statFrom").Text = "0-0"
-                        End If 'no Pieces between
-                    End If
-                End If 'it's a king
-            End If 'it's a rook
-        End If
-        ShowPiece(aMove.P1id) 'draw the Piece (if they moved the control but we didn't move the Piece position it will redraw in the original location
-        ShowPiece(aMove.P2id) 'draw the Piece (if they moved the control but we didn't move the Piece position it will redraw in the original location
-        Timer1.Enabled = True
-    End Sub
-
-    Private Sub NewToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuFileNew.Click
-        'File New
-        aGame.Clear()
-        aBoard.Clear() ' = New Board
-        SetupPieces()
-        StatusStrip1.Items("statFrom").Text = ""
-        StatusStrip1.Items("statTo").Text = ""
-        Cout("CLS")
-        aGame.Playing = True
-        Turn = BOTTOMGOINGUP 'white/red goes first
-        If PlayerisHuman(1 + Turn) Then
-            ComputerMove()
-        End If
-
-    End Sub
-
-    Private Sub ExitToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuFileExit.Click
-        'File Exit
-        End
-    End Sub
-
-    Private Sub UndoToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuEditUndo.Click
-        'Edit Undo
-        Dim aMove As Move
-
-        Try
-            aMove = aGame.Last
-            If aMove.MCode = "q" Then
-                UnQueen(aMove.P1id)
-            End If
-            aChessPiece(aMove.P1id).Move(aMove.P1XOrig, aMove.P1YOrig)
-            ShowPiece(aMove.P1id)
-            DoHistory("undo-> " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XDest) & aMove.P1YDest, aChessPiece(aMove.P1id).Direction)
-            If aMove.P2id > 0 Then
-                aChessPiece(aMove.P2id).Move(aMove.P2XOrig, aMove.P2YOrig)
-                ShowPiece(aMove.P2id) 'make visible
-            End If
-            aGame.Remove() 'remove move from array
-            Turn = -Turn 'end of turn
-        Catch ex As Exception
-            'MsgBox("MenuUndo: can't undo")
-        End Try
-    End Sub
-
-    Private Sub HistoryToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuToolsHistory.Click
-        'Tools History
-        frmCout.DefInstance.Show()
-    End Sub
-
-    Private Sub MoveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuToolsMove.Click
-        'Tools Move
-        If aGame.Playing Then
-            ComputerMove()  'do a computer generated move
-        Else
-            MsgBox("Choose the New command from the File menu to start a new game.")
-        End If
-    End Sub
-
-    Private Sub TopHumanToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuToolsTopHuman.Click
-        'Tools Top Human
-        PlayerisHuman(1 + TOPGOINGDOWN) = Not PlayerisHuman(1 + TOPGOINGDOWN)
-        MnuToolsTopHuman.Checked = PlayerisHuman(1 + TOPGOINGDOWN)
-        If aGame.Playing And Not PlayerisHuman(1 + Turn) Then
-            ComputerMove()
-        End If
-    End Sub
-
-    Private Sub BottomHumanToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuToolsBottomHuman.Click
-        'Tools Bottom human
-        PlayerisHuman(1 + BOTTOMGOINGUP) = Not PlayerisHuman(1 + BOTTOMGOINGUP)
-        MnuToolsBottomHuman.Checked = PlayerisHuman(1 + BOTTOMGOINGUP)
-        If aGame.Playing And Not PlayerisHuman(1 + Turn) Then
-            ComputerMove()
-        End If
-    End Sub
-
-    Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
-        dlgAboutBox1.ShowDialog()
     End Sub
 
     Private Function TwipsToPixelsX(twips As Integer) As Integer
@@ -1377,15 +1520,7 @@ Friend Class FrmBoard
         TwipsToPixelsY = CInt(twips / 15)
     End Function
 
-    Private Sub MnuHelpInstructions_Click(sender As Object, e As EventArgs) Handles MnuHelpInstructions.Click
-        Try
-            Dim AppPath As String = System.AppDomain.CurrentDomain.BaseDirectory
-            System.Diagnostics.Process.Start(AppPath + "ChessHelp.htm")
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-    End Sub
-
+    'Overload
     Protected Overloads Overrides Sub WndProc(ByRef m As Message)
         'Int wParam = (m.WParam.ToInt32() & 0xFFF0); if (wParam == 0xF030 || wParam == 0xF020 || wParam == 0xF120) { DoUpdate(); } worked for me. Also i called base.WndProc(ref m); before to be able to use updated window parameters 
 
@@ -1404,9 +1539,5 @@ Friend Class FrmBoard
         End If
     End Sub
 
-    Private Sub OptionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OptionsToolStripMenuItem.Click
-        DlgOptions.ShowDialog()
-
-    End Sub
 
 End Class
