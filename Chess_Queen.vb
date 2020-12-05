@@ -90,7 +90,7 @@ Option Explicit On
         CheckMoves = posCount
     End Function
 
-    Private Function RecordResult(result As Short, posCount As Byte, posX As Short, posY As Short) As Boolean
+    Private Function RecordResult(result As Short, ByRef posCount As Byte, posX As Short, posY As Short) As Boolean
         RecordResult = False 'not blocked
         If result = 0 Then
             posCount += 1

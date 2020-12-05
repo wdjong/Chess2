@@ -116,7 +116,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
         Public Property CaptureMove() As Double
             Get
                 Return CType(Me("CaptureMove"),Double)
@@ -128,7 +128,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0.9")>  _
         Public Property Threatening() As Double
             Get
                 Return CType(Me("Threatening"),Double)
@@ -243,6 +243,18 @@ Namespace My
             End Get
             Set
                 Me("Isolate") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("20")>  _
+        Public Property CheckMateIncentive() As Double
+            Get
+                Return CType(Me("CheckMateIncentive"),Double)
+            End Get
+            Set
+                Me("CheckMateIncentive") = value
             End Set
         End Property
     End Class

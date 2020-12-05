@@ -18,10 +18,10 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="CaptureMove" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="Threatening" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">0.9</Value>
     </Setting>
     <Setting Name="AvoidingThreat" Type="System.Double" Scope="User">
       <Value Profile="(Default)">2</Value>
@@ -49,6 +49,9 @@
     </Setting>
     <Setting Name="Isolate" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="CheckMateIncentive" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">20</Value>
     </Setting>
   </Settings>
 </SettingsFile>

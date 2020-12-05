@@ -1286,29 +1286,33 @@ Friend Class FrmBoard
         Dim y2 As Double 'Score with x2 value
         Dim changeFactor As Double 'how much to change by
 
-        PlayerisHuman(2) = False 'White bottom direction 1
-        PlayerisHuman(0) = False 'Black top direction -1
-        displayMoves = False
+        PlayerisHuman(1 + BOTTOMGOINGUP) = False 'White bottom direction 1
+        PlayerisHuman(1 + TOPGOINGDOWN) = False 'Black top direction -1
+        displayMoves = True
+        frmCout.DefInstance.Show()
         y2 = ComputerMoves() 'This should play a whole game (and save results) to get the ball rolling by determining y1
-        For j As Integer = 1 To 20 'do the whole shebang j times
-            For attribute As Integer = 1 To ttlAttributes
-                For i As Integer = 1 To 1 'for each attribute optimise i times
-                    changeFactor = aWhite.GetGradient(attribute)
-                    x1 = aWhite.GetAttributeValue(attribute) 'what it was
-                    y1 = y2 'what it scored
-                    x2 = aWhite.ChangeAttribute(attribute, changeFactor) 'what it is
-                    aGame.Clear()
+        For j As Integer = 1 To 1 'do the whole shebang j times
+            For attribute As Integer = 5 To 5 ' ttlAttributes
+                For i As Integer = 1 To 20 'for each attribute optimise i times
+                    changeFactor = aWhite.GetChangeFactor(attribute) 'get change factor as it was calculated after time this attribute was modified
+                    x1 = aWhite.GetAttributeValue(attribute) 'what the attribute value was at the time we played the last game
+                    y1 = y2 'what the score was for that attribute value after the last game
+                    x2 = aWhite.ChangeAttribute(attribute, changeFactor) 'what it is after applying the calculated change factor to the old attribute value to find the new value
+                    aGame.Clear() 'set up for game
                     aBoard.Clear() ' = New Board
                     SetupPieces()
+                    ShowPieces()
+                    'Stop
                     StatusStrip1.Items("statFrom").Text = ""
                     StatusStrip1.Items("statTo").Text = ""
                     Cout("CLS")
                     aGame.Playing = True
+                    Turn = BOTTOMGOINGUP
                     y2 = ComputerMoves() 'This should play a whole game (and save results)
                     StatusStrip1.Items("statScore").Text = y2
-                    changeFactor = GetNewChangeFactor(x1, y1, x2, y2)  ' Percentage difference divide the difference by an average of the creates a factor
-                    aWhite.SetChangeFactor(attribute, changeFactor)
-                    Debug.Print("a:" & attribute & " x1:" & x1 & " y1:" & y1 & " x2:" & x2 & " y2:" & y2 & " g:" & changeFactor)
+                    changeFactor = GetNewChangeFactor(x1, y1, x2, y2)  ' Calculate a new change factor based on whether the last change made things better or worse and by what degree
+                    aWhite.SetChangeFactor(attribute, changeFactor) 'store that for next time we want to assess this attribute
+                    Debug.Print("a:" & attribute & " x1:" & x1 & " y1:" & y1 & " x2:" & x2 & " y2:" & y2 & " g:" & changeFactor) 'show the newly derived change factor which should reflect the effect of the last change
                     SaveResult(y2)
                     ShowPieces()
                 Next i
@@ -1386,7 +1390,7 @@ Friend Class FrmBoard
 
     Private Function GetNewChangeFactor(x1 As Object, y1 As Double, x2 As Object, y2 As Double) As Double
         'e.g. y1 -23, y2 +23 = 46 / y
-        GetNewChangeFactor = (y2 - y1) / 100 'abs(y2 - y1) '((y2 + y1) / 2) 'Was gradient but numbers were too big (y2 - y1) / (x2 - x1)
+        GetNewChangeFactor = 1 '(y2 - y1) / 100 'abs(y2 - y1) '((y2 + y1) / 2) 'Was gradient but numbers were too big (y2 - y1) / (x2 - x1)
     End Function
 
     Private Sub HumanMove(ByRef Source As System.Windows.Forms.Control, ByRef X As Single, ByRef Y As Single)
@@ -1426,12 +1430,12 @@ Friend Class FrmBoard
                 End If
             Else
                 aGame.Add(aMove) 'add the move to the array
+                DoHistory(GetAlgebraicNotation(aMove), aChessPiece(aMove.P1id).Direction)
                 Turn = -Turn
             End If
         End If
         StatusStrip1.Items("statFrom").Text = "From: " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XOrig) & aMove.P1YOrig
         StatusStrip1.Items("statTo").Text = "To: " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XDest) & aMove.P1YDest
-        DoHistory(aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XDest) & aMove.P1YDest, aChessPiece(aMove.P1id).Direction)
         ShowPiece((aMove.P1id)) 'draw the Piece (if they moved the control but we didn't move the Piece position it will redraw in the original location
         Timer1.Enabled = True
     End Sub
