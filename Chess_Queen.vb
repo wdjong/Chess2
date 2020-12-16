@@ -21,6 +21,7 @@ Option Explicit On
             posX = MyBase.XPos
             posY = MyBase.YPos
             Do While Not blocked
+                posX += 0 '
                 posY += 1 'up
                 result = IsLegal(posX, posY, Direction) 'result 0 = empty, Same direction off board or own player, opposite direction opponent
                 blocked = RecordResult(result, posCount, posX, posY)
@@ -39,6 +40,7 @@ Option Explicit On
             posY = MyBase.YPos
             Do While Not blocked
                 posX += 1 'right
+                posY += 0 '
                 result = IsLegal(posX, posY, Direction)
                 blocked = RecordResult(result, posCount, posX, posY)
             Loop
@@ -47,7 +49,7 @@ Option Explicit On
             posY = MyBase.YPos
             Do While Not blocked
                 posX += 1 'right
-                posX -= 1 'down
+                posY -= 1 'down
                 result = IsLegal(posX, posY, Direction)
                 blocked = RecordResult(result, posCount, posX, posY)
             Loop
@@ -55,16 +57,8 @@ Option Explicit On
             posX = MyBase.XPos
             posY = MyBase.YPos
             Do While Not blocked
-                posX -= 1 'down
-                result = IsLegal(posX, posY, Direction)
-                blocked = RecordResult(result, posCount, posX, posY)
-            Loop
-            blocked = False
-            posX = MyBase.XPos
-            posY = MyBase.YPos
-            Do While Not blocked
-                posX -= 1 'left
-                posX -= 1 'up
+                posX += 0 '
+                posY -= 1 'down
                 result = IsLegal(posX, posY, Direction)
                 blocked = RecordResult(result, posCount, posX, posY)
             Loop
@@ -73,6 +67,16 @@ Option Explicit On
             posY = MyBase.YPos
             Do While Not blocked
                 posX -= 1 'left
+                posY -= 1 'down
+                result = IsLegal(posX, posY, Direction)
+                blocked = RecordResult(result, posCount, posX, posY)
+            Loop
+            blocked = False
+            posX = MyBase.XPos
+            posY = MyBase.YPos
+            Do While Not blocked
+                posX -= 1 'left
+                posY -= 0 '
                 result = IsLegal(posX, posY, Direction)
                 blocked = RecordResult(result, posCount, posX, posY)
             Loop
