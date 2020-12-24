@@ -282,6 +282,33 @@ errRemove:
         CheckMoves = posCount
     End Function
 
+    Public Overridable Function PotentialTake(posTestX As Short, posTestY As Short) As Boolean
+        'Check all possible moves of piece and if any is the move we're interested in then it's a legal move
+        Dim posX As Short 'the destination
+        Dim posY As Short 'the destination co-ord
+        Dim result As Short
+
+        PotentialTake = False
+        Try
+            If OnBoard Then
+                posX = mbytXPos
+                posY = mbytYPos 'taking move
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                    If result = 0 Or result = -Direction Then 'legal
+                        If posX = posTestX And posY = posTestY Then
+                            PotentialTake = True
+                            Exit Function
+                        End If
+                    End If
+                End If
+            End If
+        Catch ex As Exception
+            Stop
+            MsgBox("PotentialTake: " & ex.Message)
+        End Try
+    End Function
+
     Public Overridable Function CheckSupport() As Byte
         'Add each support provided to the mSupport array (analogous to nextmove array)
         Dim posX As Short 'the destination

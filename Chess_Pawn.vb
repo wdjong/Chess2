@@ -63,6 +63,10 @@ Option Explicit On
                 MyBase.SetMoveY(posCount, posY)
                 MyBase.SetScore(posCount, 2) '2 for taking
             End If
+
+            'EN PASSANT
+            'if on 5th rank and oponent pawn has just moved to same rank then en-passant is possible
+
         End If
         MyBase.MaxMove = posCount
         CheckMoves = posCount
@@ -101,5 +105,40 @@ Option Explicit On
         End If
         CheckSupport = posCount
     End Function
+
+    Public Overrides Function PotentialTake(posTestX As Short, posTestY As Short) As Boolean
+        'Check all possible moves of piece and if any is the move we're interested in then it's a legal move
+        Dim posX As Short 'the destination
+        Dim posY As Short 'the destination co-ord
+        Dim result As Short
+        PotentialTake = False
+        Try
+            If OnBoard Then
+
+                'check for taking Pieces
+                posX = MyBase.XPos + 1 'right
+                posY = MyBase.YPos + Direction 'forward
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)
+                    If posX = posTestX And posY = posTestY Then
+                        PotentialTake = True
+                        Exit Function
+                    End If
+                End If
+                posX = MyBase.XPos - 1 'left
+                posY = MyBase.YPos + Direction 'forward
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)
+                    If posX = posTestX And posY = posTestY Then
+                        PotentialTake = True
+                        Exit Function
+                    End If
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("PotentialTake P: " & ex.Message)
+        End Try
+    End Function
+
 
 End Class

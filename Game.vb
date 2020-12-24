@@ -1,3 +1,6 @@
+Imports System.IO
+
+<Serializable()>
 Public Class Game
     Const MAXMOVE As Integer = 200
     Private ReadOnly mMoves(MAXMOVE) As Move 'x= moves, y1=Pieceid, y2=xorig y3=yorig y4=xdest y5=ydest y6=Piece2id, y7 Piece2xorig y8=Piece2yorig y9=Piece2xdest y10=Piece2ydest
@@ -25,6 +28,12 @@ Public Class Game
         Set(ByVal value As Boolean)
             mPlaying = value
         End Set
+    End Property
+
+    Public ReadOnly Property MoveCount() As Short
+        Get
+            MoveCount = mCount
+        End Get
     End Property
 
     Public Sub Add(ByVal aMove As Move)
@@ -79,4 +88,17 @@ Public Class Game
         mCount = 0
         Array.Clear(mMoves, 0, mMoves.Length)
     End Sub
+
+    'Friend Sub SaveGame(aBoard As Board)
+    '    Dim strFile As String = "game.txt"
+    '    Dim gameFile As String = ""
+    '    Dim fileExists As Boolean = File.Exists(strFile)
+
+    '    Debug.Print(aBoard.ToString2())
+    '    gameFile += aBoard.ToString2()
+
+    '    Using sw As New StreamWriter(File.Open(strFile, FileMode.OpenOrCreate))
+    '        sw.WriteLine(gameFile)
+    '    End Using
+    'End Sub
 End Class

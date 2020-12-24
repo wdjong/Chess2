@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="ShareThoughts" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="CheckIncentive" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="TakeIncentive" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">1.6</Value>
     </Setting>
     <Setting Name="PromoteIncentive" Type="System.Double" Scope="User">
       <Value Profile="(Default)">10</Value>
@@ -21,37 +21,37 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="Threatening" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.9</Value>
+      <Value Profile="(Default)">0.8</Value>
     </Setting>
     <Setting Name="AvoidingThreat" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">2.3</Value>
     </Setting>
     <Setting Name="Supporting" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="Undermine" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0.6</Value>
     </Setting>
     <Setting Name="Control" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">1.7</Value>
     </Setting>
     <Setting Name="Frustrate" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">1.4</Value>
     </Setting>
     <Setting Name="Keep" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0.8</Value>
     </Setting>
     <Setting Name="Erode" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">1.9</Value>
     </Setting>
     <Setting Name="Consolidate" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">4</Value>
     </Setting>
     <Setting Name="Isolate" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0.5</Value>
     </Setting>
     <Setting Name="CheckMateIncentive" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">20</Value>
+      <Value Profile="(Default)">70</Value>
     </Setting>
   </Settings>
 </SettingsFile>

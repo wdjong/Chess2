@@ -95,6 +95,8 @@ Friend Class FrmBoard
     Friend WithEvents OptionsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LearnToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents StatScore As ToolStripStatusLabel
+    Friend WithEvents SaveToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LoadToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
@@ -106,9 +108,12 @@ Friend Class FrmBoard
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.StatFrom = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatTo = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.StatScore = New System.Windows.Forms.ToolStripStatusLabel()
         Me.MnuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.MnuFile = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuFileNew = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LoadToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuFileExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuEdit = New System.Windows.Forms.ToolStripMenuItem()
         Me.MnuEditUndo = New System.Windows.Forms.ToolStripMenuItem()
@@ -155,7 +160,6 @@ Friend Class FrmBoard
         Me.Piece_3 = New System.Windows.Forms.PictureBox()
         Me.Piece_7 = New System.Windows.Forms.PictureBox()
         Me.Piece_2 = New System.Windows.Forms.PictureBox()
-        Me.StatScore = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.MnuStrip1.SuspendLayout()
@@ -237,6 +241,12 @@ Friend Class FrmBoard
         Me.StatTo.Size = New System.Drawing.Size(19, 17)
         Me.StatTo.Text = "To"
         '
+        'StatScore
+        '
+        Me.StatScore.Name = "StatScore"
+        Me.StatScore.Size = New System.Drawing.Size(36, 17)
+        Me.StatScore.Text = "Score"
+        '
         'MnuStrip1
         '
         Me.MnuStrip1.ImageScalingSize = New System.Drawing.Size(24, 24)
@@ -249,7 +259,7 @@ Friend Class FrmBoard
         '
         'MnuFile
         '
-        Me.MnuFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuFileNew, Me.MnuFileExit})
+        Me.MnuFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MnuFileNew, Me.SaveToolStripMenuItem, Me.LoadToolStripMenuItem, Me.MnuFileExit})
         Me.MnuFile.Name = "MnuFile"
         Me.MnuFile.Size = New System.Drawing.Size(37, 20)
         Me.MnuFile.Text = "&File"
@@ -257,13 +267,25 @@ Friend Class FrmBoard
         'MnuFileNew
         '
         Me.MnuFileNew.Name = "MnuFileNew"
-        Me.MnuFileNew.Size = New System.Drawing.Size(98, 22)
+        Me.MnuFileNew.Size = New System.Drawing.Size(180, 22)
         Me.MnuFileNew.Text = "&New"
+        '
+        'SaveToolStripMenuItem
+        '
+        Me.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem"
+        Me.SaveToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SaveToolStripMenuItem.Text = "&Save"
+        '
+        'LoadToolStripMenuItem
+        '
+        Me.LoadToolStripMenuItem.Name = "LoadToolStripMenuItem"
+        Me.LoadToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LoadToolStripMenuItem.Text = "&Load"
         '
         'MnuFileExit
         '
         Me.MnuFileExit.Name = "MnuFileExit"
-        Me.MnuFileExit.Size = New System.Drawing.Size(98, 22)
+        Me.MnuFileExit.Size = New System.Drawing.Size(180, 22)
         Me.MnuFileExit.Text = "E&xit"
         '
         'MnuEdit
@@ -289,37 +311,37 @@ Friend Class FrmBoard
         'MnuToolsHistory
         '
         Me.MnuToolsHistory.Name = "MnuToolsHistory"
-        Me.MnuToolsHistory.Size = New System.Drawing.Size(180, 22)
+        Me.MnuToolsHistory.Size = New System.Drawing.Size(157, 22)
         Me.MnuToolsHistory.Text = "&History"
         '
         'MnuToolsMove
         '
         Me.MnuToolsMove.Name = "MnuToolsMove"
-        Me.MnuToolsMove.Size = New System.Drawing.Size(180, 22)
+        Me.MnuToolsMove.Size = New System.Drawing.Size(157, 22)
         Me.MnuToolsMove.Text = "&Move"
         '
         'MnuToolsTopHuman
         '
         Me.MnuToolsTopHuman.Name = "MnuToolsTopHuman"
-        Me.MnuToolsTopHuman.Size = New System.Drawing.Size(180, 22)
+        Me.MnuToolsTopHuman.Size = New System.Drawing.Size(157, 22)
         Me.MnuToolsTopHuman.Text = "&Top Human"
         '
         'MnuToolsBottomHuman
         '
         Me.MnuToolsBottomHuman.Name = "MnuToolsBottomHuman"
-        Me.MnuToolsBottomHuman.Size = New System.Drawing.Size(180, 22)
+        Me.MnuToolsBottomHuman.Size = New System.Drawing.Size(157, 22)
         Me.MnuToolsBottomHuman.Text = "&Bottom Human"
         '
         'OptionsToolStripMenuItem
         '
         Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(157, 22)
         Me.OptionsToolStripMenuItem.Text = "&Options"
         '
         'LearnToolStripMenuItem
         '
         Me.LearnToolStripMenuItem.Name = "LearnToolStripMenuItem"
-        Me.LearnToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.LearnToolStripMenuItem.Size = New System.Drawing.Size(157, 22)
         Me.LearnToolStripMenuItem.Text = "&Learn"
         '
         'MnuHelp
@@ -930,12 +952,6 @@ Friend Class FrmBoard
         Me.Piece_2.Tag = "2"
         Me.Piece_2.Visible = False
         '
-        'StatScore
-        '
-        Me.StatScore.Name = "StatScore"
-        Me.StatScore.Size = New System.Drawing.Size(36, 17)
-        Me.StatScore.Text = "Score"
-        '
         'FrmBoard
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
@@ -1067,7 +1083,7 @@ Friend Class FrmBoard
     'Form events
     Private Sub FrmBoard_Load(ByVal eventSender As System.Object, ByVal eventArgs As System.EventArgs) Handles MyBase.Load
         aGame.Playing = True
-        SetupPlayer(aWhite)
+        SetupPlayer(aWhite) 'Gets settings from my.settings
         PlayerisHuman(1 + TOPGOINGDOWN) = False 'i.e. index = (0) 'i.e. Black/Blue at top is a computer
         PlayerisHuman(1 + BOTTOMGOINGUP) = True 'i.e. index = (2) 'i.e. White/Red at the bottom is a human (by default. See menu)
         MnuToolsTopHuman.Checked = PlayerisHuman(1 + TOPGOINGDOWN)
@@ -1184,17 +1200,18 @@ Friend Class FrmBoard
 
     Private Sub NewToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuFileNew.Click
         'File New
-        Dim Score
+        Dim Score As Double
 
         aGame.Clear()
         aBoard.Clear() ' = New Board
         SetupPieces()
+        ShowPieces()
         StatusStrip1.Items("statFrom").Text = ""
         StatusStrip1.Items("statTo").Text = ""
         Cout("CLS")
         aGame.Playing = True
         Turn = BOTTOMGOINGUP 'white/red goes first
-        Score = ComputerMoves()
+        Score = PlayOn()
         If aGame.Playing = False Then
             'MessageBox.Show(score)
             SaveResult(Score)
@@ -1222,8 +1239,14 @@ Friend Class FrmBoard
                 aChessPiece(aMove.P2id).Move(aMove.P2XOrig, aMove.P2YOrig)
                 ShowPiece(aMove.P2id) 'make visible
             End If
+            If aMove.P1id < 17 Then
+                Turn = 1
+            Else
+                Turn = -1
+            End If
+            aGame.Playing = True 'e.g. if rolling back after end of game
             aGame.Remove() 'remove move from array
-            Turn = -Turn 'end of turn
+
         Catch ex As Exception
             'MsgBox("MenuUndo: can't undo")
         End Try
@@ -1237,7 +1260,7 @@ Friend Class FrmBoard
     Private Sub MoveToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MnuToolsMove.Click
         'Tools Move
         If aGame.Playing Then
-            ComputerMoves()  'do a computer generated move
+            PlayOn()  'do a computer generated move
         Else
             MsgBox("Choose the New command from the File menu to start a new game.")
         End If
@@ -1248,7 +1271,7 @@ Friend Class FrmBoard
         PlayerisHuman(1 + TOPGOINGDOWN) = Not PlayerisHuman(1 + TOPGOINGDOWN)
         MnuToolsTopHuman.Checked = PlayerisHuman(1 + TOPGOINGDOWN)
         If aGame.Playing And Not PlayerisHuman(1 + Turn) Then
-            ComputerMoves()
+            PlayOn()
         End If
     End Sub
 
@@ -1257,7 +1280,7 @@ Friend Class FrmBoard
         PlayerisHuman(1 + BOTTOMGOINGUP) = Not PlayerisHuman(1 + BOTTOMGOINGUP)
         MnuToolsBottomHuman.Checked = PlayerisHuman(1 + BOTTOMGOINGUP)
         If aGame.Playing And Not PlayerisHuman(1 + Turn) Then
-            ComputerMoves()
+            PlayOn()
         End If
     End Sub
 
@@ -1286,13 +1309,14 @@ Friend Class FrmBoard
         Dim y2 As Double 'Score with x2 value
         Dim changeFactor As Double 'how much to change by
 
-        PlayerisHuman(1 + BOTTOMGOINGUP) = False 'White bottom direction 1
+        PlayerisHuman(1 + BOTTOMGOINGUP) = False 'White bottom direction 1 'GOT Settings in form Load from my Settings
         PlayerisHuman(1 + TOPGOINGDOWN) = False 'Black top direction -1
-        displayMoves = True
+        displayMoves = False
         frmCout.DefInstance.Show()
-        y2 = ComputerMoves() 'This should play a whole game (and save results) to get the ball rolling by determining y1
+        y2 = PlayOn() 'This should play a whole game (and save results) to get the ball rolling by determining y1
         For j As Integer = 1 To 1 'do the whole shebang j times
-            For attribute As Integer = 5 To 5 ' ttlAttributes
+            For attribute As Integer = 9 To 9 ' ttlAttributes
+                Debug.Print("a:" & attribute & " x2:" & x2 & " y2:" & y2 & " g:" & changeFactor) 'show the newly derived change factor which should reflect the effect of the last change
                 For i As Integer = 1 To 20 'for each attribute optimise i times
                     changeFactor = aWhite.GetChangeFactor(attribute) 'get change factor as it was calculated after time this attribute was modified
                     x1 = aWhite.GetAttributeValue(attribute) 'what the attribute value was at the time we played the last game
@@ -1308,11 +1332,11 @@ Friend Class FrmBoard
                     Cout("CLS")
                     aGame.Playing = True
                     Turn = BOTTOMGOINGUP
-                    y2 = ComputerMoves() 'This should play a whole game (and save results)
+                    y2 = PlayOn() 'This should play a whole game (and save results)
                     StatusStrip1.Items("statScore").Text = y2
                     changeFactor = GetNewChangeFactor(x1, y1, x2, y2)  ' Calculate a new change factor based on whether the last change made things better or worse and by what degree
                     aWhite.SetChangeFactor(attribute, changeFactor) 'store that for next time we want to assess this attribute
-                    Debug.Print("a:" & attribute & " x1:" & x1 & " y1:" & y1 & " x2:" & x2 & " y2:" & y2 & " g:" & changeFactor) 'show the newly derived change factor which should reflect the effect of the last change
+                    Debug.Print("a:" & attribute & " x2:" & x2 & " y2:" & y2 & " g:" & changeFactor) 'show the newly derived change factor which should reflect the effect of the last change
                     SaveResult(y2)
                     ShowPieces()
                 Next i
@@ -1321,29 +1345,32 @@ Friend Class FrmBoard
     End Sub
 
     'Other routines
-    Friend Function ComputerMoves() As Double
+    Friend Function PlayOn() As Double
+        PlayOn = 0
         While aGame.Playing And Not PlayerisHuman(1 + Turn) 'Do
             ComputerMove()
         End While
-        If IsCheckMate(Turn) Then
-            ShowPieces()
-            Application.DoEvents()
-            Stop
-            'MsgBox("Check mate. You win.")
-            If Turn = BOTTOMGOINGUP Then 'White check mate
-                Debug.Print("Checkmate. Blue win.")
-                ComputerMoves = aWhite.GetRawScore() - 20
-            Else
-                Debug.Print("Checkmate. Red win.")
-                ComputerMoves = aWhite.GetRawScore() + 20
+        If Not aGame.Playing Then
+            If IsCheckMate(Turn) Then 'Game has ended
+                ShowPieces()
+                Application.DoEvents()
+                If Turn = BOTTOMGOINGUP Then 'White check mate
+                    'MessageBox.Show("Checkmate. Blue win.")
+                    Debug.Print("Checkmate. Blue win.")
+                    PlayOn = aWhite.GetRawScore() - 20
+                Else
+                    'MessageBox.Show("Checkmate. Red win.")
+                    Debug.Print("Checkmate. Red win.")
+                    PlayOn = aWhite.GetRawScore() + 20
+                End If
+            Else 'No legal move and no check mate e.g. when there is just a king and any move would put him in check
+                'MsgBox("Stalemate. We draw.")
+                'Debug.Print("Stalemate. Draw.")
+                PlayOn = aWhite.GetRawScore()
+                ShowPieces()
+                Application.DoEvents()
+                'Stop
             End If
-        Else 'No legal move and no check mate e.g. when there is just a king and any move would put him in check
-            'MsgBox("Stalemate. We draw.")
-            'Debug.Print("Stalemate. Draw.")
-            ComputerMoves = aWhite.GetRawScore()
-            ShowPieces()
-            Application.DoEvents()
-            'Stop
         End If
     End Function
 
@@ -1353,18 +1380,21 @@ Friend Class FrmBoard
         Dim mbest As Byte 'best move
 
         ComputerMove = 0
-        If Turn = 1 Then
+        If Turn = BOTTOMGOINGUP Then
             aWhite.GetBestMove(pbest, mbest)
         Else
             GetBestMove(pbest, mbest)
         End If
-        Application.DoEvents()
         If pbest < 1 Or pbest > 32 Then 'there is no legal move
             aGame.Playing = False
             Timer1.Enabled = False
         Else 'carry out the best move
             DoBestMove(pbest, mbest)
             Turn = -Turn 'next turn
+        End If
+        Application.DoEvents()
+        If Turn = 1 Then
+            aBlack.GetRawScore()
         End If
     End Function
 
@@ -1437,7 +1467,7 @@ Friend Class FrmBoard
         StatusStrip1.Items("statFrom").Text = "From: " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XOrig) & aMove.P1YOrig
         StatusStrip1.Items("statTo").Text = "To: " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XDest) & aMove.P1YDest
         ShowPiece((aMove.P1id)) 'draw the Piece (if they moved the control but we didn't move the Piece position it will redraw in the original location
-        Timer1.Enabled = True
+        Timer1.Enabled = True 'If it's a computer turn that will happen as a result of the timer firing.
     End Sub
 
     Private Sub SetupPlayer(aWhite As Player)
@@ -1457,6 +1487,7 @@ Friend Class FrmBoard
         aWhite.Erode = My.Settings.Erode '2 'aim to reduce their Pieces
         aWhite.Consolidate = My.Settings.Consolidate '4 'aim to avoid leaving Piece unsupported
         aWhite.Isolate = My.Settings.Isolate '0 'aim to isolate their Pieces leaving them unsupported
+        aWhite.CheckMateIncentive = My.Settings.CheckMateIncentive
     End Sub
 
     Private Sub SavePlayer(aWhite As Player)
@@ -1508,8 +1539,8 @@ Friend Class FrmBoard
         'I tried this to allow redrawing board after human completes dragging (see Human move) ... don't know if it's used...
         Dim Score
 
-        Timer1.Enabled = False
-        Score = ComputerMoves()
+        Timer1.Enabled = False 'turn off the timer
+        Score = PlayOn()
         If aGame.Playing = False Then
             'MessageBox.Show(score)
             SaveResult(Score)
@@ -1543,5 +1574,53 @@ Friend Class FrmBoard
         End If
     End Sub
 
+    Private Sub SaveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveToolStripMenuItem.Click
+        SaveGame("SavedChessGame.bin")
+    End Sub
 
+    Private Sub LoadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LoadToolStripMenuItem.Click
+        Dim aMove As New Move
+        Dim m As Integer
+        Dim algNotDest As String
+        Dim Score As Double
+
+        Try
+            aGame.Clear()
+            aBoard.Clear() ' = New Board
+            SetupPieces()
+            StatusStrip1.Items("statFrom").Text = ""
+            StatusStrip1.Items("statTo").Text = ""
+            Cout("CLS")
+            aGame.Playing = True
+            Turn = BOTTOMGOINGUP 'white/red goes first
+            '--------------------
+            LoadGame("SavedChessGame.bin")
+            For m = 0 To aGame.MoveCount - 1
+                aMove = aGame.Moves(m)
+                If aMove.P2id > 0 Then 'there's a Piece being taken
+                    Take(aMove.P1XDest, aMove.P1YDest) 'update the board and taken Piece if necessary
+                End If
+                aChessPiece(aMove.P1id).Move(aMove.P1XDest, aMove.P1YDest) 'update the moving Piece's location (and the board)
+                If Ispromoting(aMove.P1id, aMove.P1YDest) Then 'it realises it's reached the 8th rank
+                    Queening(aMove.P1id) 'change into a queen
+                    aMove.MCode = "q" 'in case we need to undo
+                End If
+                If displayMoves = True Then
+                    algNotDest = GetAlgebraicNotation(aMove)
+                    DoHistory(algNotDest, aChessPiece(aMove.P1id).Direction)
+                    My.Forms.FrmBoard.ShowPiece(aMove.P1id) 'ensure the Piece is visible and in the right location on the board
+                    My.Forms.FrmBoard.StatusStrip1.Items("statFrom").Text = "From: " & aChessPiece(aMove.P1id).AlgNot & Chr(96 + aMove.P1XOrig) & aMove.P1YOrig
+                    My.Forms.FrmBoard.StatusStrip1.Items("statTo").Text = "To: " & algNotDest
+                End If
+            Next m
+            '---------------------
+            Score = PlayOn()
+            If aGame.Playing = False Then
+                'MessageBox.Show(score)
+                SaveResult(Score)
+            End If
+        Catch ex As Exception
+            MessageBox.Show("LoadToolStripMenuItem_Click: " & ex.Message)
+        End Try
+    End Sub
 End Class

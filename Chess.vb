@@ -1,6 +1,7 @@
 Option Strict Off
 Option Explicit On
 Imports System.IO
+Imports System.Runtime.Serialization.Formatters.Binary
 'Walter de Jong
 '8/10/2007
 'To do
@@ -43,6 +44,7 @@ Module modChess
     Public PieceArray(MAXPIECE) As System.Windows.Forms.PictureBox
     Public aGame As New Game
     Public aWhite As New Player(1)
+    Public aBlack As New Player(-1)
     Public Turn As Short 'Who's turn is it? Black/Blue = -1 Top going down or White/Red = 1 Bottom going up
     Public Const TOPGOINGDOWN As Short = -1 'Direction/ Turn constant
     Public Const BOTTOMGOINGUP As Short = 1
@@ -50,28 +52,6 @@ Module modChess
     Const captureMove As Byte = 2 ' e.g. aChessPiece(aPiece).getscore(aMove) = captureMove
     Public Thoughts As String
     Public Property displayMoves As Boolean = True
-
-    Sub DebugBoardPrint()
-        'Output positions to debug window
-        'Not normally in use
-        Dim X As Byte
-        Dim Y As Byte
-        Dim i As Integer
-
-        For Y = 1 To MaxY
-            For X = 1 To MaxX
-                i = aBoard.GetGBoardID(X, (MaxY + 1) - Y) 'draw starting at top left
-                If i > 0 Then 'something on it
-                    If aChessPiece(i).XPos <> X Or aChessPiece(i).YPos <> (MaxY + 1) - Y Then
-                        Stop 'checking that Pieces are in the same position board thinks they're in
-                    End If
-                End If
-                If aBoard.GetGBoardDir(X, 9 - Y) = -1 Then System.Diagnostics.Debug.Write("-") Else System.Diagnostics.Debug.Write(" ")
-                System.Diagnostics.Debug.Write(i.ToString("00"))
-            Next X
-            System.Diagnostics.Debug.WriteLine("")
-        Next Y
-    End Sub
 
     Sub DoBestMove(ByVal pbest As Byte, ByVal mbest As Byte)
         'Create move object and use it to update the board, the Pieces, record the move and display the Piece
@@ -192,14 +172,13 @@ Module modChess
             'If My.Settings.ShareThoughts and aPiece.Watch Then
             '            Cout("CheckSupport: " & ourSuppCount & " " & theirSuppCount & vbNewLine)
             'End If
-            maxSupport = aPiece.CheckSupport 'get an array of supporting moves i.e. moves where this could take the piece that's replaced one of it's own
+            maxSupport = aPiece.CheckSupport 'get an array of supporting moves i.e. moves where this could take the piece that's replaced one of its own
             For aMove = 1 To maxSupport 'each supporting possibility
                 aDestX = aPiece.GetSuppX(aMove) 'determine the co-ordinates of the supported Piece
                 aDestY = aPiece.GetSuppY(aMove)
                 aSupportedID = aBoard.GetGBoardID(aDestX, aDestY) 'get the id of the supported Piece
                 aValue = aChessPiece(aSupportedID).Value * takePieceValPwr 'get value of supported Piece
                 aChessPiece(aSupportedID).Supported += 1 'used in checkUnsupported routine
-                'If aChessPiece(aSupportedID).Threatened = 0 Then aValue = 0 'Note: Assumes threats have been assessed and doesn't care about supporting unthreatened pieces...
                 If aChessPiece(aSupportedID).AlgNot = "K" Then aValue = 0 'no point supporting the king
                 If aPiece.Direction = currentPlayersDirection Then 'it's our Piece
                     ourSuppCount += aValue * takePieceValPwr 'Find the total level of support for other Pieces
@@ -261,7 +240,7 @@ Module modChess
         'probably should use threatened unsupported Pieces
         'The loop relating to support needs to have completed for all Pieces
         'REQUIRES: CheckSupport to have been run
-        Const takePieceValPwr As Byte = 1.5 'this adds the capture Piece value to this power
+        Const takePieceValPwr As Byte = 2 'this adds the capture Piece value to this power
         Dim aPiece As Byte
 
         Try
@@ -316,11 +295,11 @@ Module modChess
 
     Sub GetBestMove(ByRef pBest As Byte, ByRef mBest As Byte)
         'Basic Move weightings are used in conjunction with Board/Position strength assessments.
-        Const checkIncentive As Byte = 1
-        Const takeIncentive As Byte = 2 'this adds the capture Piece value to this power i.e. Value^2
-        Const promoteIncentive As Byte = 10
-        Const deterRepetition As Integer = 10
-        Const checkMateIncentive As Byte = 20
+        Const checkIncentive As Double = 0
+        Const takeIncentive As Double = 1.6 'this adds the capture Piece value to this power i.e. Value^2
+        Const promoteIncentive As Double = 10
+        Const deterRepetition As Double = 10
+        Const checkMateIncentive As Double = 70
 
         Dim p As Byte 'each Piece
         Dim pf As Byte 'first Piece
@@ -363,9 +342,9 @@ Module modChess
                         If IsInCheck(-Turn) Then s += checkIncentive 'Add some incentive to check opponent
                         If IsCheckMate(-Turn) Then s += checkMateIncentive 'Add some incentive to check opponent
                         inCheck = IsInCheck(Turn) 'Ensure you move out of check
-                        If inCheck Then
-                            Debug.Print("puts in check: " & aChessPiece(p).AlgNot & Chr(64 + aChessPiece(p).GetMoveX(m)) & "" & aChessPiece(p).GetMoveY(m) & vbNewLine)
-                        End If
+                        'If inCheck Then
+                        'Debug.Print("puts in check: " & aChessPiece(p).AlgNot & Chr(64 + aChessPiece(p).GetMoveX(m)) & "" & aChessPiece(p).GetMoveY(m) & vbNewLine)
+                        'End If
                         aBoard.RestoreBoard()
                         PiecesFromBoard() 'recreate Piece positions from board
                         result = aChessPiece(p).CheckMoves 'ensure this Piece has current moves again
@@ -553,16 +532,16 @@ Module modChess
         'given the direction d is the direction of the current player
         'Returns integer.minvalue if there would be no move
         'Because very large numbers can be generated use the following value with care... They are basically pairs of characteristics from our point of view and theirs.
-        Const Threatening As Byte = 0.9 'aggressiveness - increase our threatening
-        Const AvoidingThreat As Byte = 2 'wimpishness - reduce their threatening
-        Const Supporting As Byte = 1 'supporting our own Pieces - increase our support
-        Const Undermine As Byte = 1 'reduce their support
-        Const Control As Byte = 1 'aim to control more of the board
-        Const Frustrate As Byte = 1 'aim to reduce their mobility and control
-        Const Keep As Byte = 1 'aim to keep as many Pieces as possible
-        Const Erode As Byte = 1 'aim to reduce their Pieces
-        Const Consolidate As Byte = 8 'aim to avoid leaving Piece unsupported
-        Const Isolate As Byte = 1 'aim to isolate their Pieces leaving them unsupported
+        Const Threatening As Double = 0.8 'aggressiveness - increase our threatening
+        Const AvoidingThreat As Double = 2.3 'wimpishness - reduce their threatening
+        Const Supporting As Double = 1 'supporting our own Pieces - increase our support
+        Const Undermine As Double = 0.6 'reduce their support
+        Const Control As Double = 1.7 'aim to control more of the board
+        Const Frustrate As Double = 1.4 'aim to reduce their mobility and control
+        Const Keep As Double = 0.8 'aim to keep as many Pieces as possible
+        Const Erode As Double = 1.9 'aim to reduce their Pieces
+        Const Consolidate As Double = 4 'aim to avoid leaving Piece unsupported
+        Const Isolate As Double = 0.5 'aim to isolate their Pieces leaving them unsupported
         Dim aPiece As Byte 'for each Piece
         Dim takeCount As Integer = 0 'sum the value of all their threatened Pieces from proposed position
         Dim beTakenCount As Integer = 0 'sum of the value of our threatened Pieces from proposed position
@@ -794,7 +773,7 @@ errTake:
         Resume exitTake
     End Function
 
-    Sub TakeNoShow(ByRef X As Byte, ByRef Y As Byte)
+    Function TakeNoShow(ByRef X As Byte, ByRef Y As Byte) As Byte 'return id of piece taken
         'Call this prior to moving (called from cmdMove_Click).
         Dim p As Byte
 
@@ -804,11 +783,12 @@ errTake:
             aChessPiece(p).Remove()
         End If
 exitTake:
-        Exit Sub
+        Return p
+        Exit Function
 errTake:
         MsgBox("TakeNoShow: " & Err.Description)
         Resume exitTake
-    End Sub
+    End Function
 
     Sub UnQueen(ByVal p As Byte)
         'Change Piece p into a pawn
@@ -824,6 +804,66 @@ errTake:
         Else 'red
             PieceArray(p).Image = My.Resources.pawn 'PieceArray(9).Image
         End If
+    End Sub
+
+    Sub SaveGame(aFileName As String)
+        'aGame.History = frmHistory.
+
+        'aBGGame.EndGame = endGame
+        'aBGGame.Player = Player
+        'aBGGame.SetPlayers(players)
+        'aBGGame.SetP0Board(p0Board)
+        'aBGGame.SetP1Board(p1Board)
+        'aBGGame.mTurns = mTurns;
+        '
+        Try
+            Dim aStream As Stream = File.Create(aFileName)
+            Dim serializer As BinaryFormatter = New BinaryFormatter()
+
+            serializer.Serialize(aStream, aGame)
+            aStream.Close()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Sub LoadGame(aFileName As String)
+        ' Here we're reading in a game...
+        Try
+
+            If (File.Exists(aFileName)) Then
+                Dim aStream As Stream = File.OpenRead(aFileName)
+                Dim deserializer As BinaryFormatter = New BinaryFormatter()
+                aGame = CType(deserializer.Deserialize(aStream), Game)
+                aStream.Close()
+            Else
+                Throw New System.Exception(aFileName + " wasn't found.")
+            End If
+            'txtNotation.Text = aBGGame.Notation;
+            'endGame = aBGGame.EndGame;
+            'Player = aBGGame.Player;
+            'di1 = aBGGame.DiceHi;
+            'di2 = aBGGame.DiceLo;
+            'numMoves = aBGGame.NumMoves;
+            'mTurns = aBGGame.mTurns;
+            'aBGGame.GetPlayers(players);
+            'aBGGame.GetP0Board(p0Board);
+            'aBGGame.GetP1Board(p1Board);
+            'aBGBoard.diceHi = di1;
+            'aBGBoard.diceLo = di2;
+            'aBGBoard.SetBlackBoard(p0Board);
+            'aBGBoard.SetRedBoard(p1Board);
+            'aBGBoard.Show();
+            'aBGBoard.DrawBoard();
+            'If (endGame = False) Then
+            'HaveAGoC0H1(False)
+            'Else
+            'Cout(FinishGame() + " won.")
+            'DisplayBoard() ' HumanPrepV0H1(); // display incl. dice In prep For Human go
+            'End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
     Sub SaveResult(Score As Double)

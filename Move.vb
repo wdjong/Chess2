@@ -1,3 +1,4 @@
+<Serializable()>
 Public Class Move
     Private mp1ID As Short 'Piece 1's move
     Private mp1XOrig As Short

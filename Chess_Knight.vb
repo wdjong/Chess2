@@ -3,6 +3,10 @@ Option Explicit On
 <System.Runtime.InteropServices.ProgId("Knight_NET.Knight")> Public Class Knight
     Inherits ChessPiece   'Knight class allows for multiple instances of Chess Knights
 
+    Public Sub New()
+        MyBase.New("N", 4)
+    End Sub
+
     Public Overrides Function CheckMoves() As Byte
         'Add each legal move to the NextMove array of legal moves, 
         'Therefore CheckMoves must be called each time before moving using the nextmove array in a computer move
@@ -234,8 +238,106 @@ Option Explicit On
         CheckSupport = posCount
     End Function
 
-    Public Sub New()
-        MyBase.New("N", 4)
-    End Sub
+    Public Overrides Function PotentialTake(posTestX As Short, posTestY As Short) As Boolean
+        'Check all possible moves of piece and if any is the move we're interested in then it's a legal move
+        Dim posX As Short 'the destination
+        Dim posY As Short 'the destination co-ord
+        Dim result As Short
+        PotentialTake = False
+        Try
+            If OnBoard Then
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                posX += 1 '
+                posY += 2 '1o'clock
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent (Note: doesn't check moving into/out of check)
+                    If posX = posTestX And posY = posTestY Then
+                        PotentialTake = True
+                        Exit Function
+                    End If
+                End If
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                posX += 2 '
+                posY += 1 '2o'clock
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                    If posX = posTestX And posY = posTestY Then
+                        PotentialTake = True
+                        Exit Function
+                    End If
+                End If
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                posX += 2 '4o'clock
+                posY -= 1
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                    If posX = posTestX And posY = posTestY Then
+                        PotentialTake = True
+                        Exit Function
+                    End If
+                End If
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                posX += 1 '5o'clock
+                posY -= 2 '
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                    If posX = posTestX And posY = posTestY Then
+                        PotentialTake = True
+                        Exit Function
+                    End If
+                End If
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                posX -= 1 '7o'clock
+                posY -= 2 'down
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                    If posX = posTestX And posY = posTestY Then
+                        PotentialTake = True
+                        Exit Function
+                    End If
+                End If
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                posX -= 2 '8o'clock
+                posY -= 1 '
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                    If posX = posTestX And posY = posTestY Then
+                        PotentialTake = True
+                        Exit Function
+                    End If
+                End If
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                posX -= 2 '10o'clock
+                posY += 1
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                    If posX = posTestX And posY = posTestY Then
+                        PotentialTake = True
+                        Exit Function
+                    End If
+                End If
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                posX -= 1 '11o'clock
+                posY += 2 '
+                If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                    result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                    If posX = posTestX And posY = posTestY Then
+                        PotentialTake = True
+                        Exit Function
+                    End If
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox("PotentialTake N: " & ex.Message)
+        End Try
+    End Function
 
 End Class

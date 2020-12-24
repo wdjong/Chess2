@@ -2,6 +2,10 @@ Option Strict Off
 Option Explicit On
 <System.Runtime.InteropServices.ProgId("Bishop_NET.Bishop")> Public Class Bishop
     Inherits ChessPiece
+    Public Sub New()
+        MyBase.New("B", 4)
+    End Sub
+
 
     Public Overrides Function CheckMoves() As Byte
         'Add each legal move to the NextMove array of legal moves, 
@@ -184,8 +188,8 @@ Option Explicit On
             posY = MyBase.YPos
             result = 0
             Do While Not blocked
-                If posX < 1 Then blocked = True
-                If posY < 1 Then blocked = True
+                posX -= 1 'left
+                posY -= 1 'down
                 If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
                     If Not blocked Then result = IsLegal(posX, posY, Direction)
                     If result <> 0 Then 'the destination is occupied
@@ -226,8 +230,103 @@ Option Explicit On
         CheckSupport = posCount
     End Function
 
-    Public Sub New()
-        MyBase.New("B", 4)
-    End Sub
+    Public Overrides Function PotentialTake(posTestX As Short, posTestY As Short) As Boolean
+        'Check all possible moves of piece and if any is the move we're interested in then it's a legal move
+        Dim posX As Short 'the destination
+        Dim posY As Short 'the destination co-ord
+        Dim blocked As Boolean
+        Dim result As Short
+        PotentialTake = False
+        Try
+            If OnBoard Then
+                blocked = False
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                Do While Not blocked
+                    posX += 1 'right
+                    posY += 1 'up
+                    If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                        result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                        If posX = posTestX And posY = posTestY Then
+                            PotentialTake = True
+                            Exit Function
+                        End If
+                        If result <> 0 Then
+                            If Not (result = -Direction And (aBoard.GetGBoardID(XPos, YPos) = 5 Or aBoard.GetGBoardID(XPos, YPos) = 29)) Then
+                                blocked = True
+                            End If
+                        End If
+                    Else
+                        blocked = True
+                    End If
+                Loop
+                blocked = False
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                Do While Not blocked
+                    posX += 1 'right
+                    posY -= 1 'down
+                    If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                        result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                        If posX = posTestX And posY = posTestY Then
+                            PotentialTake = True
+                            Exit Function
+                        End If
+                        If result <> 0 Then
+                            If Not (result = -Direction And (aBoard.GetGBoardID(XPos, YPos) = 5 Or aBoard.GetGBoardID(XPos, YPos) = 29)) Then
+                                blocked = True
+                            End If
+                        End If
+                    Else
+                        blocked = True
+                    End If
+                Loop
+                blocked = False
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                Do While Not blocked
+                    posX -= 1 'left
+                    posY -= 1 'down
+                    If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                        result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                        If posX = posTestX And posY = posTestY Then
+                            PotentialTake = True
+                            Exit Function
+                        End If
+                        If result <> 0 Then
+                            If Not (result = -Direction And (aBoard.GetGBoardID(XPos, YPos) = 5 Or aBoard.GetGBoardID(XPos, YPos) = 29)) Then
+                                blocked = True
+                            End If
+                        End If
+                    Else
+                        blocked = True
+                    End If
+                Loop
+                blocked = False
+                posX = MyBase.XPos
+                posY = MyBase.YPos
+                Do While Not blocked
+                    posX -= 1 'left
+                    posY += 1 'up
+                    If posX >= 1 And posX <= 8 And posY >= 1 And posY <= 8 Then 'on board
+                        result = IsLegal(posX, posY, Direction)   '0=empty, direction=same side, -direction=opponent
+                        If posX = posTestX And posY = posTestY Then
+                            PotentialTake = True
+                            Exit Function
+                        End If
+                        If result <> 0 Then
+                            If Not (result = -Direction And (aBoard.GetGBoardID(XPos, YPos) = 5 Or aBoard.GetGBoardID(XPos, YPos) = 29)) Then
+                                blocked = True
+                            End If
+                        End If
+                    Else
+                        blocked = True
+                    End If
+                Loop
+            End If
+        Catch ex As Exception
+            MsgBox("PotentialTake B: " & ex.Message)
+        End Try
+    End Function
 
 End Class

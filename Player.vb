@@ -10,37 +10,37 @@
         Next
     End Sub
 
-    Friend Property CheckIncentive As Double = 1 'Note: FOR WHITE THESE VALUES ARE UPDATE FROM MY.SETTINGS
+    Friend Property CheckIncentive As Double = 0 'Note: FOR WHITE THESE VALUES ARE UPDATED FROM MY.SETTINGS
 
-    Friend Property TakeIncentive As Double = 2 'this adds the capture Piece value to this power i.e. Value^2
+    Friend Property TakeIncentive As Double = 1.6 'this adds the capture Piece value to this power i.e. Value^2
 
-    Friend Property PromoteIncentive As Double = 10
+    Friend Property PromoteIncentive As Double = 10 'Doesn't affect things normally (maybe in long end game)
 
-    Friend Property DeterRepetition As Double = 10
+    Friend Property DeterRepetition As Double = 10 'Doesn't affect things normally (maybe in long end game)
 
-    Friend Property CaptureMove As Double = 2 ' e.g. aChessPiece(aPiece).getscore(aMove) = captureMove
+    Friend Property CaptureMove As Double = 1 ' e.g. aChessPiece(aPiece).getscore(aMove) = captureMove ''' Doesn't seem to have much effect
 
-    Friend Property Threatening As Double = 1 'aggressiveness - increase our threatening
+    Friend Property Threatening As Double = 0.8 'aggressiveness - increase our threatening
 
-    Friend Property AvoidingThreat As Double = 2 'wimpishness - reduce their threatening
+    Friend Property AvoidingThreat As Double = 2.3 'wimpishness - reduce their threatening
 
     Friend Property Supporting As Double = 1 'supporting our own Pieces - increase our support
 
-    Friend Property Undermine As Double = 1
+    Friend Property Undermine As Double = 0.6
 
-    Friend Property Control As Double = 1 'aim to control more of the board
+    Friend Property Control As Double = 1.7 'aim to control more of the board
 
-    Friend Property Frustrate As Double = 1 'aim to reduce their mobility and control
+    Friend Property Frustrate As Double = 1.4 'aim to reduce their mobility and control
 
-    Friend Property Keep As Double = 1 'aim to keep as many Pieces as possible
+    Friend Property Keep As Double = 0.8 'aim to keep as many Pieces as possible
 
-    Friend Property Erode As Double = 1 'aim to reduce their Pieces
+    Friend Property Erode As Double = 1.9 'aim to reduce their Pieces
 
-    Friend Property Consolidate As Double = 8 'aim to avoid leaving Piece unsupported
+    Friend Property Consolidate As Double = 4 'aim to avoid leaving Piece unsupported
 
-    Friend Property Isolate As Double = 1 'aim to isolate their Pieces leaving them unsupported
+    Friend Property Isolate As Double = 0.5 'aim to isolate their Pieces leaving them unsupported
 
-    Friend Property CheckMateIncentive As Double = 20
+    Friend Property CheckMateIncentive As Double = 70
 
     Public Property IncrementBase As Double = 0.1
 
@@ -64,6 +64,9 @@
         Dim result As Byte
         Dim inCheck As Boolean
         Dim repetitions As Integer
+        Dim destX As Byte
+        Dim destY As Byte
+        Dim destID As Byte
 
         sl = Integer.MinValue ' -10000 'best score so far
         pBest = 0 'best Piece index
@@ -85,17 +88,19 @@
                     For m = 1 To ml 'For each possible move 'The list of legal moves are stored in the Piece
                         aBoard.CopyBoard() 'each board object can remember a copy of itself
                         'Try Piece p's mth move; which may be capturing something
-                        TakeNoShow(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m)) 'perform capture
+                        destX = aChessPiece(p).GetMoveX(m)
+                        destY = aChessPiece(p).GetMoveY(m)
+                        destID = TakeNoShow(destX, destY) 'perform capture
                         aChessPiece(p).Move(m)
                         s = Score(Turn) 'Derive a score based on the resulting board arrangement
                         If IsInCheck(-Turn) Then s += CheckIncentive 'Add some incentive to check opponent
-                        If IsCheckMate(-Turn) Then s += CheckMateIncentive : Stop 'Add some incentive to check opponent
+                        If IsCheckMate(-Turn) Then s += CheckMateIncentive 'Add some incentive to check opponent
                         inCheck = IsInCheck(Turn) 'Ensure you move out of check
                         aBoard.RestoreBoard()
                         PiecesFromBoard() 'recreate Piece positions from board
                         result = aChessPiece(p).CheckMoves 'ensure this Piece has current moves again
-                        If aChessPiece(p).GetScore(m) = CaptureMove Then 'Add some incentive to take the opponent
-                            s += aChessPiece(aBoard.GetGBoardID(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m))).Value ^ TakeIncentive 'get the value of the opponents Piece
+                        If destID > 0 Then ' aChessPiece(p).GetScore(m) = CaptureMove Then 'Add some incentive to take the opponent
+                            s += aChessPiece(destID).Value ^ TakeIncentive 'get the value of the opponents Piece
                             If My.Settings.ShareThoughts And aChessPiece(p).Watch Then
                                 Thoughts += "Capture move: " & aChessPiece(aBoard.GetGBoardID(aChessPiece(p).GetMoveX(m), aChessPiece(p).GetMoveY(m))).Value ^ TakeIncentive & vbNewLine
                             End If
@@ -203,6 +208,7 @@
         GetRawScore += (takeCount - beTakenCount)
         GetRawScore += (ourSuppCount - theirSuppCount)
         GetRawScore += (-ourUnSuppValue + theirUnSuppValue)
+        'Debug.Print("OPV: " + ourPieceTtlValue.ToString() + ", TPV: " + theirPieceTtlValue.ToString() + ", OO: " + ourOpenness.ToString() + ", TO: " + theirOpenness.ToString() + ", OTC: " + takeCount.ToString() + ", TTC: " + beTakenCount.ToString() + ", OSC: " + ourSuppCount.ToString() + ", TSC: " + theirSuppCount.ToString() + ", OUC: " + ourUnSuppValue.ToString() + ", TUC: " + theirUnSuppValue.ToString())
     End Function
 
     Friend Function ChangeAttribute(attribute As Integer, changeFactor As Double) As Double
@@ -287,7 +293,7 @@
                 GetAttributeValue = Consolidate '14
             Case 15 'Friend Property Isolate As Double = 1 'aim to isolate their Pieces leaving them unsupported
                 GetAttributeValue = Isolate '7
-            Case 16 'Friend Property CheckMatIncentive As Double = 1 '
+            Case 16 'Friend Property CheckMateIncentive As Double = 1 '
                 GetAttributeValue = CheckMateIncentive '1
         End Select
     End Function

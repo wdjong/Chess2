@@ -67,4 +67,29 @@ Option Explicit On
         SetGBoardDir = True
     End Function
 
+    Public Function ToString2() As String
+        'Output positions to debug window
+        'Not normally in use
+        Dim X As Byte
+        Dim Y As Byte
+        Dim i As Integer
+        ToString2 = ""
+
+        For Y = 1 To MaxY
+            For X = 1 To MaxX
+                i = aBoard.GetGBoardID(X, (MaxY + 1) - Y) 'draw starting at top left
+                If i > 0 Then 'something on it
+                    If aChessPiece(i).XPos <> X Or aChessPiece(i).YPos <> (MaxY + 1) - Y Then
+                        Stop 'checking that Pieces are in the same position board thinks they're in
+                    End If
+                End If
+                If aBoard.GetGBoardDir(X, 9 - Y) = -1 Then ToString2 += "-" Else ToString2 += " "
+                ToString2 += i.ToString("00")
+            Next X
+            ToString2 += vbCrLf
+        Next Y
+    End Function
+
+
+
 End Class
